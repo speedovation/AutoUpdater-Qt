@@ -24,9 +24,8 @@ SOURCES += \
         $$PWD/fvversioncomparator.cpp \
         $$PWD/fvplatform.cpp \
         $$PWD/fvignoredversions.cpp \
+        $$PWD/fvupdateconfirmdialog.cpp \
         $$PWD/fvavailableupdate.cpp \
-        $$PWD/fvupdateconfirmdialog.cpp
-        $$PWD/fvavailableupdate.cpp
 
 HEADERS += \
         $$PWD/fvupdatewindow.h \
@@ -34,23 +33,34 @@ HEADERS += \
         $$PWD/fvversioncomparator.h \
         $$PWD/fvplatform.h \
         $$PWD/fvignoredversions.h \
-        $$PWD/fvupdateconfirmdialog.h
-        $$PWD/fvavailableupdate.h
+        $$PWD/fvupdateconfirmdialog.h \
+        $$PWD/fvavailableupdate.h \
 
-FORMS += $$PWD/fvupdatewindow.ui \
-        $$PWD/fvupdateconfirmdialog.ui
+
+FORMS += \
+        $$PWD/fvupdatewindow.ui \
+        $$PWD/fvupdateconfirmdialog.ui \
+
 fervor_gui {
-    SOURCES += $$PWD/fvupdatewindow.cpp \
-            $$PWD/fvupdatedownloadprogress.cpp
+
+    SOURCES += \
+            $$PWD/fvupdatewindow.cpp \
+            $$PWD/fvupdatedownloadprogress.cpp \
 
 TRANSLATIONS += $$PWD/fervor_lt.ts
-    HEADERS += $$PWD/fvupdatewindow.h \
+
+HEADERS += $$PWD/fvupdatewindow.h \
             $$PWD/fvupdatedownloadprogress.h
 
-    FORMS += $$PWD/fvupdatewindow.ui \
+FORMS += $$PWD/fvupdatewindow.ui \
             $$PWD/fvupdatedownloadprogress.ui
 }
 
 
 TRANSLATIONS += fervor_lt.ts
 CODECFORTR = UTF-8
+
+DISTFILES += \
+    $$PWD/fervor_lt.qm \
+    $$PWD/fervor_lt.ts \
+    $$PWD/OriginalReadme.md

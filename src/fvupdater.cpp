@@ -8,8 +8,10 @@
 #include <QtNetwork>
 #include <QDebug>
 #include <QSettings>
-#include "quazip.h"
-#include "quazipfile.h"
+#include <QDesktopServices>
+
+//#include "quazip.h"
+//#include "quazipfile.h"
 
 #ifdef Q_WS_MAC
 #include "CoreFoundation/CoreFoundation.h"
@@ -94,8 +96,8 @@ FvUpdater::~FvUpdater()
 		m_proposedUpdate = 0;
 	}
 
-	hideUpdateConfirmationDialog();
 #ifdef FV_GUI
+    hideUpdateConfirmationDialog();
 	hideUpdaterWindow();
 #endif
 }
@@ -205,7 +207,7 @@ void FvUpdater::InstallUpdate()
 		return;
 	}
 
-	showUpdateConfirmationDialogUpdatedWithCurrentUpdateProposal();
+	//showUpdateConfirmationDialogUpdatedWithCurrentUpdateProposal();
 	// Prepare download
 	QUrl url = m_proposedUpdate->GetEnclosureUrl();
 
@@ -289,31 +291,31 @@ void FvUpdater::httpUpdateDownloadFinished()
 
 				// Retrieve List of updated files (Placed in an extra scope to avoid QuaZIP handles the archive permanently and thus avoids the deletion.)
 				{	
-					QuaZip zip(fileName);
-					if (!zip.open(QuaZip::mdUnzip)) {
-						qWarning("testRead(): zip.open(): %d", zip.getZipError());
-						return;
-					}
-					zip.setFileNameCodec("IBM866");
-					QList<QuaZipFileInfo> updateFiles = zip.getFileInfoList();
+///					QuaZip zip(fileName);
+///					if (!zip.open(QuaZip::mdUnzip)) {
+///						qWarning("testRead(): zip.open(): %d", zip.getZipError());
+///						return;
+///					}
+///					zip.setFileNameCodec("IBM866");
+///					QList<QuaZipFileInfo> updateFiles = zip.getFileInfoList();
 		
 					// Rename all current files with available update.
-					for (int i=0;i<updateFiles.size();i++)
-					{
-						QString sourceFilePath = rootDirectory + "\\" + updateFiles[i].name;
-						QDir appDir( QCoreApplication::applicationDirPath() );
+///					for (int i=0;i<updateFiles.size();i++)
+///					{
+///						QString sourceFilePath = rootDirectory + "\\" + updateFiles[i].name;
+///						QDir appDir( QCoreApplication::applicationDirPath() );
 
-						QFileInfo file(	sourceFilePath );
-						if(file.exists())
-						{
-							//qDebug()<<tr("Moving file %1 to %2").arg(sourceFilePath).arg(sourceFilePath+".oldversion");
-							appDir.rename( sourceFilePath, sourceFilePath+".oldversion" );
-						}
-					}
+///						QFileInfo file(	sourceFilePath );
+///						if(file.exists())
+///						{
+///							//qDebug()<<tr("Moving file %1 to %2").arg(sourceFilePath).arg(sourceFilePath+".oldversion");
+///							appDir.rename( sourceFilePath, sourceFilePath+".oldversion" );
+///						}
+///					}
 				}
 
 				// Install updated Files
-				unzipUpdate(fileName, rootDirectory);
+				///unzipUpdate(fileName, rootDirectory);
 
 				// Delete update archive
                 while(QFile::remove(fileName) )
@@ -337,76 +339,76 @@ void FvUpdater::httpUpdateDownloadFinished()
 
 bool FvUpdater::unzipUpdate(const QString & filePath, const QString & extDirPath, const QString & singleFileName )
 {
-	QuaZip zip(filePath);
+//	QuaZip zip(filePath);
 
-    if (!zip.open(QuaZip::mdUnzip)) {
-		qWarning()<<tr("Error: Unable to open zip archive %1 for unzipping: %2").arg(filePath).arg(zip.getZipError());
-		return false;
-	}
+//    if (!zip.open(QuaZip::mdUnzip)) {
+//		qWarning()<<tr("Error: Unable to open zip archive %1 for unzipping: %2").arg(filePath).arg(zip.getZipError());
+//		return false;
+//	}
 
-	zip.setFileNameCodec("IBM866");
+//	zip.setFileNameCodec("IBM866");
 
-	//qWarning("Update contains %d files\n", zip.getEntriesCount());
+//	//qWarning("Update contains %d files\n", zip.getEntriesCount());
 
-	QuaZipFileInfo info;
-	QuaZipFile file(&zip);
-	QFile out;
-	QString name;
-	QDir appDir(extDirPath);
-	for (bool more = zip.goToFirstFile(); more; more = zip.goToNextFile())
-	{
-		if (!zip.getCurrentFileInfo(&info)) {
-			qWarning()<<tr("Error: Unable to retrieve fileInfo about the file to extract: %2").arg(zip.getZipError());
-			return false;
-		}
+//	QuaZipFileInfo info;
+//	QuaZipFile file(&zip);
+//	QFile out;
+//	QString name;
+//	QDir appDir(extDirPath);
+//	for (bool more = zip.goToFirstFile(); more; more = zip.goToNextFile())
+//	{
+//		if (!zip.getCurrentFileInfo(&info)) {
+//			qWarning()<<tr("Error: Unable to retrieve fileInfo about the file to extract: %2").arg(zip.getZipError());
+//			return false;
+//		}
 
-		if (!singleFileName.isEmpty())
-			if (!info.name.contains(singleFileName))
-				continue;
+//		if (!singleFileName.isEmpty())
+//			if (!info.name.contains(singleFileName))
+//				continue;
 
-		if (!file.open(QIODevice::ReadOnly)) {
-			qWarning()<<tr("Error: Unable to open file %1 for unzipping: %2").arg(filePath).arg(file.getZipError());
-			return false;
-		}
+//		if (!file.open(QIODevice::ReadOnly)) {
+//			qWarning()<<tr("Error: Unable to open file %1 for unzipping: %2").arg(filePath).arg(file.getZipError());
+//			return false;
+//		}
 
-		name = QString("%1/%2").arg(extDirPath).arg(file.getActualFileName());
+//		name = QString("%1/%2").arg(extDirPath).arg(file.getActualFileName());
 
-		if (file.getZipError() != UNZ_OK) {
-			qWarning()<<tr("Error: Unable to retrieve zipped filename to unzip from %1: %2").arg(filePath).arg(file.getZipError());
-			return false;
-		}
+//		if (file.getZipError() != UNZ_OK) {
+//			qWarning()<<tr("Error: Unable to retrieve zipped filename to unzip from %1: %2").arg(filePath).arg(file.getZipError());
+//			return false;
+//		}
 		
-		QFileInfo fi(name);
-		appDir.mkpath(fi.absolutePath() );	// Ensure that subdirectories - if required - exist 
-		out.setFileName(name);
-		out.open(QIODevice::WriteOnly);
-		out.write( file.readAll() );
-		out.close();
+//		QFileInfo fi(name);
+//		appDir.mkpath(fi.absolutePath() );	// Ensure that subdirectories - if required - exist
+//		out.setFileName(name);
+//		out.open(QIODevice::WriteOnly);
+//		out.write( file.readAll() );
+//		out.close();
 
-		if (file.getZipError() != UNZ_OK) {
-			qWarning()<<tr("Error: Unable to unzip file %1: %2").arg(name).arg(file.getZipError());
-			return false;
-		}
+//		if (file.getZipError() != UNZ_OK) {
+//			qWarning()<<tr("Error: Unable to unzip file %1: %2").arg(name).arg(file.getZipError());
+//			return false;
+//		}
 
-		if (!file.atEnd()) {
-			qWarning()<<tr("Error: Have read all available bytes, but pointer still does not show EOF: %1").arg(file.getZipError());
-			return false;
-		}
+//		if (!file.atEnd()) {
+//			qWarning()<<tr("Error: Have read all available bytes, but pointer still does not show EOF: %1").arg(file.getZipError());
+//			return false;
+//		}
 
-		file.close();
+//		file.close();
 
-		if (file.getZipError() != UNZ_OK) {
-			qWarning()<<tr("Error: Unable to close zipped file %1: %2").arg(name).arg(file.getZipError());
-			return false;
-		}
-	}
+//		if (file.getZipError() != UNZ_OK) {
+//			qWarning()<<tr("Error: Unable to close zipped file %1: %2").arg(name).arg(file.getZipError());
+//			return false;
+//		}
+//	}
 
-	zip.close();
+//	zip.close();
 
-	if (zip.getZipError() != UNZ_OK) {
-		qWarning()<<tr("Error: Unable to close zip archive file %1: %2").arg(filePath).arg(file.getZipError());
-		return false;
-	}
+//	if (zip.getZipError() != UNZ_OK) {
+//		qWarning()<<tr("Error: Unable to close zip archive file %1: %2").arg(filePath).arg(file.getZipError());
+//		return false;
+//	}
 
 	return true;
 }
@@ -457,15 +459,15 @@ void FvUpdater::UpdateInstallationConfirmed()
 		return;
 	}
 
-	hideUpdaterWindow();
-	hideUpdateConfirmationDialog();
+	//hideUpdaterWindow();
+	//hideUpdateConfirmationDialog();
 }
 
 void FvUpdater::UpdateInstallationNotConfirmed()
 {
 	qDebug() << "Do not confirm update installation";
 
-	hideUpdateConfirmationDialog();	// if any; shouldn't be shown at this point, but who knows
+	//hideUpdateConfirmationDialog();	// if any; shouldn't be shown at this point, but who knows
 	// leave the "update proposal window" inact
 }
 bool FvUpdater::CheckForUpdates(bool silentAsMuchAsItCouldGet)

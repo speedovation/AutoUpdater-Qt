@@ -46,6 +46,6 @@ bool FvUpdateConfirmDialog::UpdateWindowWithCurrentProposedUpdate()
 
 void FvUpdateConfirmDialog::closeEvent(QCloseEvent* event)
 {
-	FvUpdater::sharedUpdater()->updateConfirmationDialogWasClosed();
+	///FvUpdater::sharedUpdater()->updateConfirmationDialogWasClosed();
 	event->accept();
 }

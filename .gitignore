@@ -8,3 +8,4 @@ fvupdateconfig.h
 *.pro.user
 *.ui.autosave
 Sample-build-*
+/build-Example-Desktop_Qt_5_4_1_GCC_64bit-Debug/

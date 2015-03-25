@@ -61,6 +61,6 @@ bool FvUpdateWindow::UpdateWindowWithCurrentProposedUpdate()
 
 void FvUpdateWindow::closeEvent(QCloseEvent* event)
 {
-	FvUpdater::sharedUpdater()->updaterWindowWasClosed();
+	///FvUpdater::sharedUpdater()->updaterWindowWasClosed();
 	event->accept();
 }

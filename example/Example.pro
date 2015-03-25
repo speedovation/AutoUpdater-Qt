@@ -7,7 +7,7 @@
 #}else{
 #    QT += core gui
 #}
-QT += widgets webkitwidgets
+QT += core gui widgets webkitwidgets
 TARGET = Sample
 VERSION = 1.0
 TEMPLATE = app
@@ -25,7 +25,7 @@ INCLUDEPATH += $$PWD
 
 # Fervor autoupdater
 # (set TARGET and VERSION of your app before including Fervor.pri)
-!include("../Fervor.pri") {
+!include("../src/Fervor.pri") {
 	error("Unable to include Fervor autoupdater.")
 }
 

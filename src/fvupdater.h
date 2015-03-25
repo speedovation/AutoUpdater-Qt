@@ -137,10 +137,6 @@ private:
 	//
 	QString m_requiredSslFingerprint;
 
-	void httpFeedReadyRead();
-	void httpFeedUpdateDataReadProgress(qint64 bytesRead,
-										qint64 totalBytes);
-	void httpFeedDownloadFinished();
 	bool checkSslFingerPrint(QUrl urltoCheck);	// true=ssl Fingerprint accepted, false= ssl Fingerprint NOT accepted
 
 	//
