@@ -11,8 +11,7 @@
 
 UpdaterWindow::UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remindLaterAllowed) :
 	QWidget(parent, Qt::CustomizeWindowHint),
-    _baseManager(new BaseManager) ,
-	m_ui(new Ui::UpdaterWindow)
+    m_ui(new Ui::UpdaterWindow)
 {
 	m_ui->setupUi(this);
 
@@ -37,6 +36,10 @@ UpdaterWindow::UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remi
 ///			FvUpdater::sharedUpdater(), SLOT(SkipUpdate()));
 ///	connect(m_ui->remindMeLaterButton, SIGNAL(clicked()),
 ///			FvUpdater::sharedUpdater(), SLOT(RemindMeLater()));
+///
+///
+
+    _baseManager = new BaseManager(this);
 }
 
 UpdaterWindow::~UpdaterWindow()

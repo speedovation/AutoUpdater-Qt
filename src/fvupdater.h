@@ -19,29 +19,13 @@ class FvUpdater : public QObject
 
 public:
 
-
-
-
-
 	void finishUpdate(QString pathToFinish = "");
 	void setRequiredSslFingerPrint(QString md5);
 	QString getRequiredSslFingerPrint();	// returns md5!
 
 
-
-
-	
 public slots:
 
-
-
-
-	//
-	// ---------------------------------------------------
-	// ---------------------------------------------------
-	// ---------------------------------------------------
-	// ---------------------------------------------------
-	//
 
 protected:
 
@@ -114,14 +98,7 @@ private slots:
 
 
 
-	//
-	// Download and install Update infrastructure
-	//
-	void httpUpdateDownloadFinished();
-	bool unzipUpdate(const QString & filePath, const QString & extDirPath, const QString & singleFileName = QString(""));	// returns true on success
 
-signals:
-	void updatedFinishedSuccessfully();
 
 };
 

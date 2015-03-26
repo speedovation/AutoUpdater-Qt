@@ -2,6 +2,8 @@
 #define GETUPDATE_H
 
 #include <QObject>
+#include <QUrl>
+#include <QNetworkAccessManager>
 
 class UpdaterWindow;
 class UpdateFileData;
@@ -10,7 +12,6 @@ class UpdateDownloadProgress;
 QT_BEGIN_NAMESPACE
 class QNetworkReply;
 class QAuthenticator;
-class QNetworkAccessManager;
 QT_END_NAMESPACE
 
 class GetUpdate : public QObject
@@ -66,6 +67,10 @@ class GetUpdate : public QObject
         void httpFeedDownloadFinished();
 
     private slots:
+        	void httpUpdateDownloadFinished();
+
+    signals:
+        void updatedFinishedSuccessfully();
 
     private:
         UpdaterWindow *d;

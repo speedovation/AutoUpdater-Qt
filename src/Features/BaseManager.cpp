@@ -13,6 +13,7 @@ BaseManager::BaseManager(UpdaterWindow* window) :
     _parseUpdate = new ParseUpdate(window);
     _getUpdate = new GetUpdate(window);
     _messageDialogs = new MessageDialogs(window);
+    _zip = new Zip(window);
 
 }
 
@@ -39,4 +40,8 @@ GetUpdate* BaseManager::getUpdate()
 MessageDialogs* BaseManager::messageDialogs()
 {
     return _messageDialogs;
+}
+Zip* BaseManager::zip()
+{
+    return _zip;
 }

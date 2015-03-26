@@ -145,186 +145,18 @@ void FvUpdater::updateConfirmationDialogWasClosed()
 }
 #endif
 
-
-void FvUpdater::httpUpdateDownloadFinished()
-{
-	QNetworkReply* reply = qobject_cast<QNetworkReply*>(sender());
-	if(reply==NULL)
-	{
-		qWarning()<<"The slot httpUpdateDownloadFinished() should only be invoked by S&S.";
-		return;
-	}
-
-	if(reply->error() == QNetworkReply::NoError)
-	{
-		int httpstatuscode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toUInt();
-
-		// no error received?
-		if (reply->error() == QNetworkReply::NoError)
-		{
-			if (reply->isReadable())
-			{
-#ifdef Q_WS_MAC
-                CFURLRef appURLRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-                char path[PATH_MAX];
-                if (!CFURLGetFileSystemRepresentation(appURLRef, TRUE, (UInt8 *)path, PATH_MAX)) {
-                    // error!
-                }
-
-                CFRelease(appURLRef);
-                QString filePath = QString(path);
-                QString rootDirectory = filePath.left(filePath.lastIndexOf("/"));
-#else
-                QString rootDirectory = QCoreApplication::applicationDirPath() + "/";
-#endif
-                
-				// Write download into File
-				QFileInfo fileInfo=reply->url().path();
-				QString fileName = rootDirectory + fileInfo.fileName();
-				//qDebug()<<"Writing downloaded file into "<<fileName;
-	
-				QFile file(fileName);
-				file.open(QIODevice::WriteOnly);
-				file.write(reply->readAll());
-				file.close();
-
-				// Retrieve List of updated files (Placed in an extra scope to avoid QuaZIP handles the archive permanently and thus avoids the deletion.)
-				{	
-///					QuaZip zip(fileName);
-///					if (!zip.open(QuaZip::mdUnzip)) {
-///						qWarning("testRead(): zip.open(): %d", zip.getZipError());
-///						return;
-///					}
-///					zip.setFileNameCodec("IBM866");
-///					QList<QuaZipFileInfo> updateFiles = zip.getFileInfoList();
-		
-					// Rename all current files with available update.
-///					for (int i=0;i<updateFiles.size();i++)
-///					{
-///						QString sourceFilePath = rootDirectory + "\\" + updateFiles[i].name;
-///						QDir appDir( QCoreApplication::applicationDirPath() );
-
-///						QFileInfo file(	sourceFilePath );
-///						if(file.exists())
-///						{
-///							//qDebug()<<tr("Moving file %1 to %2").arg(sourceFilePath).arg(sourceFilePath+".oldversion");
-///							appDir.rename( sourceFilePath, sourceFilePath+".oldversion" );
-///						}
-///					}
-				}
-
-				// Install updated Files
-				///unzipUpdate(fileName, rootDirectory);
-
-				// Delete update archive
-                while(QFile::remove(fileName) )
-                {
-                };
-
-				// Restart ap to clean up and start usual business
-				restartApplication();
-
-			}
-			else qDebug()<<"Error: QNetworkReply is not readable!";
-		}
-		else 
-		{
-			qDebug()<<"Download errors ocurred! HTTP Error Code:"<<httpstatuscode;
-		}
-
-		reply->deleteLater();
-    }	// If !reply->error END
-}	// httpUpdateDownloadFinished END
-
-bool FvUpdater::unzipUpdate(const QString & filePath, const QString & extDirPath, const QString & singleFileName )
-{
-//	QuaZip zip(filePath);
-
-//    if (!zip.open(QuaZip::mdUnzip)) {
-//		qWarning()<<tr("Error: Unable to open zip archive %1 for unzipping: %2").arg(filePath).arg(zip.getZipError());
-//		return false;
-//	}
-
-//	zip.setFileNameCodec("IBM866");
-
-//	//qWarning("Update contains %d files\n", zip.getEntriesCount());
-
-//	QuaZipFileInfo info;
-//	QuaZipFile file(&zip);
-//	QFile out;
-//	QString name;
-//	QDir appDir(extDirPath);
-//	for (bool more = zip.goToFirstFile(); more; more = zip.goToNextFile())
-//	{
-//		if (!zip.getCurrentFileInfo(&info)) {
-//			qWarning()<<tr("Error: Unable to retrieve fileInfo about the file to extract: %2").arg(zip.getZipError());
-//			return false;
-//		}
-
-//		if (!singleFileName.isEmpty())
-//			if (!info.name.contains(singleFileName))
-//				continue;
-
-//		if (!file.open(QIODevice::ReadOnly)) {
-//			qWarning()<<tr("Error: Unable to open file %1 for unzipping: %2").arg(filePath).arg(file.getZipError());
-//			return false;
-//		}
-
-//		name = QString("%1/%2").arg(extDirPath).arg(file.getActualFileName());
-
-//		if (file.getZipError() != UNZ_OK) {
-//			qWarning()<<tr("Error: Unable to retrieve zipped filename to unzip from %1: %2").arg(filePath).arg(file.getZipError());
-//			return false;
-//		}
-		
-//		QFileInfo fi(name);
-//		appDir.mkpath(fi.absolutePath() );	// Ensure that subdirectories - if required - exist
-//		out.setFileName(name);
-//		out.open(QIODevice::WriteOnly);
-//		out.write( file.readAll() );
-//		out.close();
-
-//		if (file.getZipError() != UNZ_OK) {
-//			qWarning()<<tr("Error: Unable to unzip file %1: %2").arg(name).arg(file.getZipError());
-//			return false;
-//		}
-
-//		if (!file.atEnd()) {
-//			qWarning()<<tr("Error: Have read all available bytes, but pointer still does not show EOF: %1").arg(file.getZipError());
-//			return false;
-//		}
-
-//		file.close();
-
-//		if (file.getZipError() != UNZ_OK) {
-//			qWarning()<<tr("Error: Unable to close zipped file %1: %2").arg(name).arg(file.getZipError());
-//			return false;
-//		}
-//	}
-
-//	zip.close();
-
-//	if (zip.getZipError() != UNZ_OK) {
-//		qWarning()<<tr("Error: Unable to close zip archive file %1: %2").arg(filePath).arg(file.getZipError());
-//		return false;
-//	}
-
-	return true;
-}
-
-
 void FvUpdater::SkipUpdate()
 {
 	qDebug() << "Skip update";
 
-	UpdateFileData* proposedUpdate = GetProposedUpdate();
-	if (! proposedUpdate) {
-		qWarning() << "Proposed update is NULL (shouldn't be at this point)";
-		return;
-	}
+///	UpdateFileData* proposedUpdate = GetProposedUpdate();
+///	if (! proposedUpdate) {
+///		qWarning() << "Proposed update is NULL (shouldn't be at this point)";
+///		return;
+///	}
 
 	// Start ignoring this particular version
-	FVIgnoredVersions::IgnoreVersion(proposedUpdate->getEnclosureVersion());
+///	FVIgnoredVersions::IgnoreVersion(proposedUpdate->getEnclosureVersion());
 
 #ifdef FV_GUI
 	hideUpdaterWindow();
@@ -344,19 +176,19 @@ void FvUpdater::RemindMeLater()
 
 void FvUpdater::UpdateInstallationConfirmed()
 {
-	qDebug() << "Confirm update installation";
+//	qDebug() << "Confirm update installation";
 
-	UpdateFileData* proposedUpdate = GetProposedUpdate();
-	if (! proposedUpdate) {
-		qWarning() << "Proposed update is NULL (shouldn't be at this point)";
-		return;
-	}
+///	UpdateFileData* proposedUpdate = GetProposedUpdate();
+///	if (! proposedUpdate) {
+///		qWarning() << "Proposed update is NULL (shouldn't be at this point)";
+///		return;
+///	}
 
-	// Open a link
-	if (! QDesktopServices::openUrl(proposedUpdate->getEnclosureUrl())) {
-		showErrorDialog(tr("Unable to open this link in a browser. Please do it manually."), true);
-		return;
-	}
+///	// Open a link
+///	if (! QDesktopServices::openUrl(proposedUpdate->getEnclosureUrl())) {
+///		showErrorDialog(tr("Unable to open this link in a browser. Please do it manually."), true);
+///		return;
+///	}
 
 	//hideUpdaterWindow();
 	//hideUpdateConfirmationDialog();

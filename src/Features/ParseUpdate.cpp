@@ -2,6 +2,8 @@
 
 #include "UpdaterWindow.h"
 
+
+
 ParseUpdate::ParseUpdate(UpdaterWindow* window) : d(window)
 {
 

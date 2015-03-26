@@ -17,7 +17,7 @@
 #include "UpdateChecker.h"
 #include "Authenticator.h"
 #include "MessageDialogs.h"
-
+#include "Zip.h"
 
 
 class BaseManager : public QObject
@@ -32,6 +32,7 @@ class BaseManager : public QObject
         ParseUpdate* parseUpdate();
         GetUpdate* getUpdate();
         MessageDialogs* messageDialogs();
+        Zip* zip();
 
 
 
@@ -49,6 +50,7 @@ class BaseManager : public QObject
         ParseUpdate* _parseUpdate;
         GetUpdate* _getUpdate;
         MessageDialogs* _messageDialogs;
+        Zip* _zip;
 
 };
 

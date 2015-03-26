@@ -19,7 +19,7 @@ UpdateChecker::~UpdateChecker()
 
 bool UpdateChecker::CheckForUpdates(bool silentAsMuchAsItCouldGet)
 {
-	if (d->mam_feedURL.isEmpty()) {
+	if (d->manager()->getUpdate()->m_feedURL.isEmpty()) {
 		qCritical() << "Please set feed URL via setFeedURL() before calling CheckForUpdates().";
 		return false;
 	}

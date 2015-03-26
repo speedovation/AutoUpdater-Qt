@@ -6,9 +6,7 @@
 
 class UpdaterWindow;
 
-QT_BEGIN_NAMESPACE
-class QXmlStreamReader;
-QT_END_NAMESPACE
+#include <QXmlStreamReader>
 
 
 class ParseUpdate : public QObject

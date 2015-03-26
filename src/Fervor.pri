@@ -34,7 +34,8 @@ SOURCES += \
     $$PWD/Features/UpdateChecker.cpp \
     $$PWD/Features/GetUpdate.cpp \
     $$PWD/Features/ParseUpdate.cpp \
-    $$PWD/Features/MessageDialogs.cpp
+    $$PWD/Features/MessageDialogs.cpp \
+    $$PWD/Features/Zip.cpp
 
 HEADERS += \
         $$PWD/fvupdater.h \
@@ -51,7 +52,8 @@ HEADERS += \
     $$PWD/Features/UpdateChecker.h \
     $$PWD/Features/GetUpdate.h \
     $$PWD/Features/ParseUpdate.h \
-    $$PWD/Features/MessageDialogs.h
+    $$PWD/Features/MessageDialogs.h \
+    $$PWD/Features/Zip.h
 
 
 FORMS += \
