@@ -30,7 +30,10 @@ SOURCES += \
         $$PWD/UpdateFileData/UpdateFileData.cpp \
     $$PWD/Platform.cpp \
     $$PWD/Partials/UpdateDownloadProgress.cpp \
-    $$PWD/Features/Authenticator.cpp
+    $$PWD/Features/Authenticator.cpp \
+    $$PWD/Features/UpdateChecker.cpp \
+    $$PWD/Features/GetUpdate.cpp \
+    $$PWD/Features/ParseUpdate.cpp
 
 HEADERS += \
         $$PWD/fvupdater.h \
@@ -43,7 +46,10 @@ HEADERS += \
         $$PWD/UpdateFileData/UpdateFileData.h \
     $$PWD/Platform.h \
     $$PWD/Partials/UpdateDownloadProgress.h \
-    $$PWD/Features/Authenticator.h
+    $$PWD/Features/Authenticator.h \
+    $$PWD/Features/UpdateChecker.h \
+    $$PWD/Features/GetUpdate.h \
+    $$PWD/Features/ParseUpdate.h
 
 
 FORMS += \

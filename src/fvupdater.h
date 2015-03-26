@@ -21,27 +21,19 @@ public:
 
 
 
-	// Set / get feed URL
-	void SetFeedURL(QUrl feedURL);
-	void SetFeedURL(QString feedURL);
-	QString GetFeedURL();
+
+
 	void finishUpdate(QString pathToFinish = "");
 	void setRequiredSslFingerPrint(QString md5);
 	QString getRequiredSslFingerPrint();	// returns md5!
-	void setSkipVersionAllowed(bool allowed);
-	void setRemindLaterAllowed(bool allowed);
-	bool getSkipVersionAllowed();
-	bool getRemindLaterAllowed();
+
+
+
 
 	
 public slots:
 
-	// Check for updates
-	bool CheckForUpdates(bool silentAsMuchAsItCouldGet = true);
 
-	// Aliases
-	bool CheckForUpdatesSilent();
-	bool CheckForUpdatesNotSilent();
 
 
 	//
@@ -79,7 +71,6 @@ private:
 	~FvUpdater();							// Hide main destructor
 
 
-
     UpdateDownloadProgress* dlwindow;
 
 	//
@@ -106,25 +97,13 @@ private:
 	// Useful for automatic update checking upon application startup.
 	bool m_silentAsMuchAsItCouldGet;
 
-	// Dialogs (notifications)
-	bool skipVersionAllowed;
-	bool remindLaterAllowed;
+
 
 	void showErrorDialog(QString message, bool showEvenInSilentMode = false);			// Show an error message
 	void showInformationDialog(QString message, bool showEvenInSilentMode = false);		// Show an informational message
 
 
-	//
-	// HTTP feed fetcher infrastructure
-	//
-	QUrl m_feedURL;					// Feed URL that will be fetched
-	QNetworkAccessManager m_qnam;
-	QNetworkReply* m_reply;
-	int m_httpGetId;
-	bool m_httpRequestAborted;
 
-	void startDownloadFeed(QUrl url);	// Start downloading feed
-	void cancelDownloadFeed();			// Stop downloading the current feed
 
 	//
 	// SSL Fingerprint Check infrastructure
@@ -136,11 +115,7 @@ private:
 
 
 
-	//
-	// XML parser
-	//
-	QXmlStreamReader m_xml;				// XML data collector and parser
-	bool xmlParseFeed();				// Parse feed in m_xml
+
 	bool searchDownloadedFeedForUpdates(QString xmlTitle,
 										QString xmlLink,
 										QString xmlReleaseNotesLink,
@@ -160,10 +135,7 @@ private:
 
 private slots:
 
-	void httpFeedReadyRead();
-	void httpFeedUpdateDataReadProgress(qint64 bytesRead,
-										qint64 totalBytes);
-	void httpFeedDownloadFinished();
+
 
 	//
 	// Download and install Update infrastructure
