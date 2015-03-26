@@ -25,7 +25,7 @@ class UpdaterWindow : public QWidget
 
         void closeEvent(QCloseEvent* event);
 
-        BaseManager baseManager();
+        BaseManager* manager();
 
     private:
         Ui::UpdaterWindow*	m_ui;

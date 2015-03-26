@@ -47,13 +47,13 @@ protected:
 
 	friend class UpdaterWindow;		// Uses GetProposedUpdate() and others
 	friend class FvUpdateConfirmDialog;	// Uses GetProposedUpdate() and others
-	UpdateFileData* GetProposedUpdate();
+
 
 
 protected slots:
 
 	// Update window button slots
-	void InstallUpdate();
+
 	void SkipUpdate();
 	void RemindMeLater();
 
@@ -71,8 +71,6 @@ private:
 	~FvUpdater();							// Hide main destructor
 
 
-    UpdateDownloadProgress* dlwindow;
-
 	//
 	// Windows / dialogs
 	//
@@ -89,15 +87,6 @@ private:
 	void decideWhatToDoWithCurrentUpdateProposal();                 // Perform an action which is configured in settings
 #endif
 
-	// Available update (NULL if not fetched)
-	UpdateFileData* m_proposedUpdate;
-
-
-
-
-
-	void showErrorDialog(QString message, bool showEvenInSilentMode = false);			// Show an error message
-	void showInformationDialog(QString message, bool showEvenInSilentMode = false);		// Show an informational message
 
 
 
@@ -113,15 +102,6 @@ private:
 
 
 
-	bool searchDownloadedFeedForUpdates(QString xmlTitle,
-										QString xmlLink,
-										QString xmlReleaseNotesLink,
-										QString xmlPubDate,
-										QString xmlEnclosureUrl,
-										QString xmlEnclosureVersion,
-										QString xmlEnclosurePlatform,
-										unsigned long xmlEnclosureLength,
-										QString xmlEnclosureType);
 
 
 	//

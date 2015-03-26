@@ -1,5 +1,5 @@
-#ifndef AUTHENTICATOR_H
-#define AUTHENTICATOR_H
+#ifndef UPDATECHECKER_H
+#define UPDATECHECKER_H
 
 #include <QObject>
 
@@ -34,4 +34,4 @@ class UpdateChecker : public QObject
 
 };
 
-#endif // AUTHENTICATOR_H
+#endif // UPDATECHECKER_H

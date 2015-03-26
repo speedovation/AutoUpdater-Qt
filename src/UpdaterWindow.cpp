@@ -71,7 +71,7 @@ void UpdaterWindow::closeEvent(QCloseEvent* event)
 	event->accept();
 }
 
-BaseManager* UpdaterWindow::baseManager()
+BaseManager* UpdaterWindow::manager()
 {
     return _baseManager;
 }

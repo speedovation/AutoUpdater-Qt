@@ -43,7 +43,7 @@ FvUpdater::FvUpdater() : QObject(0)
 	m_updaterWindow = 0;
 	m_updateConfirmationDialog = 0;
 #endif
-	m_proposedUpdate = 0;
+
 	m_requiredSslFingerprint = "";
 
 
@@ -66,10 +66,7 @@ FvUpdater::FvUpdater() : QObject(0)
 
 FvUpdater::~FvUpdater()
 {
-	if (m_proposedUpdate) {
-		delete m_proposedUpdate;
-		m_proposedUpdate = 0;
-	}
+
 
 #ifdef FV_GUI
     hideUpdateConfirmationDialog();
@@ -148,64 +145,6 @@ void FvUpdater::updateConfirmationDialogWasClosed()
 }
 #endif
 
-
-UpdateFileData* FvUpdater::GetProposedUpdate()
-{
-	return m_proposedUpdate;
-}
-
-
-void FvUpdater::InstallUpdate()
-{
-	qDebug() << "Install update";
-	if(m_proposedUpdate==NULL)
-	{
-		qWarning() << "Abort Update: No update prososed! This should not happen.";
-		return;
-	}
-
-	//showUpdateConfirmationDialogUpdatedWithCurrentUpdateProposal();
-	// Prepare download
-	QUrl url = m_proposedUpdate->getEnclosureUrl();
-
-	// Check SSL Fingerprint if required
-	if(url.scheme()=="https" && !m_requiredSslFingerprint.isEmpty())
-		if( !checkSslFingerPrint(url) )	// check failed
-		{	
-			qWarning() << "Update aborted.";
-			return;
-		}
-
-    ///remove below
-    QNetworkAccessManager m_qnam;
-
-	// Start Download
-	QNetworkReply* reply = m_qnam.get(QNetworkRequest(url));
-	connect(reply, SIGNAL(finished()), this, SLOT(httpUpdateDownloadFinished()));
-
-	// Maybe Check request 's return value
-	if (reply->error() != QNetworkReply::NoError)
-	{
-		qDebug()<<"Unable to download the update: "<<reply->errorString();
-		return;
-	}
-	else
-		qDebug()<<"OK";
-
-	// Show download Window
-#ifdef FV_GUI
-	dlwindow = new UpdateDownloadProgress;
-	connect(reply, SIGNAL(downloadProgress(qint64, qint64)), dlwindow, SLOT(downloadProgress(qint64, qint64) ));
-	connect(&m_qnam, SIGNAL(finished(QNetworkReply*)), dlwindow, SLOT(close()));
-	//dlwindow->show();
-#endif
-	emit (updatedFinishedSuccessfully());
-
-
-#ifdef FV_GUI
-	hideUpdaterWindow();
-#endif
-}
 
 void FvUpdater::httpUpdateDownloadFinished()
 {
@@ -433,125 +372,6 @@ void FvUpdater::UpdateInstallationNotConfirmed()
 
 
 
-bool FvUpdater::searchDownloadedFeedForUpdates(QString xmlTitle,
-											   QString xmlLink,
-											   QString xmlReleaseNotesLink,
-											   QString xmlPubDate,
-											   QString xmlEnclosureUrl,
-											   QString xmlEnclosureVersion,
-											   QString xmlEnclosurePlatform,
-											   unsigned long xmlEnclosureLength,
-											   QString xmlEnclosureType)
-{
-    qDebug() << "Title:" << xmlTitle;
-    qDebug() << "Link:" << xmlLink;
-    qDebug() << "Release notes link:" << xmlReleaseNotesLink;
-    qDebug() << "Pub. date:" << xmlPubDate;
-    qDebug() << "Enclosure URL:" << xmlEnclosureUrl;
-    qDebug() << "Enclosure version:" << xmlEnclosureVersion;
-    qDebug() << "Enclosure platform:" << xmlEnclosurePlatform;
-    qDebug() << "Enclosure length:" << xmlEnclosureLength;
-    qDebug() << "Enclosure type:" << xmlEnclosureType;
-
-	// Validate
-	if (xmlReleaseNotesLink.isEmpty()) {
-		if (xmlLink.isEmpty()) {
-			showErrorDialog(tr("Feed error: \"release notes\" link is empty"), false);
-			return false;
-		} else {
-			xmlReleaseNotesLink = xmlLink;
-		}
-	} else {
-		xmlLink = xmlReleaseNotesLink;
-	}
-	if (! (xmlLink.startsWith("http://") || xmlLink.startsWith("https://"))) {
-		showErrorDialog(tr("Feed error: invalid \"release notes\" link"), false);
-		return false;
-	}
-	if (xmlEnclosureUrl.isEmpty() || xmlEnclosureVersion.isEmpty() || xmlEnclosurePlatform.isEmpty()) {
-		showErrorDialog(tr("Feed error: invalid \"enclosure\" with the download link"), false);
-		return false;
-	}
-
-	// Relevant version?
-	if (FVIgnoredVersions::VersionIsIgnored(xmlEnclosureVersion)) {
-		qDebug() << "Version '" << xmlEnclosureVersion << "' is ignored, too old or something like that.";
-
-		showInformationDialog(tr("No updates were found."), false);
-
-		return true;	// Things have succeeded when you think of it.
-	}
-
-
-	//
-	// Success! At this point, we have found an update that can be proposed
-	// to the user.
-	//
-
-	if (m_proposedUpdate) {
-		delete m_proposedUpdate; m_proposedUpdate = 0;
-	}
-	m_proposedUpdate = new UpdateFileData();
-	m_proposedUpdate->setTitle(xmlTitle);
-	m_proposedUpdate->setReleaseNotesLink(xmlReleaseNotesLink);
-	m_proposedUpdate->setPubDate(xmlPubDate);
-	m_proposedUpdate->setEnclosureUrl(xmlEnclosureUrl);
-	m_proposedUpdate->setEnclosureVersion(xmlEnclosureVersion);
-	m_proposedUpdate->setEnclosurePlatform(xmlEnclosurePlatform);
-	m_proposedUpdate->setEnclosureLength(xmlEnclosureLength);
-	m_proposedUpdate->setEnclosureType(xmlEnclosureType);
-
-#ifdef FV_GUI
-	// Show "look, there's an update" window
-	showUpdaterWindowUpdatedWithCurrentUpdateProposal();
-#else
-	// Decide ourselves what to do
-	decideWhatToDoWithCurrentUpdateProposal();
-#endif
-
-	return true;
-}
-
-
-void FvUpdater::showErrorDialog(QString message, bool showEvenInSilentMode)
-{
-	if (m_silentAsMuchAsItCouldGet) {
-		if (! showEvenInSilentMode) {
-			// Don't show errors in the silent mode
-			return;
-		}
-	}
-
-#ifdef FV_GUI
-	QMessageBox dlFailedMsgBox;
-	dlFailedMsgBox.setIcon(QMessageBox::Critical);
-	dlFailedMsgBox.setText(tr("Error"));
-	dlFailedMsgBox.setInformativeText(message);
-	dlFailedMsgBox.exec();
-#else
-	qCritical() << message;
-#endif
-}
-
-void FvUpdater::showInformationDialog(QString message, bool showEvenInSilentMode)
-{
-	if (m_silentAsMuchAsItCouldGet) {
-		if (! showEvenInSilentMode) {
-			// Don't show information dialogs in the silent mode
-			return;
-		}
-	}
-
-#ifdef FV_GUI
-	QMessageBox dlInformationMsgBox;
-	dlInformationMsgBox.setIcon(QMessageBox::Information);
-	dlInformationMsgBox.setText(tr("Information"));
-	dlInformationMsgBox.setInformativeText(message);
-	dlInformationMsgBox.exec();
-#else
-	qDebug() << message;
-#endif
-}
 
 void FvUpdater::finishUpdate(QString pathToFinish)
 {

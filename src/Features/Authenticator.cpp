@@ -5,7 +5,7 @@
 #include <QAuthenticator>
 #include <QNetworkReply>
 
-Authenticator::Authenticator()
+Authenticator::Authenticator(UpdaterWindow* window) : d(window)
 {
     htAuthUsername = "";
 	htAuthPassword = "";

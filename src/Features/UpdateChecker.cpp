@@ -65,3 +65,5 @@ bool UpdateChecker::CheckForUpdatesNotSilent()
 	return CheckForUpdates(false);
 }
 
+
+

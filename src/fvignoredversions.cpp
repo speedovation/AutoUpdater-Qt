@@ -14,7 +14,7 @@ QObject(parent)
 	// noop
 }
 
-bool FVIgnoredVersions::VersionIsIgnored(QString version)
+bool FVIgnoredVersions::isVersionIgnored(QString version)
 {
 	// We assume that variable 'version' contains either:
 	//	1) The current version of the application (ignore)

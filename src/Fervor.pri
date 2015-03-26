@@ -33,7 +33,8 @@ SOURCES += \
     $$PWD/Features/Authenticator.cpp \
     $$PWD/Features/UpdateChecker.cpp \
     $$PWD/Features/GetUpdate.cpp \
-    $$PWD/Features/ParseUpdate.cpp
+    $$PWD/Features/ParseUpdate.cpp \
+    $$PWD/Features/MessageDialogs.cpp
 
 HEADERS += \
         $$PWD/fvupdater.h \
@@ -49,7 +50,8 @@ HEADERS += \
     $$PWD/Features/Authenticator.h \
     $$PWD/Features/UpdateChecker.h \
     $$PWD/Features/GetUpdate.h \
-    $$PWD/Features/ParseUpdate.h
+    $$PWD/Features/ParseUpdate.h \
+    $$PWD/Features/MessageDialogs.h
 
 
 FORMS += \

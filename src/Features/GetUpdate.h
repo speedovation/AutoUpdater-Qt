@@ -4,6 +4,8 @@
 #include <QObject>
 
 class UpdaterWindow;
+class UpdateFileData;
+class UpdateDownloadProgress;
 
 QT_BEGIN_NAMESPACE
 class QNetworkReply;
@@ -41,6 +43,22 @@ class GetUpdate : public QObject
         bool getSkipVersionAllowed();
         bool getRemindLaterAllowed();
 
+        UpdateFileData* GetProposedUpdate();
+
+
+        bool searchDownloadedFeedForUpdates(QString xmlTitle,
+                                            QString xmlLink,
+                                            QString xmlReleaseNotesLink,
+                                            QString xmlPubDate,
+                                            QString xmlEnclosureUrl,
+                                            QString xmlEnclosureVersion,
+                                            QString xmlEnclosurePlatform,
+                                            unsigned long xmlEnclosureLength,
+                                            QString xmlEnclosureType);
+
+
+        	void InstallUpdate();
+
     public slots:
         void httpFeedReadyRead();
         void httpFeedUpdateDataReadProgress(qint64 bytesRead,
@@ -62,6 +80,15 @@ class GetUpdate : public QObject
         bool m_silentAsMuchAsItCouldGet;
 
 
+        // Available update (NULL if not fetched)
+        UpdateFileData* m_proposedUpdate;
+
+
+
+
+
+
+        UpdateDownloadProgress* dlwindow;
 
 
 

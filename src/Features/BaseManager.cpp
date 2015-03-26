@@ -2,11 +2,7 @@
 
 #include "UpdaterWindow.h"
 
-#include "GetReleaseNotes.h"
-#include "GetUpdate.h"
-#include "ParseUpdate.h"
-#include "UpdateChecker.h"
-#include "Authenticator.h"
+
 
 BaseManager::BaseManager(UpdaterWindow* window) :
     QObject(window) , d(window)
@@ -16,6 +12,7 @@ BaseManager::BaseManager(UpdaterWindow* window) :
     _updateChecker = new UpdateChecker(window);
     _parseUpdate = new ParseUpdate(window);
     _getUpdate = new GetUpdate(window);
+    _messageDialogs = new MessageDialogs(window);
 
 }
 
@@ -38,4 +35,8 @@ ParseUpdate* BaseManager::parseUpdate()
 GetUpdate* BaseManager::getUpdate()
 {
     return _getUpdate;
+}
+MessageDialogs* BaseManager::messageDialogs()
+{
+    return _messageDialogs;
 }

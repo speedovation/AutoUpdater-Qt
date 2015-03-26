@@ -14,7 +14,7 @@ class Authenticator : public QObject
 {
         Q_OBJECT
     public:
-        Authenticator();
+        Authenticator(UpdaterWindow *window);
         ~Authenticator();
 
         // HTTP Authentuication - for security reasons no getters are provided, only a setter
@@ -27,6 +27,7 @@ class Authenticator : public QObject
         void authenticationRequired ( QNetworkReply * reply, QAuthenticator * authenticator );
 
     private:
+        UpdaterWindow *d;
         //
         // Htauth-Infrastructure
         //
