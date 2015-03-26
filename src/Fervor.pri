@@ -25,7 +25,7 @@ SOURCES += \
         $$PWD/fvversioncomparator.cpp \
         $$PWD/fvplatform.cpp \
         $$PWD/fvignoredversions.cpp \
-        $$PWD/fvupdateconfirmdialog.cpp \
+#        $$PWD/fvupdateconfirmdialog.cpp \
         $$PWD/fvavailableupdate.cpp \
         $$PWD/fvupdatedownloadprogress.cpp \
 
@@ -35,14 +35,14 @@ HEADERS += \
         $$PWD/fvversioncomparator.h \
         $$PWD/fvplatform.h \
         $$PWD/fvignoredversions.h \
-        $$PWD/fvupdateconfirmdialog.h \
+#        $$PWD/fvupdateconfirmdialog.h \
         $$PWD/fvavailableupdate.h \
         $$PWD/fvupdatedownloadprogress.h \
 
 
 FORMS += \
         $$PWD/fvupdatewindow.ui \
-        $$PWD/fvupdateconfirmdialog.ui \
+#        $$PWD/fvupdateconfirmdialog.ui \
         $$PWD/fvupdatedownloadprogress.ui \
 
 fervor_gui {

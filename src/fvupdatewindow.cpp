@@ -38,7 +38,7 @@ FvUpdateWindow::FvUpdateWindow(QWidget *parent, bool skipVersionAllowed, bool re
 
 FvUpdateWindow::~FvUpdateWindow()
 {
-	m_ui->releaseNotesWebView->stop();
+//	m_ui->releaseNotesWebView->stop();
 	delete m_ui;
 }
 
@@ -53,8 +53,11 @@ bool FvUpdateWindow::UpdateWindowWithCurrentProposedUpdate()
 			.arg(QApplication::applicationName(), proposedUpdate->GetEnclosureVersion(), QApplication::applicationVersion());
 	m_ui->wouldYouLikeToDownloadLabel->setText(downloadString);
 
-	m_ui->releaseNotesWebView->stop();
-	m_ui->releaseNotesWebView->load(proposedUpdate->GetReleaseNotesLink());
+    //Get change notes from download link and set it inside
+    //m_ui->releaseNotes
+
+//	m_ui->releaseNotesWebView->stop();
+//	m_ui->releaseNotesWebView->load(proposedUpdate->GetReleaseNotesLink());
 
 	return true;
 }
@@ -64,3 +67,5 @@ void FvUpdateWindow::closeEvent(QCloseEvent* event)
 	///FvUpdater::sharedUpdater()->updaterWindowWasClosed();
 	event->accept();
 }
+
+

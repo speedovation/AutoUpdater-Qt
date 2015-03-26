@@ -3,7 +3,7 @@
 
 
 FvUpdateDownloadProgress::FvUpdateDownloadProgress(QWidget *parent)
-	: QWidget(parent, Qt::SplashScreen) ,
+	: QWidget(parent) ,
       	ui(new Ui::FvUpdateDownloadProgress)
 {
 	ui->setupUi(this);

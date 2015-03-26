@@ -52,21 +52,19 @@
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_7">
         <item>
-         <widget class="QWebView" name="releaseNotesWebView">
-          <property name="minimumSize">
-           <size>
-            <width>160</width>
-            <height>80</height>
-           </size>
-          </property>
-          <property name="url">
-           <url>
-            <string>about:blank</string>
-           </url>
-          </property>
-         </widget>
+         <widget class="QTextEdit" name="releaseNotes"/>
         </item>
        </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="FvUpdateDownloadProgress" name="widget" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>24</height>
+        </size>
+       </property>
       </widget>
      </item>
      <item>
@@ -119,9 +117,10 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QWebView</class>
+   <class>FvUpdateDownloadProgress</class>
    <extends>QWidget</extends>
-   <header>QtWebKit/QWebView</header>
+   <header>fvupdatedownloadprogress.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
