@@ -1,6 +1,7 @@
 #include "fvupdater.h"
 #include "fvupdatewindow.h"
 #include "fvupdateconfirmdialog.h"
+#include "fvupdatedownloadprogress.h"
 #include "fvplatform.h"
 #include "fvignoredversions.h"
 #include "fvavailableupdate.h"
@@ -234,7 +235,7 @@ void FvUpdater::InstallUpdate()
 
 	// Show download Window
 #ifdef FV_GUI
-	FvUpdateDownloadProgress* dlwindow = new FvUpdateDownloadProgress(NULL);
+	dlwindow = new FvUpdateDownloadProgress;
 	connect(reply, SIGNAL(downloadProgress(qint64, qint64)), dlwindow, SLOT(downloadProgress(qint64, qint64) ));
 	connect(&m_qnam, SIGNAL(finished(QNetworkReply*)), dlwindow, SLOT(close()));
 	dlwindow->show();
@@ -467,7 +468,7 @@ void FvUpdater::UpdateInstallationNotConfirmed()
 {
 	qDebug() << "Do not confirm update installation";
 
-	//hideUpdateConfirmationDialog();	// if any; shouldn't be shown at this point, but who knows
+	hideUpdateConfirmationDialog();	// if any; shouldn't be shown at this point, but who knows
 	// leave the "update proposal window" inact
 }
 bool FvUpdater::CheckForUpdates(bool silentAsMuchAsItCouldGet)
@@ -729,10 +730,6 @@ bool FvUpdater::searchDownloadedFeedForUpdates(QString xmlTitle,
     qDebug() << "Enclosure platform:" << xmlEnclosurePlatform;
     qDebug() << "Enclosure length:" << xmlEnclosureLength;
     qDebug() << "Enclosure type:" << xmlEnclosureType;
-	Q_UNUSED(xmlTitle);
-	Q_UNUSED(xmlPubDate);
-	Q_UNUSED(xmlEnclosureLength);
-	Q_UNUSED(xmlEnclosureType);
 
 	// Validate
 	if (xmlReleaseNotesLink.isEmpty()) {

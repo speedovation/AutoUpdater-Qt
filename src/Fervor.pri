@@ -3,7 +3,7 @@ contains(QT_VERSION, ^5\\.[0-9]\\..*){
     win32:INCLUDEPATH += $$[QT_INSTALL_PREFIX]/include/QtZlib
 }else{
     #QT += core gui webkit network
-    QT += core webkit network
+    QT += core network
     fervor_gui {
         DEFINES += FV_GUI
         QT += gui
@@ -12,6 +12,7 @@ contains(QT_VERSION, ^5\\.[0-9]\\..*){
 }
 DEFINES += FV_APP_NAME=\\\"$$TARGET\\\"
 DEFINES += FV_APP_VERSION=\\\"$$VERSION\\\"
+DEFINES += FV_GUI=\\\"true\\\"
 
 
 
@@ -26,6 +27,7 @@ SOURCES += \
         $$PWD/fvignoredversions.cpp \
         $$PWD/fvupdateconfirmdialog.cpp \
         $$PWD/fvavailableupdate.cpp \
+        $$PWD/fvupdatedownloadprogress.cpp \
 
 HEADERS += \
         $$PWD/fvupdatewindow.h \
@@ -35,11 +37,13 @@ HEADERS += \
         $$PWD/fvignoredversions.h \
         $$PWD/fvupdateconfirmdialog.h \
         $$PWD/fvavailableupdate.h \
+        $$PWD/fvupdatedownloadprogress.h \
 
 
 FORMS += \
         $$PWD/fvupdatewindow.ui \
         $$PWD/fvupdateconfirmdialog.ui \
+        $$PWD/fvupdatedownloadprogress.ui \
 
 fervor_gui {
 

@@ -10,6 +10,7 @@ class QNetworkReply;
 class FvUpdateWindow;
 class FvUpdateConfirmDialog;
 class FvAvailableUpdate;
+class FvUpdateDownloadProgress;
 
 
 class FvUpdater : public QObject
@@ -87,6 +88,7 @@ private:
 
 	static FvUpdater* m_Instance;			// Singleton instance
 
+    FvUpdateDownloadProgress* dlwindow;
 
 	//
 	// Windows / dialogs

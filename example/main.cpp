@@ -17,9 +17,9 @@ int main(int argc, char *argv[])
     QApplication::setApplicationVersion("1.0");
 
 	// Set feed URL before doing anything else
-	FvUpdater::sharedUpdater()->SetFeedURL("https://www.dannhauer.de/swupdates/appcast_fervor.xml");
-    FvUpdater::sharedUpdater()->setRequiredSslFingerPrint("d7e0f2fc899f5ec4456300c7061ff1da");	// Optional
-	FvUpdater::sharedUpdater()->setHtAuthCredentials("swupdates", "updatepw");	// Optional
+	FvUpdater::sharedUpdater()->SetFeedURL("http://kiwi.po/update.xml");
+//    FvUpdater::sharedUpdater()->setRequiredSslFingerPrint("6c673fd7ca385089b3aff75e9f8ae8c0");	// Optional
+//	FvUpdater::sharedUpdater()->setHtAuthCredentials("swupdates", "updatepw");	// Optional
     FvUpdater::sharedUpdater()->setSkipVersionAllowed(false);	// Optional
     FvUpdater::sharedUpdater()->setRemindLaterAllowed(false);	// Optional
 	// Finish Up old Updates

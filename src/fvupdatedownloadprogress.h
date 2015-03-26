@@ -2,7 +2,11 @@
 #define FVUPDATEDOWNLOADPROGRESS_H
 
 #include <QWidget>
-#include "ui_fvupdatedownloadprogress.h"
+
+
+namespace Ui {
+class FvUpdateDownloadProgress;
+}
 
 class FvUpdateDownloadProgress : public QWidget
 {
@@ -17,7 +21,7 @@ public slots:
 	void close();
 
 private:
-	Ui::FvUpdateDownloadProgress ui;
+	Ui::FvUpdateDownloadProgress* ui;
 };
 
 #endif // FVUPDATEDOWNLOADPROGRESS_H
