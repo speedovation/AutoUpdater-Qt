@@ -20,7 +20,6 @@ DEPENDPATH += "$$PWD"
 INCLUDEPATH += "$$PWD"
 
 SOURCES += \
-        $$PWD/fvupdatewindow.cpp \
         $$PWD/fvupdater.cpp \
         $$PWD/fvversioncomparator.cpp \
         $$PWD/fvplatform.cpp \
@@ -28,9 +27,11 @@ SOURCES += \
 #        $$PWD/fvupdateconfirmdialog.cpp \
         $$PWD/fvavailableupdate.cpp \
         $$PWD/fvupdatedownloadprogress.cpp \
+    $$PWD/features/GetReleaseNotes.cpp \
+    $$PWD/features/BaseManager.cpp \
+    $$PWD/UpdaterWindow.cpp
 
 HEADERS += \
-        $$PWD/fvupdatewindow.h \
         $$PWD/fvupdater.h \
         $$PWD/fvversioncomparator.h \
         $$PWD/fvplatform.h \
@@ -38,25 +39,27 @@ HEADERS += \
 #        $$PWD/fvupdateconfirmdialog.h \
         $$PWD/fvavailableupdate.h \
         $$PWD/fvupdatedownloadprogress.h \
+    $$PWD/features/GetReleaseNotes.h \
+    $$PWD/features/BaseManager.h \
+    $$PWD/UpdaterWindow.h
 
 
 FORMS += \
-        $$PWD/fvupdatewindow.ui \
 #        $$PWD/fvupdateconfirmdialog.ui \
         $$PWD/fvupdatedownloadprogress.ui \
+    $$PWD/UpdaterWindow.ui
 
 fervor_gui {
 
     SOURCES += \
-            $$PWD/fvupdatewindow.cpp \
             $$PWD/fvupdatedownloadprogress.cpp \
 
 TRANSLATIONS += $$PWD/fervor_lt.ts
 
-HEADERS += $$PWD/fvupdatewindow.h \
+HEADERS += \
             $$PWD/fvupdatedownloadprogress.h
 
-FORMS += $$PWD/fvupdatewindow.ui \
+FORMS += \
             $$PWD/fvupdatedownloadprogress.ui
 }
 

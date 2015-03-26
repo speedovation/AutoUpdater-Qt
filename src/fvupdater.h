@@ -7,7 +7,7 @@
 #include <QUrl>
 #include <QXmlStreamReader>
 class QNetworkReply;
-class FvUpdateWindow;
+class UpdaterWindow;
 class FvUpdateConfirmDialog;
 class FvAvailableUpdate;
 class FvUpdateDownloadProgress;
@@ -59,7 +59,7 @@ public slots:
 
 protected:
 
-	friend class FvUpdateWindow;		// Uses GetProposedUpdate() and others
+	friend class UpdaterWindow;		// Uses GetProposedUpdate() and others
 	friend class FvUpdateConfirmDialog;	// Uses GetProposedUpdate() and others
 	FvAvailableUpdate* GetProposedUpdate();
 
@@ -94,7 +94,7 @@ private:
 	// Windows / dialogs
 	//
 #ifdef FV_GUI
-	FvUpdateWindow* m_updaterWindow;								// Updater window (NULL if not shown)
+	UpdaterWindow* m_updaterWindow;								// Updater window (NULL if not shown)
 	void showUpdaterWindowUpdatedWithCurrentUpdateProposal();		// Show updater window
 	void hideUpdaterWindow();										// Hide + destroy m_updaterWindow
 	void updaterWindowWasClosed();									// Sent by the updater window when it gets closed

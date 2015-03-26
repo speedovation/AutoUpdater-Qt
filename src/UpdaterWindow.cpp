@@ -1,15 +1,17 @@
-#include "fvupdatewindow.h"
-#include "ui_fvupdatewindow.h"
+#include "UpdaterWindow.h"
+#include "ui_UpdaterWindow.h"
+
 #include "fvupdater.h"
 #include "fvavailableupdate.h"
+
 #include <QApplication>
 #include <QCloseEvent>
 #include <QDebug>
 
 
-FvUpdateWindow::FvUpdateWindow(QWidget *parent, bool skipVersionAllowed, bool remindLaterAllowed) :
+UpdaterWindow::UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remindLaterAllowed) :
 	QWidget(parent, Qt::CustomizeWindowHint),
-	m_ui(new Ui::FvUpdateWindow)
+	m_ui(new Ui::UpdaterWindow)
 {
 	m_ui->setupUi(this);
 
@@ -36,13 +38,13 @@ FvUpdateWindow::FvUpdateWindow(QWidget *parent, bool skipVersionAllowed, bool re
 			FvUpdater::sharedUpdater(), SLOT(RemindMeLater()));
 }
 
-FvUpdateWindow::~FvUpdateWindow()
+UpdaterWindow::~UpdaterWindow()
 {
 //	m_ui->releaseNotesWebView->stop();
 	delete m_ui;
 }
 
-bool FvUpdateWindow::UpdateWindowWithCurrentProposedUpdate()
+bool UpdaterWindow::UpdateWindowWithCurrentProposedUpdate()
 {
 	FvAvailableUpdate* proposedUpdate = FvUpdater::sharedUpdater()->GetProposedUpdate();
 	if (! proposedUpdate) {
@@ -62,7 +64,7 @@ bool FvUpdateWindow::UpdateWindowWithCurrentProposedUpdate()
 	return true;
 }
 
-void FvUpdateWindow::closeEvent(QCloseEvent* event)
+void UpdaterWindow::closeEvent(QCloseEvent* event)
 {
 	///FvUpdater::sharedUpdater()->updaterWindowWasClosed();
 	event->accept();

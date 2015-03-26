@@ -1,5 +1,5 @@
 #include "fvupdater.h"
-#include "fvupdatewindow.h"
+#include "UpdaterWindow.h"
 #include "fvupdateconfirmdialog.h"
 #include "fvupdatedownloadprogress.h"
 #include "fvplatform.h"
@@ -19,7 +19,7 @@
 #endif
 
 #ifdef FV_GUI
-#include "fvupdatewindow.h"
+#include "UpdaterWindow.h"
 #include "fvupdatedownloadprogress.h"
 #include <QMessageBox>
 #include <QDesktopServices>
@@ -123,7 +123,7 @@ void FvUpdater::showUpdaterWindowUpdatedWithCurrentUpdateProposal()
 	hideUpdaterWindow();
 
 	// Create a new window
-	m_updaterWindow = new FvUpdateWindow(NULL, skipVersionAllowed, remindLaterAllowed);
+	m_updaterWindow = new UpdaterWindow(NULL, skipVersionAllowed, remindLaterAllowed);
 	m_updaterWindow->UpdateWindowWithCurrentProposedUpdate();
 	m_updaterWindow->show();
 }
@@ -153,9 +153,9 @@ void FvUpdater::showUpdateConfirmationDialogUpdatedWithCurrentUpdateProposal()
 	hideUpdateConfirmationDialog();
 
 	// Create a new window
-	m_updateConfirmationDialog = new FvUpdateConfirmDialog();
-	m_updateConfirmationDialog->UpdateWindowWithCurrentProposedUpdate();
-	m_updateConfirmationDialog->show();
+///	m_updateConfirmationDialog = new FvUpdateConfirmDialog();
+///	m_updateConfirmationDialog->UpdateWindowWithCurrentProposedUpdate();
+///	m_updateConfirmationDialog->show();
 }
 
 void FvUpdater::hideUpdateConfirmationDialog()
@@ -238,10 +238,10 @@ void FvUpdater::InstallUpdate()
 	dlwindow = new FvUpdateDownloadProgress;
 	connect(reply, SIGNAL(downloadProgress(qint64, qint64)), dlwindow, SLOT(downloadProgress(qint64, qint64) ));
 	connect(&m_qnam, SIGNAL(finished(QNetworkReply*)), dlwindow, SLOT(close()));
-	dlwindow->show();
+	//dlwindow->show();
 #endif
-
 	emit (updatedFinishedSuccessfully());
+
 
 #ifdef FV_GUI
 	hideUpdaterWindow();
