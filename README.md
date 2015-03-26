@@ -12,9 +12,9 @@ Let's see what I can do. Stay tuned. :)
 
 ### Components
 
-A seperate updater app would be best instead of adding in app itself.
+A separate updater app would be best instead of adding in app itself.
 
-* Updater : Seperate executable.
+* Updater : Separate executable.
 * Updater's handler : Connecting app and updater. Launch updater whenever required. 
 
 
