@@ -1,14 +1,14 @@
-#include "fvplatform.h"
+#include "Platform.h"
 #include <QtGlobal>
 #include <QDebug>
 
-FvPlatform::FvPlatform(QObject *parent) :
+Platform::Platform(QObject *parent) :
 	QObject(parent)
 {
 	// noop
 }
 
-bool FvPlatform::CurrentlyRunningOnPlatform(QString platform)
+bool Platform::isCurrentOsSupported(QString platform)
 {
 	platform = platform.toUpper().trimmed();
 	if (platform.isEmpty()) {

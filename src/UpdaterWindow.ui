@@ -58,7 +58,7 @@
       </widget>
      </item>
      <item>
-      <widget class="FvUpdateDownloadProgress" name="widget" native="true">
+      <widget class="UpdateDownloadProgress" name="widget" native="true">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -117,9 +117,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>FvUpdateDownloadProgress</class>
+   <class>UpdateDownloadProgress</class>
    <extends>QWidget</extends>
-   <header>fvupdatedownloadprogress.h</header>
+   <header>Partials/UpdateDownloadProgress.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

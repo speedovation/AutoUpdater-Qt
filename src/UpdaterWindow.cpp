@@ -2,7 +2,7 @@
 #include "ui_UpdaterWindow.h"
 
 #include "fvupdater.h"
-#include "fvavailableupdate.h"
+#include "UpdateFileData/UpdateFileData.h"
 
 #include <QApplication>
 #include <QCloseEvent>
@@ -30,12 +30,12 @@ UpdaterWindow::UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remi
 	m_ui->newVersionIsAvailableLabel->setText(newVersString);
 
 	// Connect buttons
-	connect(m_ui->installUpdateButton, SIGNAL(clicked()),
-			FvUpdater::sharedUpdater(), SLOT(InstallUpdate()));
-	connect(m_ui->skipThisVersionButton, SIGNAL(clicked()),
-			FvUpdater::sharedUpdater(), SLOT(SkipUpdate()));
-	connect(m_ui->remindMeLaterButton, SIGNAL(clicked()),
-			FvUpdater::sharedUpdater(), SLOT(RemindMeLater()));
+///	connect(m_ui->installUpdateButton, SIGNAL(clicked()),
+///			FvUpdater::sharedUpdater(), SLOT(InstallUpdate()));
+///	connect(m_ui->skipThisVersionButton, SIGNAL(clicked()),
+///			FvUpdater::sharedUpdater(), SLOT(SkipUpdate()));
+///	connect(m_ui->remindMeLaterButton, SIGNAL(clicked()),
+///			FvUpdater::sharedUpdater(), SLOT(RemindMeLater()));
 }
 
 UpdaterWindow::~UpdaterWindow()
@@ -46,17 +46,17 @@ UpdaterWindow::~UpdaterWindow()
 
 bool UpdaterWindow::UpdateWindowWithCurrentProposedUpdate()
 {
-	FvAvailableUpdate* proposedUpdate = FvUpdater::sharedUpdater()->GetProposedUpdate();
-	if (! proposedUpdate) {
-		return false;
-	}
+	///UpdateFileData* proposedUpdate = FvUpdater::sharedUpdater()->GetProposedUpdate();
+	///if (! proposedUpdate) {
+	///	return false;
+	///}
 
-	QString downloadString = m_ui->wouldYouLikeToDownloadLabel->text()
-			.arg(QApplication::applicationName(), proposedUpdate->GetEnclosureVersion(), QApplication::applicationVersion());
-	m_ui->wouldYouLikeToDownloadLabel->setText(downloadString);
+	///QString downloadString = m_ui->wouldYouLikeToDownloadLabel->text()
+///			.arg(QApplication::applicationName(), proposedUpdate->getEnclosureVersion(), QApplication::applicationVersion());
+	///m_ui->wouldYouLikeToDownloadLabel->setText(downloadString);
 
-    //Get change notes from download link and set it inside
-    //m_ui->releaseNotes
+    ///Get change notes from download link and set it inside
+    ///m_ui->releaseNotes
 
 //	m_ui->releaseNotesWebView->stop();
 //	m_ui->releaseNotesWebView->load(proposedUpdate->GetReleaseNotesLink());

@@ -22,32 +22,34 @@ INCLUDEPATH += "$$PWD"
 SOURCES += \
         $$PWD/fvupdater.cpp \
         $$PWD/fvversioncomparator.cpp \
-        $$PWD/fvplatform.cpp \
         $$PWD/fvignoredversions.cpp \
 #        $$PWD/fvupdateconfirmdialog.cpp \
-        $$PWD/fvavailableupdate.cpp \
-        $$PWD/fvupdatedownloadprogress.cpp \
-    $$PWD/features/GetReleaseNotes.cpp \
-    $$PWD/features/BaseManager.cpp \
-    $$PWD/UpdaterWindow.cpp
+        $$PWD/Features/GetReleaseNotes.cpp \
+        $$PWD/Features/BaseManager.cpp \
+        $$PWD/UpdaterWindow.cpp \
+        $$PWD/UpdateFileData/UpdateFileData.cpp \
+    $$PWD/Platform.cpp \
+    $$PWD/Partials/UpdateDownloadProgress.cpp \
+    $$PWD/Features/Authenticator.cpp
 
 HEADERS += \
         $$PWD/fvupdater.h \
         $$PWD/fvversioncomparator.h \
-        $$PWD/fvplatform.h \
         $$PWD/fvignoredversions.h \
 #        $$PWD/fvupdateconfirmdialog.h \
-        $$PWD/fvavailableupdate.h \
-        $$PWD/fvupdatedownloadprogress.h \
-    $$PWD/features/GetReleaseNotes.h \
-    $$PWD/features/BaseManager.h \
-    $$PWD/UpdaterWindow.h
+        $$PWD/Features/GetReleaseNotes.h \
+        $$PWD/Features/BaseManager.h \
+        $$PWD/UpdaterWindow.h \
+        $$PWD/UpdateFileData/UpdateFileData.h \
+    $$PWD/Platform.h \
+    $$PWD/Partials/UpdateDownloadProgress.h \
+    $$PWD/Features/Authenticator.h
 
 
 FORMS += \
 #        $$PWD/fvupdateconfirmdialog.ui \
-        $$PWD/fvupdatedownloadprogress.ui \
-    $$PWD/UpdaterWindow.ui
+    $$PWD/UpdaterWindow.ui \
+    $$PWD/Partials/UpdateDownloadProgress.ui
 
 fervor_gui {
 

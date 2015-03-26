@@ -14,8 +14,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
 
 	// Connect the "check for updates manually" button with the autoupdater
-	connect(ui->updateButton, SIGNAL(clicked()),
-			FvUpdater::sharedUpdater(), SLOT(CheckForUpdatesNotSilent()));
+	///connect(ui->updateButton, SIGNAL(clicked()),
+	///		FvUpdater::sharedUpdater(), SLOT(CheckForUpdatesNotSilent()));
 
 	ui->label->setText( tr("Version %1").arg(QApplication::applicationVersion()) );
 }

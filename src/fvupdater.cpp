@@ -1,10 +1,10 @@
 #include "fvupdater.h"
 #include "UpdaterWindow.h"
 #include "fvupdateconfirmdialog.h"
-#include "fvupdatedownloadprogress.h"
-#include "fvplatform.h"
+#include "Partials/UpdateDownloadProgress.h"
+#include "UpdateFileData/UpdateFileData.h"
+#include "Platform.h"
 #include "fvignoredversions.h"
-#include "fvavailableupdate.h"
 #include <QApplication>
 #include <QtNetwork>
 #include <QDebug>
@@ -20,7 +20,6 @@
 
 #ifdef FV_GUI
 #include "UpdaterWindow.h"
-#include "fvupdatedownloadprogress.h"
 #include <QMessageBox>
 #include <QDesktopServices>
 #else
@@ -35,32 +34,7 @@
 
 //extern QSettings* settings;
 
-FvUpdater* FvUpdater::m_Instance = 0;
 
-FvUpdater* FvUpdater::sharedUpdater()
-{
-	static QMutex mutex;
-	if (! m_Instance) {
-		mutex.lock();
-
-		if (! m_Instance) {
-			m_Instance = new FvUpdater;
-		}
-
-		mutex.unlock();
-	}
-
-	return m_Instance;
-}
-
-void FvUpdater::drop()
-{
-	static QMutex mutex;
-	mutex.lock();
-	delete m_Instance;
-	m_Instance = 0;
-	mutex.unlock();
-}
 
 FvUpdater::FvUpdater() : QObject(0)
 {
@@ -71,12 +45,13 @@ FvUpdater::FvUpdater() : QObject(0)
 #endif
 	m_proposedUpdate = 0;
 	m_requiredSslFingerprint = "";
-	htAuthUsername = "";
-	htAuthPassword = "";
+
 	skipVersionAllowed = true;
 	remindLaterAllowed = true;
 
-	connect(&m_qnam, SIGNAL(authenticationRequired(QNetworkReply*, QAuthenticator*)),this, SLOT(authenticationRequired(QNetworkReply*, QAuthenticator*)));
+    /// Use Manager and connect
+	///connect(&m_qnam, SIGNAL(authenticationRequired(QNetworkReply*, QAuthenticator*)),
+    ///        this, SLOT(authenticationRequired(QNetworkReply*, QAuthenticator*)));
 
 	// Translation mechanism
 	installTranslator();
@@ -108,10 +83,6 @@ void FvUpdater::installTranslator()
 	QTranslator translator;
 	QString locale = QLocale::system().name();
 	translator.load(QString("fervor_") + locale);
-
-#if QT_VERSION < 0x050000
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
-#endif
 
 	qApp->installTranslator(&translator);
 }
@@ -193,7 +164,7 @@ QString FvUpdater::GetFeedURL()
 	return m_feedURL.toString();
 }
 
-FvAvailableUpdate* FvUpdater::GetProposedUpdate()
+UpdateFileData* FvUpdater::GetProposedUpdate()
 {
 	return m_proposedUpdate;
 }
@@ -210,7 +181,7 @@ void FvUpdater::InstallUpdate()
 
 	//showUpdateConfirmationDialogUpdatedWithCurrentUpdateProposal();
 	// Prepare download
-	QUrl url = m_proposedUpdate->GetEnclosureUrl();
+	QUrl url = m_proposedUpdate->getEnclosureUrl();
 
 	// Check SSL Fingerprint if required
 	if(url.scheme()=="https" && !m_requiredSslFingerprint.isEmpty())
@@ -235,7 +206,7 @@ void FvUpdater::InstallUpdate()
 
 	// Show download Window
 #ifdef FV_GUI
-	dlwindow = new FvUpdateDownloadProgress;
+	dlwindow = new UpdateDownloadProgress;
 	connect(reply, SIGNAL(downloadProgress(qint64, qint64)), dlwindow, SLOT(downloadProgress(qint64, qint64) ));
 	connect(&m_qnam, SIGNAL(finished(QNetworkReply*)), dlwindow, SLOT(close()));
 	//dlwindow->show();
@@ -419,14 +390,14 @@ void FvUpdater::SkipUpdate()
 {
 	qDebug() << "Skip update";
 
-	FvAvailableUpdate* proposedUpdate = GetProposedUpdate();
+	UpdateFileData* proposedUpdate = GetProposedUpdate();
 	if (! proposedUpdate) {
 		qWarning() << "Proposed update is NULL (shouldn't be at this point)";
 		return;
 	}
 
 	// Start ignoring this particular version
-	FVIgnoredVersions::IgnoreVersion(proposedUpdate->GetEnclosureVersion());
+	FVIgnoredVersions::IgnoreVersion(proposedUpdate->getEnclosureVersion());
 
 #ifdef FV_GUI
 	hideUpdaterWindow();
@@ -448,14 +419,14 @@ void FvUpdater::UpdateInstallationConfirmed()
 {
 	qDebug() << "Confirm update installation";
 
-	FvAvailableUpdate* proposedUpdate = GetProposedUpdate();
+	UpdateFileData* proposedUpdate = GetProposedUpdate();
 	if (! proposedUpdate) {
 		qWarning() << "Proposed update is NULL (shouldn't be at this point)";
 		return;
 	}
 
 	// Open a link
-	if (! QDesktopServices::openUrl(proposedUpdate->GetEnclosureUrl())) {
+	if (! QDesktopServices::openUrl(proposedUpdate->getEnclosureUrl())) {
 		showErrorDialog(tr("Unable to open this link in a browser. Please do it manually."), true);
 		return;
 	}
@@ -639,7 +610,7 @@ bool FvUpdater::xmlParseFeed()
 				{
 					xmlEnclosurePlatform = attribs.value("fervor:platform").toString().trimmed();
 
-					if (FvPlatform::CurrentlyRunningOnPlatform(xmlEnclosurePlatform))
+					if (Platform::isCurrentOsSupported(xmlEnclosurePlatform))
 					{
 						xmlEnclosureUrl = attribs.hasAttribute("url") ? attribs.value("url").toString().trimmed() : "";
 				
@@ -769,15 +740,15 @@ bool FvUpdater::searchDownloadedFeedForUpdates(QString xmlTitle,
 	if (m_proposedUpdate) {
 		delete m_proposedUpdate; m_proposedUpdate = 0;
 	}
-	m_proposedUpdate = new FvAvailableUpdate();
-	m_proposedUpdate->SetTitle(xmlTitle);
-	m_proposedUpdate->SetReleaseNotesLink(xmlReleaseNotesLink);
-	m_proposedUpdate->SetPubDate(xmlPubDate);
-	m_proposedUpdate->SetEnclosureUrl(xmlEnclosureUrl);
-	m_proposedUpdate->SetEnclosureVersion(xmlEnclosureVersion);
-	m_proposedUpdate->SetEnclosurePlatform(xmlEnclosurePlatform);
-	m_proposedUpdate->SetEnclosureLength(xmlEnclosureLength);
-	m_proposedUpdate->SetEnclosureType(xmlEnclosureType);
+	m_proposedUpdate = new UpdateFileData();
+	m_proposedUpdate->setTitle(xmlTitle);
+	m_proposedUpdate->setReleaseNotesLink(xmlReleaseNotesLink);
+	m_proposedUpdate->setPubDate(xmlPubDate);
+	m_proposedUpdate->setEnclosureUrl(xmlEnclosureUrl);
+	m_proposedUpdate->setEnclosureVersion(xmlEnclosureVersion);
+	m_proposedUpdate->setEnclosurePlatform(xmlEnclosurePlatform);
+	m_proposedUpdate->setEnclosureLength(xmlEnclosureLength);
+	m_proposedUpdate->setEnclosureType(xmlEnclosureType);
 
 #ifdef FV_GUI
 	// Show "look, there's an update" window
@@ -914,37 +885,7 @@ bool FvUpdater::checkSslFingerPrint(QUrl urltoCheck)
 	return true;
 }
 
-void FvUpdater::authenticationRequired ( QNetworkReply * reply, QAuthenticator * authenticator )
-{
-	if(reply==NULL || authenticator==NULL)
-		return;
 
-	if(!authenticator->user().isEmpty())	// If there is already a login user set but an authentication is still required: credentials must be wrong -> abort
-	{
-		reply->abort();
-		qWarning()<<"Http authentication: Wrong credentials!";
-		return;
-	}
-
-	authenticator->setUser(htAuthUsername);
-	authenticator->setPassword(htAuthPassword);
-}
-
-void FvUpdater::setHtAuthCredentials(QString user, QString pass)
-{
-	htAuthUsername = user;
-	htAuthPassword = pass;
-}
-
-void FvUpdater::setHtAuthUsername(QString user)
-{
-	htAuthUsername = user;
-}
-
-void FvUpdater::setHtAuthPassword(QString pass)
-{
-	htAuthPassword = pass;
-}
 
 void FvUpdater::setSkipVersionAllowed(bool allowed)
 {

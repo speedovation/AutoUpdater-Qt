@@ -9,8 +9,8 @@
 class QNetworkReply;
 class UpdaterWindow;
 class FvUpdateConfirmDialog;
-class FvAvailableUpdate;
-class FvUpdateDownloadProgress;
+class UpdateFileData;
+class UpdateDownloadProgress;
 
 
 class FvUpdater : public QObject
@@ -19,9 +19,7 @@ class FvUpdater : public QObject
 
 public:
 
-	// Singleton
-	static FvUpdater* sharedUpdater();
-	static void drop();
+
 
 	// Set / get feed URL
 	void SetFeedURL(QUrl feedURL);
@@ -30,10 +28,6 @@ public:
 	void finishUpdate(QString pathToFinish = "");
 	void setRequiredSslFingerPrint(QString md5);
 	QString getRequiredSslFingerPrint();	// returns md5!
-	// HTTP Authentuication - for security reasons no getters are provided, only a setter
-	void setHtAuthCredentials(QString user, QString pass);
-	void setHtAuthUsername(QString user);
-	void setHtAuthPassword(QString pass);
 	void setSkipVersionAllowed(bool allowed);
 	void setRemindLaterAllowed(bool allowed);
 	bool getSkipVersionAllowed();
@@ -61,7 +55,7 @@ protected:
 
 	friend class UpdaterWindow;		// Uses GetProposedUpdate() and others
 	friend class FvUpdateConfirmDialog;	// Uses GetProposedUpdate() and others
-	FvAvailableUpdate* GetProposedUpdate();
+	UpdateFileData* GetProposedUpdate();
 
 
 protected slots:
@@ -83,12 +77,10 @@ private:
 	//  to use those two functions by accident)
 	FvUpdater();							// Hide main constructor
 	~FvUpdater();							// Hide main destructor
-	FvUpdater(const FvUpdater&);			// Hide copy constructor
-	FvUpdater& operator=(const FvUpdater&);	// Hide assign op
 
-	static FvUpdater* m_Instance;			// Singleton instance
 
-    FvUpdateDownloadProgress* dlwindow;
+
+    UpdateDownloadProgress* dlwindow;
 
 	//
 	// Windows / dialogs
@@ -107,7 +99,7 @@ private:
 #endif
 
 	// Available update (NULL if not fetched)
-	FvAvailableUpdate* m_proposedUpdate;
+	UpdateFileData* m_proposedUpdate;
 
 	// If true, don't show the error dialogs and the "no updates." dialog
 	// (silentAsMuchAsItCouldGet from CheckForUpdates() goes here)
@@ -141,11 +133,7 @@ private:
 
 	bool checkSslFingerPrint(QUrl urltoCheck);	// true=ssl Fingerprint accepted, false= ssl Fingerprint NOT accepted
 
-	//
-	// Htauth-Infrastructure
-	//
-	QString htAuthUsername;
-	QString htAuthPassword;
+
 
 
 	//
@@ -172,7 +160,6 @@ private:
 
 private slots:
 
-	void authenticationRequired ( QNetworkReply * reply, QAuthenticator * authenticator );
 	void httpFeedReadyRead();
 	void httpFeedUpdateDataReadProgress(qint64 bytesRead,
 										qint64 totalBytes);
