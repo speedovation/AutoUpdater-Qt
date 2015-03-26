@@ -5,6 +5,11 @@
 
 class UpdaterWindow;
 class GetReleaseNotes;
+class Authenticator;
+class UpdateChecker;
+class ParseUpdate;
+class GetUpdate;
+
 
 
 class BaseManager : public QObject
@@ -14,6 +19,11 @@ class BaseManager : public QObject
         explicit BaseManager(UpdaterWindow *window);
 
         GetReleaseNotes* getReleaseNotes();
+        Authenticator* authenticator();
+        UpdateChecker* updateChecker();
+        ParseUpdate* parseUpdate();
+        GetUpdate* getUpdate();
+
 
 
     signals:
@@ -25,6 +35,10 @@ class BaseManager : public QObject
         UpdaterWindow *d;
 
         GetReleaseNotes* _getReleaseNotes;
+        Authenticator* _authenticator;
+        UpdateChecker* _updateChecker;
+        ParseUpdate* _parseUpdate;
+        GetUpdate* _getUpdate;
 
 };
 

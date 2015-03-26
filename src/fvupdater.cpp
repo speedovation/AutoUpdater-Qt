@@ -38,7 +38,7 @@
 
 FvUpdater::FvUpdater() : QObject(0)
 {
-	m_reply = 0;
+
 #ifdef FV_GUI
 	m_updaterWindow = 0;
 	m_updateConfirmationDialog = 0;
@@ -46,8 +46,7 @@ FvUpdater::FvUpdater() : QObject(0)
 	m_proposedUpdate = 0;
 	m_requiredSslFingerprint = "";
 
-	skipVersionAllowed = true;
-	remindLaterAllowed = true;
+
 
     /// Use Manager and connect
 	///connect(&m_qnam, SIGNAL(authenticationRequired(QNetworkReply*, QAuthenticator*)),
@@ -93,10 +92,10 @@ void FvUpdater::showUpdaterWindowUpdatedWithCurrentUpdateProposal()
 	// Destroy window if already exists
 	hideUpdaterWindow();
 
-	// Create a new window
-	m_updaterWindow = new UpdaterWindow(NULL, skipVersionAllowed, remindLaterAllowed);
-	m_updaterWindow->UpdateWindowWithCurrentProposedUpdate();
-	m_updaterWindow->show();
+	/// FIX with manager Create a new window
+	///m_updaterWindow = new UpdaterWindow(NULL, skipVersionAllowed, remindLaterAllowed);
+	///m_updaterWindow->UpdateWindowWithCurrentProposedUpdate();
+	///m_updaterWindow->show();
 }
 
 void FvUpdater::hideUpdaterWindow()
@@ -176,6 +175,9 @@ void FvUpdater::InstallUpdate()
 			qWarning() << "Update aborted.";
 			return;
 		}
+
+    ///remove below
+    QNetworkAccessManager m_qnam;
 
 	// Start Download
 	QNetworkReply* reply = m_qnam.get(QNetworkRequest(url));

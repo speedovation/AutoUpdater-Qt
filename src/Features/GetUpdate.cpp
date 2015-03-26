@@ -7,7 +7,9 @@
 
 GetUpdate::GetUpdate(UpdaterWindow *window) : d(window)
 {
-
+    skipVersionAllowed = true;
+	remindLaterAllowed = true;
+    m_reply = 0;
 }
 
 GetUpdate::~GetUpdate()

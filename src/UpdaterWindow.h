@@ -3,7 +3,10 @@
 
 #include <QWidget>
 
+#include "Features/BaseManager.h"
+
 class QGraphicsScene;
+
 
 namespace Ui {
     class UpdaterWindow;
@@ -22,9 +25,13 @@ class UpdaterWindow : public QWidget
 
         void closeEvent(QCloseEvent* event);
 
+        BaseManager baseManager();
+
     private:
         Ui::UpdaterWindow*	m_ui;
         QGraphicsScene* m_appIconScene;
+
+        BaseManager *_baseManager;
 
 };
 

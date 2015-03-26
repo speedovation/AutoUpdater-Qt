@@ -56,6 +56,14 @@ class GetUpdate : public QObject
         bool skipVersionAllowed;
         bool remindLaterAllowed;
 
+        // If true, don't show the error dialogs and the "no updates." dialog
+        // (silentAsMuchAsItCouldGet from CheckForUpdates() goes here)
+        // Useful for automatic update checking upon application startup.
+        bool m_silentAsMuchAsItCouldGet;
+
+
+
+
 
 };
 

@@ -11,6 +11,7 @@
 
 UpdaterWindow::UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remindLaterAllowed) :
 	QWidget(parent, Qt::CustomizeWindowHint),
+    _baseManager(new BaseManager) ,
 	m_ui(new Ui::UpdaterWindow)
 {
 	m_ui->setupUi(this);
@@ -70,4 +71,7 @@ void UpdaterWindow::closeEvent(QCloseEvent* event)
 	event->accept();
 }
 
-
+BaseManager* UpdaterWindow::baseManager()
+{
+    return _baseManager;
+}

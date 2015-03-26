@@ -4,6 +4,7 @@
 
 #include <QAuthenticator>
 #include <QNetworkReply>
+#include <QApplication>
 
 UpdateChecker::UpdateChecker(UpdaterWindow* window) : d(window)
 {
@@ -18,7 +19,7 @@ UpdateChecker::~UpdateChecker()
 
 bool UpdateChecker::CheckForUpdates(bool silentAsMuchAsItCouldGet)
 {
-	if (m_feedURL.isEmpty()) {
+	if (d->mam_feedURL.isEmpty()) {
 		qCritical() << "Please set feed URL via setFeedURL() before calling CheckForUpdates().";
 		return false;
 	}
