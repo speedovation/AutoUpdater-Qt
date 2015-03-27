@@ -26,6 +26,7 @@ class UpdaterWindow : public QWidget
         void closeEvent(QCloseEvent* event);
 
         BaseManager* manager();
+        UpdateDownloadProgress* updateDownloadProgress();
 
     private:
         Ui::UpdaterWindow*	m_ui;

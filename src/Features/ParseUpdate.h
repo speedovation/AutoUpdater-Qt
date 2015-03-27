@@ -24,7 +24,7 @@ class ParseUpdate : public QObject
 
 
 
-        UpdateFileData* GetProposedUpdate();
+        UpdateFileData* getProposedUpdate();
 
 
 

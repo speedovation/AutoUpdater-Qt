@@ -1,7 +1,14 @@
 #include "ActionUpdate.h"
 
 #include <QSettings>
+#include <QApplication>
+#include <QDir>
+#include <QNetworkReply>
+
 #include "UpdaterWindow.h"
+#include "Partials/UpdateDownloadProgress.h"
+
+#define FV_NEW_VERSION_POLICY_KEY  "FVNewVersionPolicy"
 
 ActionUpdate::ActionUpdate(UpdaterWindow* window) : QObject(window),  d(window)
 {
@@ -27,10 +34,6 @@ void ActionUpdate::SkipUpdate()
 	// Start ignoring this particular version
 ///	FVIgnoredVersions::IgnoreVersion(proposedUpdate->getEnclosureVersion());
 
-#ifdef FV_GUI
-	hideUpdaterWindow();
-	hideUpdateConfirmationDialog();	// if any; shouldn't be shown at this point, but who knows
-#endif
 }
 
 void ActionUpdate::RemindMeLater()
@@ -109,7 +112,7 @@ void ActionUpdate::decideWhatToDoWithCurrentUpdateProposal()
 void ActionUpdate::InstallUpdate()
 {
 	qDebug() << "Install update";
-	if(m_proposedUpdate==NULL)
+	if(d->manager()->parseUpdate()->getProposedUpdate()==NULL)
 	{
 		qWarning() << "Abort Update: No update prososed! This should not happen.";
 		return;
@@ -117,11 +120,11 @@ void ActionUpdate::InstallUpdate()
 
 	//showUpdateConfirmationDialogUpdatedWithCurrentUpdateProposal();
 	// Prepare download
-	QUrl url = m_proposedUpdate->getEnclosureUrl();
+	QUrl url = d->manager()->parseUpdate()->getProposedUpdate()->getEnclosureUrl();
 
 	// Check SSL Fingerprint if required
-	if(url.scheme()=="https" && !m_requiredSslFingerprint.isEmpty())
-		if( !checkSslFingerPrint(url) )	// check failed
+	if(url.scheme()=="https" && !d->manager()->ssl()->m_requiredSslFingerprint.isEmpty())
+		if( ! d->manager()->ssl()->checkSslFingerPrint(url) )	// check failed
 		{
 			qWarning() << "Update aborted.";
 			return;
@@ -143,18 +146,12 @@ void ActionUpdate::InstallUpdate()
 	else
 		qDebug()<<"OK";
 
-	// Show download Window
-#ifdef FV_GUI
-	dlwindow = new UpdateDownloadProgress;
-	connect(reply, SIGNAL(downloadProgress(qint64, qint64)), dlwindow, SLOT(downloadProgress(qint64, qint64) ));
-	connect(&m_qnam, SIGNAL(finished(QNetworkReply*)), dlwindow, SLOT(close()));
+
+	connect(reply, SIGNAL(downloadProgress(qint64, qint64)), d->updateDownloadProgress(), SLOT(downloadProgress(qint64, qint64) ));
+	connect(&m_qnam, SIGNAL(finished(QNetworkReply*)), d->updateDownloadProgress(), SLOT(close()));
 	//dlwindow->show();
-#endif
 	emit (updatedFinishedSuccessfully());
 
-
-#ifdef FV_GUI
-	hideUpdaterWindow();
-#endif
+    //Don't hide show progress on widget itself...I mean window
 }
 

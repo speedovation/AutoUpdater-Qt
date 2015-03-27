@@ -23,6 +23,7 @@ class Ssl : public QObject
     private:
         UpdaterWindow *d;
         friend class GetUpdate;
+        friend class ActionUpdate;
 
         //
         // SSL Fingerprint Check infrastructure

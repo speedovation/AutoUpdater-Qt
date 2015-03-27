@@ -209,7 +209,7 @@ bool ParseUpdate::searchDownloadedFeedForUpdates(QString xmlTitle,
 
 
 
-UpdateFileData* ParseUpdate::GetProposedUpdate()
+UpdateFileData* ParseUpdate::getProposedUpdate()
 {
 	return m_proposedUpdate;
 }

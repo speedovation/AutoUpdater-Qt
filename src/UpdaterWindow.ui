@@ -58,7 +58,7 @@
       </widget>
      </item>
      <item>
-      <widget class="UpdateDownloadProgress" name="widget" native="true">
+      <widget class="UpdateDownloadProgress" name="updateDownloadProgress" native="true">
        <property name="minimumSize">
         <size>
          <width>0</width>

@@ -57,8 +57,7 @@ class GetUpdate : public QObject
     private slots:
         	void httpUpdateDownloadFinished();
 
-    signals:
-        void updatedFinishedSuccessfully();
+
 
     private:
         UpdaterWindow *d;

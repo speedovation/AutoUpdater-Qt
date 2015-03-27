@@ -11,7 +11,7 @@
 #include <QDesktopServices>
 #else
 // QSettings key for automatic update installation
-#define FV_NEW_VERSION_POLICY_KEY              "FVNewVersionPolicy"
+
 #endif
 
 #ifdef FV_DEBUG

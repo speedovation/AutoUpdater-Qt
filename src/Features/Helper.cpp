@@ -3,6 +3,7 @@
 #include <QProcess>
 #include <QTranslator>
 #include <QApplication>
+#include <QDir>
 
 #include "UpdaterWindow.h"
 

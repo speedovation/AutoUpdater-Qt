@@ -25,6 +25,8 @@ class ActionUpdate : public QObject
         // Update confirmation dialog button slots
         void UpdateInstallationConfirmed();
 
+    signals:
+        void updatedFinishedSuccessfully();
 
     private:
         UpdaterWindow *d;

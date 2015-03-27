@@ -82,7 +82,10 @@ BaseManager* UpdaterWindow::manager()
     return _baseManager;
 }
 
-
+UpdateDownloadProgress* UpdaterWindow::updateDownloadProgress()
+{
+    return m_ui->updateDownloadProgress;
+}
 
 /// Handler
 /// Include 	This in handler before shown
