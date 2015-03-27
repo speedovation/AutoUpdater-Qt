@@ -1,6 +1,7 @@
 #include "UpdateDownloadProgress.h"
 #include "ui_UpdateDownloadProgress.h"
 
+#include <unistd.h>
 
 UpdateDownloadProgress::UpdateDownloadProgress(QWidget *parent)
 	: QWidget(parent) ,
@@ -22,8 +23,3 @@ void UpdateDownloadProgress::downloadProgress ( qint64 bytesReceived, qint64 byt
 	ui->progress->setValue( ((float)bytesReceived / (float)bytesTotal) * 100 );
 }
 
-void UpdateDownloadProgress::close()
-{
-	this->deleteLater();
-	QWidget::close();
-}

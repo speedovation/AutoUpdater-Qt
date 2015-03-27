@@ -18,7 +18,6 @@ class UpdateDownloadProgress : public QWidget
 
     public slots:
         void downloadProgress ( qint64 bytesReceived, qint64 bytesTotal );
-        void close();
 
     private:
         Ui::UpdateDownloadProgress* ui;

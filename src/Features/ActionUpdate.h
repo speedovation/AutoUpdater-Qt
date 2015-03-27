@@ -2,6 +2,7 @@
 #define ACTIONUPDATE_H
 
 #include <QtWidgets/QWidget>
+#include <QNetworkAccessManager>
 
 class UpdaterWindow;
 
@@ -25,12 +26,18 @@ class ActionUpdate : public QObject
         // Update confirmation dialog button slots
         void UpdateInstallationConfirmed();
 
+    private slots:
+        	void httpUpdateDownloadFinished();
+
     signals:
         void updatedFinishedSuccessfully();
 
     private:
         UpdaterWindow *d;
         void decideWhatToDoWithCurrentUpdateProposal();                 // Perform an action which is configured in settings
+
+        QNetworkAccessManager m_qnam;
+
 
 };
 

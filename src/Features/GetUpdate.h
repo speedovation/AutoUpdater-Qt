@@ -54,8 +54,7 @@ class GetUpdate : public QObject
                                             qint64 totalBytes);
         void httpFeedDownloadFinished();
 
-    private slots:
-        	void httpUpdateDownloadFinished();
+
 
 
 
