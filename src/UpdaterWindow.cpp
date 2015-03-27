@@ -1,3 +1,21 @@
+/****************************************************************************
+**
+** Copyright (C) 2015 Yash Pal, Speedovation
+** Copyright (C) 2012 Linas Valiukas
+**
+** Contact: Speedovation Lab (info@speedovation.com)
+**
+** KineticWing Auto Updater
+** http:// kineticwing.com
+** This file is part of the KiWi Editor (IDE)
+**
+** Author: Yash Pal, Linas Valiukas
+** License : Apache License 2.0
+**
+** All rights are reserved.
+**
+**/
+
 #include "UpdaterWindow.h"
 #include "ui_UpdaterWindow.h"
 
@@ -6,6 +24,7 @@
 
 #include <QApplication>
 #include <QCloseEvent>
+#include <QDesktopWidget>
 #include <QDebug>
 
 #ifdef Q_WS_MAC
@@ -42,6 +61,21 @@ UpdaterWindow::UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remi
 			_baseManager->actionUpdate(), SLOT(SkipUpdate()));
 	connect(m_ui->remindMeLaterButton, SIGNAL(clicked()),
             _baseManager->actionUpdate(), SLOT(RemindMeLater()));
+
+
+    //Move the dialog away from the center
+        setGeometry(0,0,this->width(),this->height());
+        int i = 0;
+        if ( qApp->desktop()->screenCount() > 1 )
+        {
+            i = qApp->desktop()->screenNumber(this) ;
+        }
+
+        //Put the dialog in the screen center
+        const QRect screen = qApp->desktop()->screenGeometry(i);
+        move( screen.center() - rect().center() );
+
+        setWindowFlags(Qt::WindowStaysOnTopHint);
 
 
 }

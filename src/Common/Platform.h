@@ -16,31 +16,21 @@
 **
 **/
 
-#ifndef GETRELEASENOTES_H
-#define GETRELEASENOTES_H
+#ifndef PLATFORM_H
+#define PLATFORM_H
 
 #include <QObject>
 
-class UpdaterWindow;
-
-class GetReleaseNotes : public QObject
+class Platform : public QObject
 {
-        Q_OBJECT
-    public:
-        explicit GetReleaseNotes(UpdaterWindow *parent);
+	Q_OBJECT
 
+public:
+	static bool isCurrentOsSupported(QString platform);
 
-
-    signals:
-
-    public slots:
-
-    private slots:
-
-    private:
-        UpdaterWindow *d;
-
-
+private:
+	explicit Platform(QObject *parent = 0);
+		
 };
 
-#endif // GETRELEASENOTES_H
+#endif // FVPLATFORM_H

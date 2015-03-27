@@ -21,7 +21,7 @@
 
 #include "UpdaterWindow.h"
 #include "Platform.h"
-#include "fvignoredversions.h"
+#include "IgnoredVersions.h"
 
 ParseUpdate::ParseUpdate(UpdaterWindow* window) : d(window)
 {
@@ -188,7 +188,7 @@ bool ParseUpdate::searchDownloadedFeedForUpdates(QString xmlTitle,
 	}
 
 	// Relevant version?
-	if (FVIgnoredVersions::isVersionIgnored(xmlEnclosureVersion)) {
+	if (IgnoredVersions::isVersionIgnored(xmlEnclosureVersion)) {
 		qDebug() << "Version '" << xmlEnclosureVersion << "' is ignored, too old or something like that.";
 
 		d->manager()->messageDialogs()->showInformationDialog(tr("No updates were found."), false);

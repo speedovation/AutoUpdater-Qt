@@ -1,5 +1,23 @@
-#include "fvignoredversions.h"
-#include "fvversioncomparator.h"
+/****************************************************************************
+**
+** Copyright (C) 2015 Yash Pal, Speedovation
+** Copyright (C) 2012 Linas Valiukas
+**
+** Contact: Speedovation Lab (info@speedovation.com)
+**
+** KineticWing Auto Updater
+** http:// kineticwing.com
+** This file is part of the KiWi Editor (IDE)
+**
+** Author: Yash Pal, Linas Valiukas
+** License : Apache License 2.0
+**
+** All rights are reserved.
+**
+**/
+
+#include "IgnoredVersions.h"
+#include "VersionComparator.h"
 #include <QSettings>
 #include <QCoreApplication>
 #include <string>
@@ -8,13 +26,13 @@
 #define FV_IGNORED_VERSIONS_LATEST_SKIPPED_VERSION_KEY	"FVLatestSkippedVersion"
 
 
-FVIgnoredVersions::FVIgnoredVersions(QObject *parent) :
+IgnoredVersions::IgnoredVersions(QObject *parent) :
 QObject(parent)
 {
 	// noop
 }
 
-bool FVIgnoredVersions::isVersionIgnored(QString version)
+bool IgnoredVersions::isVersionIgnored(QString version)
 {
 	// We assume that variable 'version' contains either:
 	//	1) The current version of the application (ignore)
@@ -42,7 +60,7 @@ bool FVIgnoredVersions::isVersionIgnored(QString version)
     
 	std::string currentAppVersion = QCoreApplication::applicationVersion().toStdString();
 	std::string suggestedVersion = std::string(version.toStdString());
-	if (FvVersionComparator::CompareVersions(currentAppVersion, suggestedVersion) == FvVersionComparator::kAscending) {
+	if (VersionComparator::CompareVersions(currentAppVersion, suggestedVersion) == VersionComparator::kAscending) {
 		// Newer version - do not skip
 		return false;
 	}
@@ -51,7 +69,7 @@ bool FVIgnoredVersions::isVersionIgnored(QString version)
 	return true;
 }
 
-void FVIgnoredVersions::IgnoreVersion(QString version)
+void IgnoredVersions::setVersionIgnored(QString version)
 {
 	if (version == QCoreApplication::applicationVersion()) {
 		// Don't ignore the current version

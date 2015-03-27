@@ -1,26 +1,43 @@
-#include "fvversioncomparator.h"
+/****************************************************************************
+**
+** Clone of Sparkle's SUStandardVersionComparator.m, so here's original author's
+** copyright too:
+**
+** Copyright 2007 Andy Matuschak. All rights reserved.
+** Everything's the same except for TypeOfCharacter()
+** (because who knows how Foundation does isdigit() and such.)
+**
+**
+** Copyright (C) 2015 Yash Pal, Speedovation
+** Copyright (C) 2012 Linas Valiukas
+**
+** Contact: Speedovation Lab (info@speedovation.com)
+**
+** KineticWing Auto Updater
+** http:// kineticwing.com
+** This file is part of the KiWi Editor (IDE)
+**
+** Author: Yash Pal, Linas Valiukas
+** License : Apache License 2.0
+**
+** All rights are reserved.
+*/
+
+
+#include "VersionComparator.h"
 #include <string>
 #include <algorithm>
 #include <cctype>
 #include <stdlib.h>  // for atoi()
 
-//
-// Clone of Sparkle's SUStandardVersionComparator.m, so here's original author's
-// copyright too:
-//
-//	Copyright 2007 Andy Matuschak. All rights reserved.
-//
-// Everything's the same except for TypeOfCharacter()
-// (because who knows how Foundation does isdigit() and such.)
-//
 
 
-FvVersionComparator::FvVersionComparator()
+VersionComparator::VersionComparator()
 {
 	// noop
 }
 
-FvVersionComparator::CharacterType FvVersionComparator::TypeOfCharacter(std::string character)
+VersionComparator::CharacterType VersionComparator::TypeOfCharacter(std::string character)
 {
 	if (character == ".") {
 		return kSeparatorType;
@@ -36,7 +53,7 @@ FvVersionComparator::CharacterType FvVersionComparator::TypeOfCharacter(std::str
 
 }
 
-std::vector<std::string> FvVersionComparator::SplitVersionString(std::string version)
+std::vector<std::string> VersionComparator::SplitVersionString(std::string version)
 {
 	std::string character;
 	std::string s;
@@ -73,7 +90,7 @@ std::vector<std::string> FvVersionComparator::SplitVersionString(std::string ver
 }
 
 
-FvVersionComparator::ComparatorResult FvVersionComparator::CompareVersions(std::string versionA,
+VersionComparator::ComparatorResult VersionComparator::CompareVersions(std::string versionA,
 																		   std::string versionB)
 {
 	std::vector<std::string> partsA = SplitVersionString(versionA);

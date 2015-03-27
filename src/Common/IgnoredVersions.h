@@ -16,31 +16,22 @@
 **
 **/
 
-#ifndef GETRELEASENOTES_H
-#define GETRELEASENOTES_H
+#ifndef IGNOREDVERSIONS_H
+#define IGNOREDVERSIONS_H
 
 #include <QObject>
 
-class UpdaterWindow;
-
-class GetReleaseNotes : public QObject
+class IgnoredVersions : public QObject
 {
-        Q_OBJECT
-    public:
-        explicit GetReleaseNotes(UpdaterWindow *parent);
+	Q_OBJECT
 
-
-
-    signals:
-
-    public slots:
-
-    private slots:
-
-    private:
-        UpdaterWindow *d;
-
-
+public:
+	static bool isVersionIgnored(QString version);
+	static void setVersionIgnored(QString version);
+	
+private:
+	explicit IgnoredVersions(QObject *parent = 0);
+	
 };
 
-#endif // GETRELEASENOTES_H
+#endif // FVIGNOREDVERSIONS_H

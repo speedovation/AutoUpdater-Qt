@@ -21,14 +21,11 @@ INCLUDEPATH += "$$PWD"
 
 SOURCES += \
         $$PWD/fvupdater.cpp \
-        $$PWD/fvversioncomparator.cpp \
-        $$PWD/fvignoredversions.cpp \
 #        $$PWD/fvupdateconfirmdialog.cpp \
         $$PWD/Features/GetReleaseNotes.cpp \
         $$PWD/Features/BaseManager.cpp \
         $$PWD/UpdaterWindow.cpp \
         $$PWD/UpdateFileData/UpdateFileData.cpp \
-        $$PWD/Platform.cpp \
         $$PWD/Partials/UpdateDownloadProgress.cpp \
         $$PWD/Features/Authenticator.cpp \
         $$PWD/Features/UpdateChecker.cpp \
@@ -39,18 +36,18 @@ SOURCES += \
         $$PWD/Features/Ssl.cpp \
         $$PWD/Features/Helper.cpp \
         $$PWD/Features/ActionUpdate.cpp \
-        $$PWD/Features/Tests.cpp
+        $$PWD/Features/Tests.cpp \
+        $$PWD/Common/Platform.cpp \
+        $$PWD/Common/VersionComparator.cpp \
+        $$PWD/Common/IgnoredVersions.cpp
 
 HEADERS += \
         $$PWD/fvupdater.h \
-        $$PWD/fvversioncomparator.h \
-        $$PWD/fvignoredversions.h \
 #        $$PWD/fvupdateconfirmdialog.h \
         $$PWD/Features/GetReleaseNotes.h \
         $$PWD/Features/BaseManager.h \
         $$PWD/UpdaterWindow.h \
         $$PWD/UpdateFileData/UpdateFileData.h \
-        $$PWD/Platform.h \
         $$PWD/Partials/UpdateDownloadProgress.h \
         $$PWD/Features/Authenticator.h \
         $$PWD/Features/UpdateChecker.h \
@@ -61,11 +58,13 @@ HEADERS += \
         $$PWD/Features/Ssl.h \
         $$PWD/Features/Helper.h \
         $$PWD/Features/ActionUpdate.h \
-        $$PWD/Features/Tests.h
+        $$PWD/Features/Tests.h \
+        $$PWD/Common/Platform.h \
+        $$PWD/Common/VersionComparator.h \
+        $$PWD/Common/IgnoredVersions.h
 
 
 FORMS += \
-        $$PWD/fvupdateconfirmdialog.ui \
     $$PWD/UpdaterWindow.ui \
     $$PWD/Partials/UpdateDownloadProgress.ui
 
@@ -74,13 +73,14 @@ fervor_gui {
     SOURCES += \
             $$PWD/fvupdatedownloadprogress.cpp \
 
-TRANSLATIONS += $$PWD/fervor_lt.ts
+    TRANSLATIONS += $$PWD/fervor_lt.ts
 
-HEADERS += \
+    HEADERS += \
             $$PWD/fvupdatedownloadprogress.h
 
-FORMS += \
+    FORMS += \
             $$PWD/fvupdatedownloadprogress.ui
+
 }
 
 
