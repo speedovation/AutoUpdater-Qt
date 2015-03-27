@@ -3,10 +3,12 @@
 
 
 #include <QObject>
+#include <QXmlStreamReader>
+
+#include "UpdateFileData/UpdateFileData.h"
 
 class UpdaterWindow;
 
-#include <QXmlStreamReader>
 
 
 class ParseUpdate : public QObject
@@ -21,6 +23,22 @@ class ParseUpdate : public QObject
         bool xmlParseFeed();				// Parse feed in m_xml
 
 
+
+        UpdateFileData* GetProposedUpdate();
+
+
+
+    private:
+        UpdaterWindow *d;
+        friend class GetUpdate;
+
+        QXmlStreamReader m_xml;				// XML data collector and parser
+
+
+        // Available update (NULL if not fetched)
+        UpdateFileData* m_proposedUpdate;
+
+
         bool searchDownloadedFeedForUpdates(QString xmlTitle,
                                             QString xmlLink,
                                             QString xmlReleaseNotesLink,
@@ -32,12 +50,6 @@ class ParseUpdate : public QObject
                                             QString xmlEnclosureType);
 
 
-
-    private:
-        UpdaterWindow *d;
-        friend class GetUpdate;
-
-        QXmlStreamReader m_xml;				// XML data collector and parser
 };
 
 #endif // PARSEUPDATE_H

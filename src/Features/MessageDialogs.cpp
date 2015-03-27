@@ -3,7 +3,7 @@
 
 #include <QMessageBox>
 
-MessageDialogs::MessageDialogs(UpdaterWindow* window) : d(window)
+MessageDialogs::MessageDialogs(UpdaterWindow* window) : QObject(window), d(window)
 {
 
 }

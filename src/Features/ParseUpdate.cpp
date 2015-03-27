@@ -2,16 +2,19 @@
 
 #include "UpdaterWindow.h"
 #include "Platform.h"
-
+#include "fvignoredversions.h"
 
 ParseUpdate::ParseUpdate(UpdaterWindow* window) : d(window)
 {
-
+    m_proposedUpdate = 0;
 }
 
 ParseUpdate::~ParseUpdate()
 {
-
+    if (m_proposedUpdate) {
+		delete m_proposedUpdate;
+		m_proposedUpdate = 0;
+	}
 }
 
 
@@ -202,6 +205,13 @@ bool ParseUpdate::searchDownloadedFeedForUpdates(QString xmlTitle,
 #endif
 
 	return true;
+}
+
+
+
+UpdateFileData* ParseUpdate::GetProposedUpdate()
+{
+	return m_proposedUpdate;
 }
 
 

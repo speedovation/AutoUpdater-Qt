@@ -7,6 +7,7 @@
 #include <QFileInfo>
 
 #include "UpdaterWindow.h"
+
 #include "Partials/UpdateDownloadProgress.h"
 #include "UpdateFileData/UpdateFileData.h"
 #include "fvignoredversions.h"
@@ -16,15 +17,12 @@ GetUpdate::GetUpdate(UpdaterWindow *window) : QObject(window), d(window)
     skipVersionAllowed = true;
 	remindLaterAllowed = true;
     m_reply = 0;
-    m_proposedUpdate = 0;
+
 }
 
 GetUpdate::~GetUpdate()
 {
-    if (m_proposedUpdate) {
-		delete m_proposedUpdate;
-		m_proposedUpdate = 0;
-	}
+
 
 }
 
@@ -147,13 +145,6 @@ bool GetUpdate::getRemindLaterAllowed()
 	return remindLaterAllowed;
 }
 
-
-
-
-UpdateFileData* GetUpdate::GetProposedUpdate()
-{
-	return m_proposedUpdate;
-}
 
 
 

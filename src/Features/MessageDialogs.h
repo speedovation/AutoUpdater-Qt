@@ -11,8 +11,9 @@ class QXmlStreamReader;
 QT_END_NAMESPACE
 
 
-class MessageDialogs
+class MessageDialogs : public QObject
 {
+        Q_OBJECT
     public:
         MessageDialogs(UpdaterWindow *window);
         ~MessageDialogs();

@@ -5,8 +5,8 @@
 #include <QUrl>
 #include <QNetworkAccessManager>
 
+
 class UpdaterWindow;
-class UpdateFileData;
 class UpdateDownloadProgress;
 
 QT_BEGIN_NAMESPACE
@@ -44,7 +44,6 @@ class GetUpdate : public QObject
         bool getSkipVersionAllowed();
         bool getRemindLaterAllowed();
 
-        UpdateFileData* GetProposedUpdate();
 
 
 
@@ -64,6 +63,7 @@ class GetUpdate : public QObject
     private:
         UpdaterWindow *d;
         friend class UpdateChecker;
+        friend class MessageDialogs;
 
         // Dialogs (notifications)
         bool skipVersionAllowed;
@@ -74,9 +74,6 @@ class GetUpdate : public QObject
         // Useful for automatic update checking upon application startup.
         bool m_silentAsMuchAsItCouldGet;
 
-
-        // Available update (NULL if not fetched)
-        UpdateFileData* m_proposedUpdate;
 
 
 
