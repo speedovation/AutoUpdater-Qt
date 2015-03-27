@@ -19,7 +19,6 @@
 #include "UpdaterWindow.h"
 #include "ui_UpdaterWindow.h"
 
-#include "fvupdater.h"
 #include "UpdateFileData/UpdateFileData.h"
 
 #include <QApplication>

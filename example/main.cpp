@@ -5,7 +5,6 @@
 #endif
 
 #include "mainwindow.h"
-#include "fvupdater.h"
 
 int main(int argc, char *argv[])
 {

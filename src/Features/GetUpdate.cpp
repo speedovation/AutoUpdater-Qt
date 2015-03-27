@@ -28,7 +28,8 @@
 
 #include "Partials/UpdateDownloadProgress.h"
 #include "UpdateFileData/UpdateFileData.h"
-#include "fvignoredversions.h"
+#include "Common/IgnoredVersions.h"
+
 
 GetUpdate::GetUpdate(UpdaterWindow *window) : QObject(window), d(window)
 {
