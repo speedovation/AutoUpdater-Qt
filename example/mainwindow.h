@@ -1,11 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#if QT_VERSION >= 0x050000
-    #include <QtWidgets/QMainWindow>
-#else
-    #include<QMainWindow>
-#endif
+
+#include<QMainWindow>
+#include "UpdaterWindow.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -21,6 +20,8 @@ public:
 	
 private:
 	Ui::MainWindow *ui;
+
+    UpdaterWindow *w;
 };
 
 #endif // MAINWINDOW_H

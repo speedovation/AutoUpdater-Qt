@@ -13,7 +13,7 @@
 #endif
 
 UpdaterWindow::UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remindLaterAllowed) :
-	QWidget(parent, Qt::CustomizeWindowHint),
+	QWidget(parent),
     m_ui(new Ui::UpdaterWindow)
 {
 	m_ui->setupUi(this);
@@ -32,17 +32,18 @@ UpdaterWindow::UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remi
 	QString newVersString = m_ui->newVersionIsAvailableLabel->text().arg(QApplication::applicationName());
 	m_ui->newVersionIsAvailableLabel->setText(newVersString);
 
-	// Connect buttons
-///	connect(m_ui->installUpdateButton, SIGNAL(clicked()),
-///			FvUpdater::sharedUpdater(), SLOT(InstallUpdate()));
-///	connect(m_ui->skipThisVersionButton, SIGNAL(clicked()),
-///			FvUpdater::sharedUpdater(), SLOT(SkipUpdate()));
-///	connect(m_ui->remindMeLaterButton, SIGNAL(clicked()),
-///			FvUpdater::sharedUpdater(), SLOT(RemindMeLater()));
-///
-///
-
     _baseManager = new BaseManager(this);
+
+
+    // Connect buttons
+	connect(m_ui->installUpdateButton, SIGNAL(clicked()),
+			_baseManager->actionUpdate() , SLOT(InstallUpdate()));
+	connect(m_ui->skipThisVersionButton, SIGNAL(clicked()),
+			_baseManager->actionUpdate(), SLOT(SkipUpdate()));
+	connect(m_ui->remindMeLaterButton, SIGNAL(clicked()),
+            _baseManager->actionUpdate(), SLOT(RemindMeLater()));
+
+
 }
 
 UpdaterWindow::~UpdaterWindow()

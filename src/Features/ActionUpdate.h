@@ -14,7 +14,7 @@ class ActionUpdate : public QObject
 
         void finishUpdate(QString pathToFinish = "");
 
-    protected slots:
+    public slots:
         // Update window button slots
 
         void SkipUpdate();

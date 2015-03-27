@@ -35,9 +35,9 @@ class GetUpdate : public QObject
         void cancelDownloadFeed();			// Stop downloading the current feed
 
         // Set / get feed URL
-        void SetFeedURL(QUrl feedURL);
-        void SetFeedURL(QString feedURL);
-        QString GetFeedURL();
+        void setFeedURL(QUrl feedURL);
+        void setFeedURL(QString feedURL);
+        QString getFeedURL();
 
         void setSkipVersionAllowed(bool allowed);
         void setRemindLaterAllowed(bool allowed);

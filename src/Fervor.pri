@@ -28,18 +28,18 @@ SOURCES += \
         $$PWD/Features/BaseManager.cpp \
         $$PWD/UpdaterWindow.cpp \
         $$PWD/UpdateFileData/UpdateFileData.cpp \
-    $$PWD/Platform.cpp \
-    $$PWD/Partials/UpdateDownloadProgress.cpp \
-    $$PWD/Features/Authenticator.cpp \
-    $$PWD/Features/UpdateChecker.cpp \
-    $$PWD/Features/GetUpdate.cpp \
-    $$PWD/Features/ParseUpdate.cpp \
-    $$PWD/Features/MessageDialogs.cpp \
-    $$PWD/Features/Zip.cpp \
-    $$PWD/Features/Ssl.cpp \
-    $$PWD/Features/Helper.cpp \
-    $$PWD/Features/ActionUpdate.cpp \
-    $$PWD/Features/Tests.cpp
+        $$PWD/Platform.cpp \
+        $$PWD/Partials/UpdateDownloadProgress.cpp \
+        $$PWD/Features/Authenticator.cpp \
+        $$PWD/Features/UpdateChecker.cpp \
+        $$PWD/Features/GetUpdate.cpp \
+        $$PWD/Features/ParseUpdate.cpp \
+        $$PWD/Features/MessageDialogs.cpp \
+        $$PWD/Features/Zip.cpp \
+        $$PWD/Features/Ssl.cpp \
+        $$PWD/Features/Helper.cpp \
+        $$PWD/Features/ActionUpdate.cpp \
+        $$PWD/Features/Tests.cpp
 
 HEADERS += \
         $$PWD/fvupdater.h \
@@ -50,18 +50,18 @@ HEADERS += \
         $$PWD/Features/BaseManager.h \
         $$PWD/UpdaterWindow.h \
         $$PWD/UpdateFileData/UpdateFileData.h \
-    $$PWD/Platform.h \
-    $$PWD/Partials/UpdateDownloadProgress.h \
-    $$PWD/Features/Authenticator.h \
-    $$PWD/Features/UpdateChecker.h \
-    $$PWD/Features/GetUpdate.h \
-    $$PWD/Features/ParseUpdate.h \
-    $$PWD/Features/MessageDialogs.h \
-    $$PWD/Features/Zip.h \
-    $$PWD/Features/Ssl.h \
-    $$PWD/Features/Helper.h \
-    $$PWD/Features/ActionUpdate.h \
-    $$PWD/Features/Tests.h
+        $$PWD/Platform.h \
+        $$PWD/Partials/UpdateDownloadProgress.h \
+        $$PWD/Features/Authenticator.h \
+        $$PWD/Features/UpdateChecker.h \
+        $$PWD/Features/GetUpdate.h \
+        $$PWD/Features/ParseUpdate.h \
+        $$PWD/Features/MessageDialogs.h \
+        $$PWD/Features/Zip.h \
+        $$PWD/Features/Ssl.h \
+        $$PWD/Features/Helper.h \
+        $$PWD/Features/ActionUpdate.h \
+        $$PWD/Features/Tests.h
 
 
 FORMS += \

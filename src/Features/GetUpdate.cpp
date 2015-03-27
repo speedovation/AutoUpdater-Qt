@@ -108,17 +108,17 @@ void GetUpdate::httpFeedDownloadFinished()
 	m_reply = 0;
 }
 
-void GetUpdate::SetFeedURL(QUrl feedURL)
+void GetUpdate::setFeedURL(QUrl feedURL)
 {
 	m_feedURL = feedURL;
 }
 
-void GetUpdate::SetFeedURL(QString feedURL)
+void GetUpdate::setFeedURL(QString feedURL)
 {
-	SetFeedURL(QUrl(feedURL));
+	setFeedURL(QUrl(feedURL));
 }
 
-QString GetUpdate::GetFeedURL()
+QString GetUpdate::getFeedURL()
 {
 	return m_feedURL.toString();
 }

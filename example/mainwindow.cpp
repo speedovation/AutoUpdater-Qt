@@ -12,10 +12,16 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
+    w = new UpdaterWindow(0 , true, true) ;
+
+    w->manager()->getUpdate()->setFeedURL("http://kiwi.po/update.xml");
 
 	// Connect the "check for updates manually" button with the autoupdater
-	///connect(ui->updateButton, SIGNAL(clicked()),
-	///		FvUpdater::sharedUpdater(), SLOT(CheckForUpdatesNotSilent()));
+	connect(ui->updateButton, SIGNAL(clicked()),
+			w->manager()->updateChecker(), SLOT(CheckForUpdatesNotSilent() ));
+
+
+
 
 	ui->label->setText( tr("Version %1").arg(QApplication::applicationVersion()) );
 }

@@ -13,6 +13,7 @@ class UpdaterWindow;
 
 class ParseUpdate : public QObject
 {
+        Q_OBJECT
     public:
         ParseUpdate(   UpdaterWindow *window);
         ~ParseUpdate();

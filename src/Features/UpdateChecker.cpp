@@ -52,6 +52,9 @@ d->manager()->getUpdate()->m_silentAsMuchAsItCouldGet = silentAsMuchAsItCouldGet
 	d->manager()->getUpdate()->m_httpRequestAborted = false;
 	d->manager()->getUpdate()->startDownloadFeed(d->manager()->getUpdate()->m_feedURL);
 
+    if(!silentAsMuchAsItCouldGet)
+     d->show();
+
 	return true;
 }
 
