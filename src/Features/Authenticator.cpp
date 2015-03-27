@@ -9,6 +9,12 @@ Authenticator::Authenticator(UpdaterWindow* window) : d(window)
 {
     htAuthUsername = "";
 	htAuthPassword = "";
+
+
+    /// Use Manager and connect
+	///connect(&m_qnam, SIGNAL(authenticationRequired(QNetworkReply*, QAuthenticator*)),
+    ///        this, SLOT(authenticationRequired(QNetworkReply*, QAuthenticator*)));
+
 }
 
 Authenticator::~Authenticator()

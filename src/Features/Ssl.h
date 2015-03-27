@@ -3,16 +3,35 @@
 
 #include <QtCore/QObject>
 
+class UpdaterWindow;
+
 class Ssl : public QObject
 {
         Q_OBJECT
     public:
-        explicit Ssl(QObject *parent = 0);
+        Ssl(UpdaterWindow *window);
         ~Ssl();
+
+        void setRequiredSslFingerPrint(QString md5);
+        QString getRequiredSslFingerPrint();	// returns md5!
+
 
     signals:
 
     public slots:
+
+    private:
+        UpdaterWindow *d;
+        friend class GetUpdate;
+
+        //
+        // SSL Fingerprint Check infrastructure
+        //
+        QString m_requiredSslFingerprint;
+
+        bool checkSslFingerPrint(QUrl urltoCheck);	// true=ssl Fingerprint accepted, false= ssl Fingerprint NOT accepted
+
+
 };
 
 #endif // SSL_H

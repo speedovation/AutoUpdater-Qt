@@ -47,18 +47,7 @@ class GetUpdate : public QObject
         UpdateFileData* GetProposedUpdate();
 
 
-        bool searchDownloadedFeedForUpdates(QString xmlTitle,
-                                            QString xmlLink,
-                                            QString xmlReleaseNotesLink,
-                                            QString xmlPubDate,
-                                            QString xmlEnclosureUrl,
-                                            QString xmlEnclosureVersion,
-                                            QString xmlEnclosurePlatform,
-                                            unsigned long xmlEnclosureLength,
-                                            QString xmlEnclosureType);
 
-
-        	void InstallUpdate();
 
     public slots:
         void httpFeedReadyRead();
@@ -74,6 +63,7 @@ class GetUpdate : public QObject
 
     private:
         UpdaterWindow *d;
+        friend class UpdateChecker;
 
         // Dialogs (notifications)
         bool skipVersionAllowed;

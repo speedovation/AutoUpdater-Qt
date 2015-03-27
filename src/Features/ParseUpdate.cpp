@@ -1,7 +1,7 @@
 #include "ParseUpdate.h"
 
 #include "UpdaterWindow.h"
-
+#include "Platform.h"
 
 
 ParseUpdate::ParseUpdate(UpdaterWindow* window) : d(window)
@@ -112,7 +112,7 @@ bool ParseUpdate::xmlParseFeed()
 
 		if (m_xml.error() && m_xml.error() != QXmlStreamReader::PrematureEndOfDocumentError) {
 
-			showErrorDialog(tr("Feed parsing failed: %1 %2.").arg(QString::number(m_xml.lineNumber()), m_xml.errorString()), false);
+			d->manager()->messageDialogs()->showErrorDialog(tr("Feed parsing failed: %1 %2.").arg(QString::number(m_xml.lineNumber()), m_xml.errorString()), false);
 			return false;
 
 		}
@@ -120,7 +120,88 @@ bool ParseUpdate::xmlParseFeed()
 
     // No updates were found if we're at this point
     // (not a single <item> element found)
-    showInformationDialog(tr("No updates were found."), false);
+    d->manager()->messageDialogs()->showInformationDialog(tr("No updates were found."), false);
 	return false;
 }
+
+
+bool ParseUpdate::searchDownloadedFeedForUpdates(QString xmlTitle,
+											   QString xmlLink,
+											   QString xmlReleaseNotesLink,
+											   QString xmlPubDate,
+											   QString xmlEnclosureUrl,
+											   QString xmlEnclosureVersion,
+											   QString xmlEnclosurePlatform,
+											   unsigned long xmlEnclosureLength,
+											   QString xmlEnclosureType)
+{
+    qDebug() << "Title:" << xmlTitle;
+    qDebug() << "Link:" << xmlLink;
+    qDebug() << "Release notes link:" << xmlReleaseNotesLink;
+    qDebug() << "Pub. date:" << xmlPubDate;
+    qDebug() << "Enclosure URL:" << xmlEnclosureUrl;
+    qDebug() << "Enclosure version:" << xmlEnclosureVersion;
+    qDebug() << "Enclosure platform:" << xmlEnclosurePlatform;
+    qDebug() << "Enclosure length:" << xmlEnclosureLength;
+    qDebug() << "Enclosure type:" << xmlEnclosureType;
+
+	// Validate
+	if (xmlReleaseNotesLink.isEmpty()) {
+		if (xmlLink.isEmpty()) {
+			d->manager()->messageDialogs()->showErrorDialog(tr("Feed error: \"release notes\" link is empty"), false);
+			return false;
+		} else {
+			xmlReleaseNotesLink = xmlLink;
+		}
+	} else {
+		xmlLink = xmlReleaseNotesLink;
+	}
+	if (! (xmlLink.startsWith("http://") || xmlLink.startsWith("https://"))) {
+		d->manager()->messageDialogs()->showErrorDialog(tr("Feed error: invalid \"release notes\" link"), false);
+		return false;
+	}
+	if (xmlEnclosureUrl.isEmpty() || xmlEnclosureVersion.isEmpty() || xmlEnclosurePlatform.isEmpty()) {
+		d->manager()->messageDialogs()->showErrorDialog(tr("Feed error: invalid \"enclosure\" with the download link"), false);
+		return false;
+	}
+
+	// Relevant version?
+	if (FVIgnoredVersions::isVersionIgnored(xmlEnclosureVersion)) {
+		qDebug() << "Version '" << xmlEnclosureVersion << "' is ignored, too old or something like that.";
+
+		d->manager()->messageDialogs()->showInformationDialog(tr("No updates were found."), false);
+
+		return true;	// Things have succeeded when you think of it.
+	}
+
+
+	//
+	// Success! At this point, we have found an update that can be proposed
+	// to the user.
+	//
+
+	if (m_proposedUpdate) {
+		delete m_proposedUpdate; m_proposedUpdate = 0;
+	}
+	m_proposedUpdate = new UpdateFileData();
+	m_proposedUpdate->setTitle(xmlTitle);
+	m_proposedUpdate->setReleaseNotesLink(xmlReleaseNotesLink);
+	m_proposedUpdate->setPubDate(xmlPubDate);
+	m_proposedUpdate->setEnclosureUrl(xmlEnclosureUrl);
+	m_proposedUpdate->setEnclosureVersion(xmlEnclosureVersion);
+	m_proposedUpdate->setEnclosurePlatform(xmlEnclosurePlatform);
+	m_proposedUpdate->setEnclosureLength(xmlEnclosureLength);
+	m_proposedUpdate->setEnclosureType(xmlEnclosureType);
+
+#ifdef FV_GUI
+	// Show "look, there's an update" window
+///	showUpdaterWindowUpdatedWithCurrentUpdateProposal();
+#else
+	// Decide ourselves what to do
+	decideWhatToDoWithCurrentUpdateProposal();
+#endif
+
+	return true;
+}
+
 

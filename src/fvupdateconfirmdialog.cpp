@@ -25,10 +25,6 @@ FvUpdateConfirmDialog::FvUpdateConfirmDialog(QWidget *parent) :
 			FvUpdater::sharedUpdater(), SLOT(UpdateInstallationNotConfirmed()));
 }
 
-FvUpdateConfirmDialog::~FvUpdateConfirmDialog()
-{
-	delete m_ui;
-}
 
 bool FvUpdateConfirmDialog::UpdateWindowWithCurrentProposedUpdate()
 {
@@ -44,8 +40,3 @@ bool FvUpdateConfirmDialog::UpdateWindowWithCurrentProposedUpdate()
 	return true;
 }
 
-void FvUpdateConfirmDialog::closeEvent(QCloseEvent* event)
-{
-	///FvUpdater::sharedUpdater()->updateConfirmationDialogWasClosed();
-	event->accept();
-}

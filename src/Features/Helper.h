@@ -3,16 +3,29 @@
 
 #include <QtWidgets/QWidget>
 
-class Helper : public QWidget
+class UpdaterWindow;
+
+class Helper : public QObject
 {
         Q_OBJECT
     public:
-        explicit Helper(QWidget *parent = 0);
+        explicit Helper(UpdaterWindow *window);
         ~Helper();
+
+        //
+        // Helpers
+        //
+        void installTranslator();			// Initialize translation mechanism
+        void restartApplication();			// Restarts application after update
+
+
 
     signals:
 
     public slots:
+
+    private:
+        UpdaterWindow *d;
 };
 
 #endif // HELPER_H

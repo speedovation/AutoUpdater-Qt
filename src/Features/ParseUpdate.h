@@ -21,8 +21,21 @@ class ParseUpdate : public QObject
         bool xmlParseFeed();				// Parse feed in m_xml
 
 
+        bool searchDownloadedFeedForUpdates(QString xmlTitle,
+                                            QString xmlLink,
+                                            QString xmlReleaseNotesLink,
+                                            QString xmlPubDate,
+                                            QString xmlEnclosureUrl,
+                                            QString xmlEnclosureVersion,
+                                            QString xmlEnclosurePlatform,
+                                            unsigned long xmlEnclosureLength,
+                                            QString xmlEnclosureType);
+
+
+
     private:
         UpdaterWindow *d;
+        friend class GetUpdate;
 
         QXmlStreamReader m_xml;				// XML data collector and parser
 };

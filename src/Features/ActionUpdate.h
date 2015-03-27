@@ -3,16 +3,33 @@
 
 #include <QtWidgets/QWidget>
 
-class ActionUpdate : public QWidget
+class UpdaterWindow;
+
+class ActionUpdate : public QObject
 {
         Q_OBJECT
     public:
-        explicit ActionUpdate(QWidget *parent = 0);
+        explicit ActionUpdate(UpdaterWindow *window);
         ~ActionUpdate();
 
-    signals:
+        void finishUpdate(QString pathToFinish = "");
 
-    public slots:
+    protected slots:
+        // Update window button slots
+
+        void SkipUpdate();
+        void RemindMeLater();
+        void InstallUpdate();
+
+
+        // Update confirmation dialog button slots
+        void UpdateInstallationConfirmed();
+
+
+    private:
+        UpdaterWindow *d;
+        void decideWhatToDoWithCurrentUpdateProposal();                 // Perform an action which is configured in settings
+
 };
 
 #endif // ACTIONUPDATE_H

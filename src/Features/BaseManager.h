@@ -18,6 +18,10 @@
 #include "Authenticator.h"
 #include "MessageDialogs.h"
 #include "Zip.h"
+#include "Helper.h"
+#include "ActionUpdate.h"
+#include "Ssl.h"
+#include "Tests.h"
 
 
 class BaseManager : public QObject
@@ -33,6 +37,10 @@ class BaseManager : public QObject
         GetUpdate* getUpdate();
         MessageDialogs* messageDialogs();
         Zip* zip();
+        Helper* helper();
+        ActionUpdate* actionUpdate();
+        Ssl* ssl();
+        Tests* tests();
 
 
 
@@ -51,6 +59,10 @@ class BaseManager : public QObject
         GetUpdate* _getUpdate;
         MessageDialogs* _messageDialogs;
         Zip* _zip;
+        Helper* _helper;
+        ActionUpdate* _actionUpdate;
+        Ssl* _ssl;
+        Tests* _tests;
 
 };
 

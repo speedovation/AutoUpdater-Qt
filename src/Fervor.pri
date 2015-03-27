@@ -35,7 +35,11 @@ SOURCES += \
     $$PWD/Features/GetUpdate.cpp \
     $$PWD/Features/ParseUpdate.cpp \
     $$PWD/Features/MessageDialogs.cpp \
-    $$PWD/Features/Zip.cpp
+    $$PWD/Features/Zip.cpp \
+    $$PWD/Features/Ssl.cpp \
+    $$PWD/Features/Helper.cpp \
+    $$PWD/Features/ActionUpdate.cpp \
+    $$PWD/Features/Tests.cpp
 
 HEADERS += \
         $$PWD/fvupdater.h \
@@ -53,11 +57,15 @@ HEADERS += \
     $$PWD/Features/GetUpdate.h \
     $$PWD/Features/ParseUpdate.h \
     $$PWD/Features/MessageDialogs.h \
-    $$PWD/Features/Zip.h
+    $$PWD/Features/Zip.h \
+    $$PWD/Features/Ssl.h \
+    $$PWD/Features/Helper.h \
+    $$PWD/Features/ActionUpdate.h \
+    $$PWD/Features/Tests.h
 
 
 FORMS += \
-#        $$PWD/fvupdateconfirmdialog.ui \
+        $$PWD/fvupdateconfirmdialog.ui \
     $$PWD/UpdaterWindow.ui \
     $$PWD/Partials/UpdateDownloadProgress.ui
 

@@ -14,6 +14,10 @@ BaseManager::BaseManager(UpdaterWindow* window) :
     _getUpdate = new GetUpdate(window);
     _messageDialogs = new MessageDialogs(window);
     _zip = new Zip(window);
+    _helper = new Helper(window);
+    _actionUpdate = new ActionUpdate(window);
+    _ssl = new Ssl(window);
+    _tests = new Tests(window);
 
 }
 
@@ -44,4 +48,20 @@ MessageDialogs* BaseManager::messageDialogs()
 Zip* BaseManager::zip()
 {
     return _zip;
+}
+Helper* BaseManager::helper()
+{
+    return _helper;
+}
+ActionUpdate* BaseManager::actionUpdate()
+{
+    return _actionUpdate;
+}
+Ssl* BaseManager::ssl()
+{
+    return _ssl;
+}
+Tests* BaseManager::tests()
+{
+    return _tests;
 }

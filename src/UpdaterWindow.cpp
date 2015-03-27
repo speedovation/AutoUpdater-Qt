@@ -8,6 +8,9 @@
 #include <QCloseEvent>
 #include <QDebug>
 
+#ifdef Q_WS_MAC
+#include "CoreFoundation/CoreFoundation.h"
+#endif
 
 UpdaterWindow::UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remindLaterAllowed) :
 	QWidget(parent, Qt::CustomizeWindowHint),
@@ -78,3 +81,14 @@ BaseManager* UpdaterWindow::manager()
 {
     return _baseManager;
 }
+
+
+
+/// Handler
+/// Include 	This in handler before shown
+///
+/// /// FIX with manager Create a new window
+///m_updaterWindow = new UpdaterWindow(NULL, skipVersionAllowed, remindLaterAllowed);
+///m_updaterWindow->UpdateWindowWithCurrentProposedUpdate();
+///m_updaterWindow->show();
+

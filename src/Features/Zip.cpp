@@ -1,5 +1,8 @@
 #include "Zip.h"
 
+
+#include "UpdaterWindow.h"
+
 Zip::Zip(UpdaterWindow* window) : d(window)
 {
 
