@@ -25,8 +25,8 @@ INCLUDEPATH += $$PWD
 
 # Fervor autoupdater
 # (set TARGET and VERSION of your app before including Fervor.pri)
-!include("../src/Fervor.pri") {
-	error("Unable to include Fervor autoupdater.")
+!include("../src/AutoUpdater.pri") {
+	error("Unable to include Autoupdater.")
 }
 
 # The sample application
