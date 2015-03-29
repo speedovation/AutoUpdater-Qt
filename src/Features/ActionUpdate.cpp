@@ -22,9 +22,11 @@
 #include <QApplication>
 #include <QDir>
 #include <QNetworkReply>
+#include <QDesktopServices>
 
 #include "UpdaterWindow.h"
 #include "Partials/UpdateDownloadProgress.h"
+#include "Common/IgnoredVersions.h"
 
 #define FV_NEW_VERSION_POLICY_KEY  "FVNewVersionPolicy"
 
@@ -43,14 +45,14 @@ void ActionUpdate::SkipUpdate()
 {
 	qDebug() << "Skip update";
 
-///	UpdateFileData* proposedUpdate = GetProposedUpdate();
-///	if (! proposedUpdate) {
-///		qWarning() << "Proposed update is NULL (shouldn't be at this point)";
-///		return;
-///	}
+	UpdateFileData* proposedUpdate = d->manager()->parseUpdate()->getProposedUpdate();
+	if (! proposedUpdate) {
+		qWarning() << "Proposed update is NULL (shouldn't be at this point)";
+		return;
+	}
 
-	// Start ignoring this particular version
-///	FVIgnoredVersions::IgnoreVersion(proposedUpdate->getEnclosureVersion());
+    //	 Start ignoring this particular version
+	IgnoredVersions::setVersionIgnored(proposedUpdate->getEnclosureVersion());
 
 }
 
@@ -59,23 +61,25 @@ void ActionUpdate::RemindMeLater()
 	// qDebug() << "Remind me later";
 
     // hide update window
+    d->hide();
 }
 
 void ActionUpdate::UpdateInstallationConfirmed()
 {
-//	qDebug() << "Confirm update installation";
+	qDebug() << "Confirm update installation";
 
-///	UpdateFileData* proposedUpdate = GetProposedUpdate();
-///	if (! proposedUpdate) {
-///		qWarning() << "Proposed update is NULL (shouldn't be at this point)";
-///		return;
-///	}
+    UpdateFileData* proposedUpdate = d->manager()->parseUpdate()->getProposedUpdate();
+	if (! proposedUpdate) {
+		qWarning() << "Proposed update is NULL (shouldn't be at this point)";
+		return;
+	}
 
-///	// Open a link
-///	if (! QDesktopServices::openUrl(proposedUpdate->getEnclosureUrl())) {
-///		showErrorDialog(tr("Unable to open this link in a browser. Please do it manually."), true);
-///		return;
-///	}
+
+	// Open a link
+	if (! QDesktopServices::openUrl(proposedUpdate->getEnclosureUrl())) {
+		d->manager()->messageDialogs()->showErrorDialog(tr("Unable to open this link in a browser. Please do it manually."), true);
+		return;
+	}
 
 	//hideUpdaterWindow();
 	//hideUpdateConfirmationDialog();
