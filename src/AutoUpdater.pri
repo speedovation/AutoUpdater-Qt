@@ -15,7 +15,7 @@
 
 DEFINES += FV_APP_NAME=\\\"$$TARGET\\\"
 DEFINES += FV_APP_VERSION=\\\"$$VERSION\\\"
-
+CONFIG   += c++11
 
 
 DEPENDPATH += "$$PWD"
@@ -66,7 +66,9 @@ FORMS += \
     $$PWD/UpdaterWindow.ui \
     $$PWD/Partials/UpdateDownloadProgress.ui
 
-
+!include("../thirdparty/miniz-cpp/Miniz.pri") {
+	error("Unable to include Minz.")
+}
 
 TRANSLATIONS += $$PWD/src/fervor_lt.ts
 

@@ -41299,9 +41299,9 @@ void test_zip()
 
 } // namespace
 
-int main()
-{
-    test_zip();
-    std::cout << "all tests passed" << std::endl;
-    return 0;
-}
+//int main()
+//{
+//    test_zip();
+//    std::cout << "all tests passed" << std::endl;
+//    return 0;
+//}

@@ -6,6 +6,9 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <stdint.h>
+#include "miniz.h"
+
 
 struct mz_zip_archive_tag;
 

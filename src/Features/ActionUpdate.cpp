@@ -28,6 +28,7 @@
 #include "Partials/UpdateDownloadProgress.h"
 #include "Common/IgnoredVersions.h"
 
+
 #define FV_NEW_VERSION_POLICY_KEY  "FVNewVersionPolicy"
 
 ActionUpdate::ActionUpdate(UpdaterWindow* window) : QObject(window),  d(window)
@@ -198,69 +199,9 @@ void ActionUpdate::httpUpdateDownloadFinished()
 		if (reply->error() == QNetworkReply::NoError)
 		{
 			if (reply->isReadable())
-			{
-#ifdef Q_WS_MAC
-                CFURLRef appURLRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-                char path[PATH_MAX];
-                if (!CFURLGetFileSystemRepresentation(appURLRef, TRUE, (UInt8 *)path, PATH_MAX)) {
-                    // error!
-                }
-
-                CFRelease(appURLRef);
-                QString filePath = QString(path);
-                QString rootDirectory = filePath.left(filePath.lastIndexOf("/"));
-#else
-                QString rootDirectory = QCoreApplication::applicationDirPath() + "/";
-#endif
-
-				// Write download into File
-				QFileInfo fileInfo=reply->url().path();
-				QString fileName = rootDirectory + fileInfo.fileName();
-				//qDebug()<<"Writing downloaded file into "<<fileName;
-
-				QFile file(fileName);
-				file.open(QIODevice::WriteOnly);
-				file.write(reply->readAll());
-				file.close();
-
-				// Retrieve List of updated files (Placed in an extra scope to avoid QuaZIP handles the archive permanently and thus avoids the deletion.)
-				{
-///					QuaZip zip(fileName);
-///					if (!zip.open(QuaZip::mdUnzip)) {
-///						qWarning("testRead(): zip.open(): %d", zip.getZipError());
-///						return;
-///					}
-///					zip.setFileNameCodec("IBM866");
-///					QList<QuaZipFileInfo> updateFiles = zip.getFileInfoList();
-
-					// Rename all current files with available update.
-///					for (int i=0;i<updateFiles.size();i++)
-///					{
-///						QString sourceFilePath = rootDirectory + "\\" + updateFiles[i].name;
-///						QDir appDir( QCoreApplication::applicationDirPath() );
-
-///						QFileInfo file(	sourceFilePath );
-///						if(file.exists())
-///						{
-///							//qDebug()<<tr("Moving file %1 to %2").arg(sourceFilePath).arg(sourceFilePath+".oldversion");
-///							appDir.rename( sourceFilePath, sourceFilePath+".oldversion" );
-///						}
-///					}
-				}
-
-				// Install updated Files
-				///unzipUpdate(fileName, rootDirectory);
-
-				// Delete update archive
-                while(QFile::remove(fileName) )
-                {
-                };
-
-				// Restart ap to clean up and start usual business
-				d->manager()->helper()->restartApplication();
-
-			}
-			else qDebug()<<"Error: QNetworkReply is not readable!";
+               d->manager()->zip()->extract(reply);
+			else
+                qDebug()<<"Error: QNetworkReply is not readable!";
 		}
 		else
 		{

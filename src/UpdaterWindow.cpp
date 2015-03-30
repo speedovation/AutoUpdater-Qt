@@ -26,7 +26,7 @@
 #include <QDesktopWidget>
 #include <QDebug>
 
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 #include "CoreFoundation/CoreFoundation.h"
 #endif
 
