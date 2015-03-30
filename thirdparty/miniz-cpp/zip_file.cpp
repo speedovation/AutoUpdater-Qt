@@ -8,6 +8,7 @@
 #include <Windows.h>
 #endif
 
+#include "miniz.h"
 #include "zip_file.hpp"
 
 

@@ -21,6 +21,11 @@ CONFIG   += c++11
 DEPENDPATH += "$$PWD"
 INCLUDEPATH += "$$PWD"
 
+!include("../thirdparty/miniz-cpp/Miniz.pri") {
+	error("Unable to include Minz.")
+}
+
+
 SOURCES += \
         $$PWD/Features/GetReleaseNotes.cpp \
         $$PWD/Features/BaseManager.cpp \
@@ -66,9 +71,6 @@ FORMS += \
     $$PWD/UpdaterWindow.ui \
     $$PWD/Partials/UpdateDownloadProgress.ui
 
-!include("../thirdparty/miniz-cpp/Miniz.pri") {
-	error("Unable to include Minz.")
-}
 
 TRANSLATIONS += $$PWD/src/fervor_lt.ts
 
