@@ -120,6 +120,39 @@ bool Zip::unzipUpdate(const QString & filePath, const QString & extDirPath, cons
     return true;
 }
 
+/*!
+ * \brief Zip::extract
+ *
+ *
+ *
+ *  Updater mode
+ *
+ *    Requires admin permission. Add manifest.
+ *    Check chmod permission on current folders
+ *
+ *    Update mode
+ *      App handler will notify about new update
+ *      Launch Updater in update mode
+ *      Download Latest App zip from server
+ *      Extract in folder  app.version name
+ *      Execute this latest Updater in install mode
+ *
+ *    Install mode
+ *      Run Updater saying you're latest and app is old folder
+ *      Make a copy of app (with version name) This may be used for rollback actions
+ *      Copy all files from app.version to app
+ *
+ *    Clean mode
+ *      Run latest updater again but from app dir
+ *      Remove this extracted folder
+ *      Run Updater for cleaning up folder
+ *
+ *
+ *
+ *
+ * \param reply
+ */
+
 void Zip::extract(QNetworkReply* reply)
 {
 #ifdef Q_OS_MAC
@@ -162,7 +195,7 @@ void Zip::extract(QNetworkReply* reply)
         // Rename all current files with available update.
         for (int i=0;i<updateFiles.size();i++)
         {
-        	QString sourceFilePath = rootDirectory + "\\" + QString::fromStdString(updateFiles[i].filename);
+        	QString sourceFilePath = rootDirectory + QString::fromStdString(updateFiles[i].filename);
         	QDir appDir( QCoreApplication::applicationDirPath() );
 
         	QFileInfo file(	sourceFilePath );
@@ -172,16 +205,19 @@ void Zip::extract(QNetworkReply* reply)
         		appDir.rename( sourceFilePath, sourceFilePath+".oldversion" );
         	}
         }
+
+        // Install updated Files
+        ///unzipUpdate(fileName, rootDirectory);
+        zipFile.extractall(rootDirectory.toStdString());
+
+
     }
 
     catch(std::exception const& e)
     {
-        std::cout << "Exception: " << e.what() << "\n";
+        qDebug() << "Exception: " << e.what() << "\n";
     }
 
-    // Install updated Files
-    ///unzipUpdate(fileName, rootDirectory);
-    zipFile.extractall(rootDirectory.toStdString());
 
 
     // Delete update archive
