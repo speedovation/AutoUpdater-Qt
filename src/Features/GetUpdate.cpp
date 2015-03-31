@@ -121,10 +121,20 @@ void GetUpdate::httpFeedDownloadFinished()
 		// Done.
 		d->manager()->parseUpdate()->xmlParseFeed();
 
+        //
+        //if(!d->manager()->getUpdate()->m_silentAsMuchAsItCouldGet)
+//        {
+//            d->UpdateWindowWithCurrentProposedUpdate();
+//            d->show();
+//        }
+
+
 	}
 
 	m_reply->deleteLater();
 	m_reply = 0;
+
+
 }
 
 void GetUpdate::setFeedURL(QUrl feedURL)

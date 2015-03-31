@@ -43,7 +43,7 @@ bool UpdateChecker::CheckForUpdates(bool silentAsMuchAsItCouldGet)
 		return false;
 	}
 
-d->manager()->getUpdate()->m_silentAsMuchAsItCouldGet = silentAsMuchAsItCouldGet;
+    d->manager()->getUpdate()->m_silentAsMuchAsItCouldGet = silentAsMuchAsItCouldGet;
 
 	// Check if application's organization name and domain are set, fail otherwise
 	// (nowhere to store QSettings to)
@@ -71,8 +71,6 @@ d->manager()->getUpdate()->m_silentAsMuchAsItCouldGet = silentAsMuchAsItCouldGet
 	d->manager()->getUpdate()->m_httpRequestAborted = false;
 	d->manager()->getUpdate()->startDownloadFeed(d->manager()->getUpdate()->m_feedURL);
 
-    if(!silentAsMuchAsItCouldGet)
-     d->show();
 
 	return true;
 }

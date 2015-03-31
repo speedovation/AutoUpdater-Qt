@@ -40,7 +40,8 @@ UpdaterWindow::UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remi
 
 	if(!skipVersionAllowed)
 		m_ui->skipThisVersionButton->hide();
-	if(!remindLaterAllowed)
+
+    if(!remindLaterAllowed)
 		m_ui->remindMeLaterButton->hide();
 
 	// Delete on close
@@ -63,18 +64,18 @@ UpdaterWindow::UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remi
 
 
     //Move the dialog away from the center
-        setGeometry(0,0,this->width(),this->height());
-        int i = 0;
-        if ( qApp->desktop()->screenCount() > 1 )
-        {
-            i = qApp->desktop()->screenNumber(this) ;
-        }
+    setGeometry(0,0,this->width(),this->height());
+    int i = 0;
+    if ( qApp->desktop()->screenCount() > 1 )
+    {
+        i = qApp->desktop()->screenNumber(this) ;
+    }
 
-        //Put the dialog in the screen center
-        const QRect screen = qApp->desktop()->screenGeometry(i);
-        move( screen.center() - rect().center() );
+    //Put the dialog in the screen center
+    const QRect screen = qApp->desktop()->screenGeometry(i);
+    move( screen.center() - rect().center() );
 
-        setWindowFlags(Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::WindowStaysOnTopHint);
 
 
 }
@@ -87,28 +88,31 @@ UpdaterWindow::~UpdaterWindow()
 
 bool UpdaterWindow::UpdateWindowWithCurrentProposedUpdate()
 {
-	///UpdateFileData* proposedUpdate = FvUpdater::sharedUpdater()->GetProposedUpdate();
-	///if (! proposedUpdate) {
-	///	return false;
-	///}
+	UpdateFileData* proposedUpdate = _baseManager->parseUpdate()->getProposedUpdate();
+	if (! proposedUpdate) {
+		return false;
+	}
 
-	///QString downloadString = m_ui->wouldYouLikeToDownloadLabel->text()
-///			.arg(QApplication::applicationName(), proposedUpdate->getEnclosureVersion(), QApplication::applicationVersion());
-	///m_ui->wouldYouLikeToDownloadLabel->setText(downloadString);
+	QString downloadString = m_ui->wouldYouLikeToDownloadLabel->text()
+			.arg(QApplication::applicationName(), proposedUpdate->getEnclosureVersion(), QApplication::applicationVersion());
 
-    ///Get change notes from download link and set it inside
-    ///m_ui->releaseNotes
+    m_ui->wouldYouLikeToDownloadLabel->setText(downloadString);
+
+    //Get change notes from download link and set it inside
+    //m_ui->releaseNotes
 
 //	m_ui->releaseNotesWebView->stop();
 //	m_ui->releaseNotesWebView->load(proposedUpdate->GetReleaseNotesLink());
+
+    show();
 
 	return true;
 }
 
 void UpdaterWindow::closeEvent(QCloseEvent* event)
 {
-	///FvUpdater::sharedUpdater()->updaterWindowWasClosed();
-	event->accept();
+    hide();
+    event->accept();
 }
 
 BaseManager* UpdaterWindow::manager()

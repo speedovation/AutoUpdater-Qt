@@ -130,22 +130,30 @@ bool Zip::unzipUpdate(const QString & filePath, const QString & extDirPath, cons
  *    Requires admin permission. Add manifest.
  *    Check chmod permission on current folders
  *
- *    Update mode
- *      App handler will notify about new update
- *      Launch Updater in update mode
- *      Download Latest App zip from server
- *      Extract in folder  app.version name
- *      Execute this latest Updater in install mode
+ *    Delta mode
+ *      Download
+ *      Extract
+ *      Rename files in zip list
+ *      Replace files
+ *      Relaunch
  *
- *    Install mode
- *      Run Updater saying you're latest and app is old folder
- *      Make a copy of app (with version name) This may be used for rollback actions
- *      Copy all files from app.version to app
+ *   Full update
+ *      Update mode
+ *        App handler will notify about new update
+ *        Launch Updater in update mode
+ *        Download Latest App zip from server
+ *        Extract in folder  app.version name
+ *        Execute this latest Updater in install mode
  *
- *    Clean mode
- *      Run latest updater again but from app dir
- *      Remove this extracted folder
- *      Run Updater for cleaning up folder
+ *      Install mode
+ *        Run Updater saying you're latest and app is old folder
+ *        Make a copy of app (with version name) This may be used for rollback actions
+ *        Copy all files from app.version to app
+ *
+ *      Clean mode
+ *        Run latest updater again but from app dir
+ *        Remove this extracted folder
+ *        Run Updater for cleaning up folder
  *
  *
  *

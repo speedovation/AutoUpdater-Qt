@@ -215,13 +215,11 @@ bool ParseUpdate::searchDownloadedFeedForUpdates(QString xmlTitle,
 	m_proposedUpdate->setEnclosureLength(xmlEnclosureLength);
 	m_proposedUpdate->setEnclosureType(xmlEnclosureType);
 
-#ifdef FV_GUI
 	// Show "look, there's an update" window
-///	showUpdaterWindowUpdatedWithCurrentUpdateProposal();
-#else
+	d->UpdateWindowWithCurrentProposedUpdate();
 	// Decide ourselves what to do
 //	decideWhatToDoWithCurrentUpdateProposal();
-#endif
+//#endif
 
 	return true;
 }

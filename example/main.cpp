@@ -10,10 +10,10 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 	// Prerequisite for the Fervor updater
-	QApplication::setOrganizationName("pypt");
-	QApplication::setOrganizationDomain("pypt.lt");
-	QApplication::setApplicationName("Sample");
-    QApplication::setApplicationVersion("1.0");
+	QApplication::setOrganizationName("speedovation");
+	QApplication::setOrganizationDomain("speedovation.com");
+	QApplication::setApplicationName("KineticWing IDE");
+    QApplication::setApplicationVersion("1.0.0");
 
 //	// Set feed URL before doing anything else
 //	FvUpdater::sharedUpdater()->SetFeedURL("http://kiwi.po/update.xml");
