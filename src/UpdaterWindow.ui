@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>UpdaterWindow</class>
- <widget class="QWidget" name="UpdaterWindow">
+ <widget class="QMainWindow" name="UpdaterWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,102 +13,105 @@
   <property name="windowTitle">
    <string>Software Update</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_6">
-   <property name="sizeConstraint">
-    <enum>QLayout::SetFixedSize</enum>
+  <widget class="QWidget" name="Outer" native="true">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>9</y>
+     <width>524</width>
+     <height>271</height>
+    </rect>
    </property>
-   <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QLabel" name="newVersionIsAvailableLabel">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>A new version of %1 is available!</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="wouldYouLikeToDownloadLabel">
-       <property name="text">
-        <string>%1 %2 is now available - you have %3. 
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="newVersionIsAvailableLabel">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>A new version of %1 is available!</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="wouldYouLikeToDownloadLabel">
+      <property name="text">
+       <string>%1 %2 is now available - you have %3. 
 Would you like to download it now?</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="groupBox">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="title">
-        <string>Release Notes:</string>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_7">
-        <item>
-         <widget class="QTextEdit" name="releaseNotes">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="textInteractionFlags">
-           <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="title">
+       <string>Release Notes:</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
        <item>
-        <widget class="QPushButton" name="skipThisVersionButton">
-         <property name="text">
-          <string>Skip This Version</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="UpdateDownloadProgress" name="updateDownloadProgress" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>24</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="remindMeLaterButton">
-         <property name="text">
-          <string>Remind Me Later</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="installUpdateButton">
-         <property name="text">
-          <string>Install Update</string>
-         </property>
-         <property name="autoDefault">
+        <widget class="QTextEdit" name="releaseNotes">
+         <property name="readOnly">
           <bool>true</bool>
          </property>
-         <property name="default">
-          <bool>true</bool>
+         <property name="textInteractionFlags">
+          <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
          </property>
         </widget>
        </item>
       </layout>
-     </item>
-    </layout>
-   </item>
-  </layout>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QPushButton" name="skipThisVersionButton">
+        <property name="text">
+         <string>Skip This Version</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="UpdateDownloadProgress" name="updateDownloadProgress" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="remindMeLaterButton">
+        <property name="text">
+         <string>Remind Me Later</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="installUpdateButton">
+        <property name="text">
+         <string>Install Update</string>
+        </property>
+        <property name="autoDefault">
+         <bool>true</bool>
+        </property>
+        <property name="default">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>

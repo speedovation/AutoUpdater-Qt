@@ -31,7 +31,7 @@
 #include "CoreFoundation/CoreFoundation.h"
 #endif
 
-//#include "zip_file.hpp"
+#include "zip_file.hpp"
 
 
 Zip::Zip(UpdaterWindow* window) : d(window)
@@ -73,12 +73,6 @@ void  Zip::extractAll(zip_file *zipFile)
 
             //out <<  QByteArray::fromStdString( zipFile->read(f) );
 
-
-            //qDebug() << "status: " << out.status()  ;
-
-
-
-
         }
         else
         {
@@ -96,8 +90,97 @@ void  Zip::extractAll(zip_file *zipFile)
 
 }
 
-bool Zip::unzipUpdate(const QString & filePath, const QString & extDirPath, const QString & singleFileName )
+
+
+/*!
+ * \brief Zip::extract
+ *
+ * \param reply
+ */
+
+void Zip::extract(QNetworkReply* reply)
 {
+
+
+#ifdef Q_OS_MAC
+//    CFURLRef appURLRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+//    char path[PATH_MAX];
+//    if (!CFURLGetFileSystemRepresentation(appURLRef, TRUE, (UInt8 *)path, PATH_MAX)) {
+//        // error!
+//    }
+
+//    CFRelease(appURLRef);
+//    QString filePath = QString(path);
+//    QString rootDirectory = filePath.left(filePath.lastIndexOf("/"));
+
+    QDir dir = QDir(QCoreApplication::applicationDirPath());
+    dir.cdUp();
+    dir.cdUp();
+
+
+#else
+    QString rootDirectory = QCoreApplication::applicationDirPath() + "/";
+#endif
+
+    // Write download into File
+    QFileInfo fileInfo=reply->url().path();
+    qDebug() << reply->url().path();
+    QString fileName = rootDirectory + fileInfo.fileName();
+    qDebug()<<"Writing downloaded file into "<<fileName;
+
+    QFile file(fileName);
+    file.open(QIODevice::WriteOnly);
+    file.write(reply->readAll());
+    file.close();
+
+    zip_file zipFile(fileName.toStdString());
+    try
+    {
+
+        std::vector <zip_info> updateFiles = zipFile.infolist();
+
+        // Rename all current files with available update.
+        for (size_t i=0;i<updateFiles.size();i++)
+        {
+            QString sourceFilePath = rootDirectory + QString::fromStdString(updateFiles[i].filename);
+            QDir appDir( QCoreApplication::applicationDirPath() );
+
+            QFileInfo file(	sourceFilePath );
+            if(file.exists())
+            {
+                //qDebug()<<tr("Moving file %1 to %2").arg(sourceFilePath).arg(sourceFilePath+".oldversion");
+                appDir.rename( sourceFilePath, sourceFilePath+".oldversion" );
+            }
+        }
+
+        // Install updated Files
+        extractAll(&zipFile);
+
+
+
+    }
+
+    catch(std::exception const& e)
+    {
+        qDebug() << "Exception: " << e.what() << "\n";
+    }
+
+
+    // Delete update archive
+    while(QFile::remove(fileName) )
+    {
+    };
+
+    QApplication::exit(200);
+
+    // Restart ap to clean up and start usual business
+    ///d->manager()->helper()->restartApplication();
+}
+
+
+/*
+ * //bool Zip::unzipUpdate(const QString & filePath, const QString & extDirPath, const QString & singleFileName )
+//{
     //	QuaZip zip(filePath);
 
     //    if (!zip.open(QuaZip::mdUnzip)) {
@@ -169,101 +252,6 @@ bool Zip::unzipUpdate(const QString & filePath, const QString & extDirPath, cons
     //		return false;
     //	}
 
-    return true;
-}
-
-/*!
- * \brief Zip::extract
- *
- *
-
- *
- *
- *
- *
- * \param reply
+//    return true;
+//}
  */
-
-void Zip::extract(QNetworkReply* reply)
-{
-
-
-#ifdef Q_OS_MAC
-    CFURLRef appURLRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-    char path[PATH_MAX];
-    if (!CFURLGetFileSystemRepresentation(appURLRef, TRUE, (UInt8 *)path, PATH_MAX)) {
-        // error!
-    }
-
-    CFRelease(appURLRef);
-    QString filePath = QString(path);
-    QString rootDirectory = filePath.left(filePath.lastIndexOf("/"));
-#else
-    QString rootDirectory = QCoreApplication::applicationDirPath() + "/";
-#endif
-
-    // Write download into File
-    QFileInfo fileInfo=reply->url().path();
-    QString fileName = rootDirectory + fileInfo.fileName();
-    //qDebug()<<"Writing downloaded file into "<<fileName;
-
-    QFile file(fileName);
-    file.open(QIODevice::WriteOnly);
-    file.write(reply->readAll());
-    file.close();
-
-    zip_file zipFile(fileName.toStdString());
-    try
-    {
-        // Retrieve List of updated files (Placed in an extra scope to avoid QuaZIP handles the archive permanently and thus avoids the deletion.)
-        //            if (!zip.open(QuaZip::mdUnzip)) {
-        //                qWarning("testRead(): zip.open(): %d", zip.getZipError());
-        //                return;
-        //            }
-
-        //     		zip.setFileNameCodec("IBM866");
-
-        std::vector <zip_info> updateFiles = zipFile.infolist();
-
-        // Rename all current files with available update.
-        for (int i=0;i<updateFiles.size();i++)
-        {
-            QString sourceFilePath = rootDirectory + QString::fromStdString(updateFiles[i].filename);
-            QDir appDir( QCoreApplication::applicationDirPath() );
-
-            QFileInfo file(	sourceFilePath );
-            if(file.exists())
-            {
-                //qDebug()<<tr("Moving file %1 to %2").arg(sourceFilePath).arg(sourceFilePath+".oldversion");
-                appDir.rename( sourceFilePath, sourceFilePath+".oldversion" );
-            }
-        }
-
-        // Install updated Files
-        ///unzipUpdate(fileName, rootDirectory);
-        //        zipFile.extractall(rootDirectory.toStdString() + "tree");
-        extractAll(&zipFile);
-
-
-
-    }
-
-    catch(std::exception const& e)
-    {
-        qDebug() << "Exception: " << e.what() << "\n";
-    }
-
-
-
-    // Delete update archive
-    while(QFile::remove(fileName) )
-    {
-    };
-
-     QApplication::exit();
-
-    // Restart ap to clean up and start usual business
-    ///d->manager()->helper()->restartApplication();
-}
-
-

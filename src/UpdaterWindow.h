@@ -19,7 +19,7 @@
 #ifndef UPDATERWINDOW_H
 #define UPDATERWINDOW_H
 
-#include <QWidget>
+#include <QMainWindow>
 
 #include "Features/BaseManager.h"
 
@@ -30,7 +30,7 @@ namespace Ui {
     class UpdaterWindow;
 }
 
-class UpdaterWindow : public QWidget
+class UpdaterWindow : public QMainWindow
 {
         Q_OBJECT
 
@@ -46,8 +46,10 @@ class UpdaterWindow : public QWidget
         BaseManager* manager();
         UpdateDownloadProgress* updateDownloadProgress();
 
+        void showProgress(bool show);
+
     private:
-        Ui::UpdaterWindow*	m_ui;
+        Ui::UpdaterWindow*	ui;
         QGraphicsScene* m_appIconScene;
 
         BaseManager *_baseManager;

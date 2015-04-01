@@ -72,35 +72,35 @@
  *
  */
 UpdaterWindow::UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remindLaterAllowed) :
-	QWidget(parent),
-    m_ui(new Ui::UpdaterWindow)
+	QMainWindow(parent),
+    ui(new Ui::UpdaterWindow)
 {
-	m_ui->setupUi(this);
+	ui->setupUi(this);
 
 	m_appIconScene = 0;
 
 	if(!skipVersionAllowed)
-		m_ui->skipThisVersionButton->hide();
+		ui->skipThisVersionButton->hide();
 
     if(!remindLaterAllowed)
-		m_ui->remindMeLaterButton->hide();
+		ui->remindMeLaterButton->hide();
 
 	// Delete on close
 	setAttribute(Qt::WA_DeleteOnClose, true);
 
 	// Set the "new version is available" string
-	QString newVersString = m_ui->newVersionIsAvailableLabel->text().arg(QApplication::applicationName());
-	m_ui->newVersionIsAvailableLabel->setText(newVersString);
+	QString newVersString = ui->newVersionIsAvailableLabel->text().arg(QApplication::applicationName());
+	ui->newVersionIsAvailableLabel->setText(newVersString);
 
     _baseManager = new BaseManager(this);
 
 
     // Connect buttons
-	connect(m_ui->installUpdateButton, SIGNAL(clicked()),
+	connect(ui->installUpdateButton, SIGNAL(clicked()),
 			_baseManager->actionUpdate() , SLOT(InstallUpdate()));
-	connect(m_ui->skipThisVersionButton, SIGNAL(clicked()),
+	connect(ui->skipThisVersionButton, SIGNAL(clicked()),
 			_baseManager->actionUpdate(), SLOT(SkipUpdate()));
-	connect(m_ui->remindMeLaterButton, SIGNAL(clicked()),
+	connect(ui->remindMeLaterButton, SIGNAL(clicked()),
             _baseManager->actionUpdate(), SLOT(RemindMeLater()));
 
 
@@ -124,7 +124,7 @@ UpdaterWindow::UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remi
 UpdaterWindow::~UpdaterWindow()
 {
 //	m_ui->releaseNotesWebView->stop();
-	delete m_ui;
+	delete ui;
 }
 
 bool UpdaterWindow::UpdateWindowWithCurrentProposedUpdate()
@@ -134,10 +134,10 @@ bool UpdaterWindow::UpdateWindowWithCurrentProposedUpdate()
 		return false;
 	}
 
-	QString downloadString = m_ui->wouldYouLikeToDownloadLabel->text()
+	QString downloadString = ui->wouldYouLikeToDownloadLabel->text()
 			.arg(QApplication::applicationName(), proposedUpdate->getEnclosureVersion(), QApplication::applicationVersion());
 
-    m_ui->wouldYouLikeToDownloadLabel->setText(downloadString);
+    ui->wouldYouLikeToDownloadLabel->setText(downloadString);
 
     //Get change notes from download link and set it inside
     //m_ui->releaseNotes
@@ -163,10 +163,24 @@ BaseManager* UpdaterWindow::manager()
 
 UpdateDownloadProgress* UpdaterWindow::updateDownloadProgress()
 {
-    return m_ui->updateDownloadProgress;
+    return ui->updateDownloadProgress;
 }
 
+void UpdaterWindow::showProgress(bool show)
+{
+    if(show)
+    {
+        ui->updateDownloadProgress->show();
+        ui->installUpdateButton->hide();
+        ui->remindMeLaterButton->hide();
+        ui->skipThisVersionButton->hide();
 
+    }
+    else
+    {
+        ui->updateDownloadProgress->hide();
+    }
+}
 
 /// Handler
 /// Include 	This in handler before shown

@@ -179,13 +179,18 @@ void ActionUpdate::InstallUpdate()
 	emit updatedFinishedSuccessfully();
 
     //Don't hide show progress on widget itself...I mean window
+
+    d->showProgress(true);
 }
 
 
 void ActionUpdate::httpUpdateDownloadFinished()
 {
 	QNetworkReply* reply = qobject_cast<QNetworkReply*>(sender());
-	if(reply==NULL)
+
+    d->showProgress(false);
+
+    if(reply==NULL)
 	{
 		qWarning()<<"The slot httpUpdateDownloadFinished() should only be invoked by S&S.";
 		return;
@@ -199,6 +204,7 @@ void ActionUpdate::httpUpdateDownloadFinished()
 		if (reply->error() == QNetworkReply::NoError)
 		{
 			if (reply->isReadable())
+
                d->manager()->zip()->extract(reply);
 			else
                 qDebug()<<"Error: QNetworkReply is not readable!";

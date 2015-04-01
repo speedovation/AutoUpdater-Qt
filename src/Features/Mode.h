@@ -34,6 +34,8 @@ class Mode : public QObject
         Mode( UpdaterWindow *window);
         ~Mode();
 
+        void deltaUpdateMode();
+
         void updateMode();
 
 

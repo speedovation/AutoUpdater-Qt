@@ -63,3 +63,18 @@ void Mode::updateMode()
 
 }
 
+/**
+ *    Delta mode
+ *      Download
+ *      Extract
+ *      Rename files in zip list
+ *      Replace files
+ *      Relaunch
+ *
+ * @brief Mode::deltaUpdateMode
+ *
+ */
+void Mode::deltaUpdateMode()
+{
+    //
+}

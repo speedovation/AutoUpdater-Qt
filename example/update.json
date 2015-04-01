@@ -1,0 +1,25 @@
+{
+    "title": "Your Great App's Changelog",
+    "description": "Most recent changes with links to updates",
+    "language": "en",
+    "link" : "http://kineticwing.com/downloads/",
+    "release": {
+        "title": "Version 2.0 (2 bugs fixed; 3 new features)",
+        "pubDate": "1 April 2015",
+        "releaseNotes": "http://pypt.github.com/fervor/RelNotes.html",
+        "downloads": {
+            "windows": {
+                "link": "Windows.zip",
+                "version": "1.0.0"
+            },
+            "linux": {
+                "link": "Linux.zip",
+                "version": "1.0.0"
+            },
+            "mac": {
+                "link": "Mac.zip",
+                "version": "1.0.0"
+            }
+        }
+    }
+}

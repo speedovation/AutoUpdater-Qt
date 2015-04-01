@@ -27,7 +27,7 @@ QT_BEGIN_NAMESPACE
 class QNetworkReply;
 QT_END_NAMESPACE
 
-#include "zip_file.hpp"
+class zip_file;
 
 class Zip : public QObject
 {
@@ -36,12 +36,6 @@ class Zip : public QObject
         Zip( UpdaterWindow *window);
         ~Zip();
 
-
-        //
-        // Download and install Update infrastructure
-        //
-
-        bool unzipUpdate(const QString & filePath, const QString & extDirPath, const QString & singleFileName = QString(""));	// returns true on success
 
         void extract(QNetworkReply* reply);
 
