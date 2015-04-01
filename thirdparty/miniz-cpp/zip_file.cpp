@@ -11,6 +11,10 @@
 #include "miniz.h"
 #include "zip_file.hpp"
 
+#include <QFile>
+#include <QTextStream>
+#include <QDebug>
+#include <QApplication>
 
 namespace {
 
@@ -571,6 +575,25 @@ std::string zip_file::read(const zip_info &info)
     return extracted;
 }
 
+char * zip_file::getData(const zip_info &info,QDataStream *out)
+{
+    std::size_t size;
+    char *data = static_cast<char *>(mz_zip_reader_extract_file_to_heap(archive_.get(), info.filename.c_str(), &size, 0));
+    if(data == nullptr)
+    {
+        throw std::runtime_error("file couldn't be read");
+    }
+
+    out->writeRawData(data,size);
+
+    return data;
+//    std::string extracted(data, data + size);
+//    mz_free(data);
+//    return extracted;
+    //return QByteArray::fromRawData(data, size + 1);
+}
+
+
 std::string zip_file::read(const std::string &name)
 {
     return read(getinfo(name));
@@ -630,8 +653,28 @@ std::ostream &zip_file::open(const std::string &name)
 std::ostream &zip_file::open(const zip_info &name)
 {
     auto data = read(name);
+
     std::string data_string(data.begin(), data.end());
-    open_stream_ << data_string;
+       open_stream_ << data_string;
+
+
+//    QFile file( qApp->applicationDirPath() + directory_separator + QString::fromStdString(name.filename));
+
+
+//        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+//        {
+//            qDebug() << file.errorString() << " :error" << qApp->applicationDirPath() + directory_separator + QString::fromStdString(name.filename);
+//            return open_stream_ ;
+//        }
+
+//        QTextStream out(&file);
+
+
+//        out << QString::fromStdString(data_string) ;
+
+//        out.flush();
+
+
     return open_stream_;
 }
 
@@ -644,6 +687,8 @@ void zip_file::extract(const std::string &member, const std::string &path)
 {
     std::fstream stream(join_path({path, member}), std::ios::binary | std::ios::out);
     stream << open(member).rdbuf();
+    stream.flush();
+    stream.close();
 }
 
 void zip_file::extract(const zip_info &member)
@@ -655,6 +700,9 @@ void zip_file::extract(const zip_info &member, const std::string &path)
 {
     std::fstream stream(join_path({path, member.filename}), std::ios::binary | std::ios::out);
     stream << open(member).rdbuf();
+    stream.flush();
+    stream.sync();
+    stream.close();
 }
 
 void zip_file::extractall(const std::string &path)
@@ -674,6 +722,8 @@ void zip_file::extractall(const std::string &path, const std::vector<zip_info> &
 {
     for(auto &member : members)
     {
+
+
         extract(member, path);
     }
 }

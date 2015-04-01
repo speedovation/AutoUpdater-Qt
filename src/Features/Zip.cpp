@@ -24,6 +24,8 @@
 #include <QFileInfo>
 #include <QApplication>
 #include <QNetworkReply>
+#include <QVector>
+#include <QDebug>
 
 #ifdef Q_OS_MAC
 #include "CoreFoundation/CoreFoundation.h"
@@ -42,7 +44,57 @@ Zip::~Zip()
 
 }
 
+void  Zip::extractAll(zip_file *zipFile)
+{
 
+
+    QVector<zip_info> files =  QVector<zip_info>::fromStdVector(zipFile->infolist());
+
+    foreach (const zip_info &f , files ) {
+
+        if( f.crc > 0 )
+        {
+            qDebug() <<"File:" <<  QString::fromStdString(f.filename);;
+
+            QFile file( qApp->applicationDirPath() + "/" + QString::fromStdString(f.filename));
+
+
+            if (!file.open(QIODevice::WriteOnly))
+            {
+                qDebug() << file.errorString() << " :error" << qApp->applicationDirPath() + "/" + QString::fromStdString(f.filename);
+                continue;
+            }
+
+            QDataStream out(&file);
+//            out.setByteOrder( QDataStream::BigEndian );
+            out.setVersion(QDataStream::Qt_5_4);
+
+            zipFile->getData(f,&out);
+
+            //out <<  QByteArray::fromStdString( zipFile->read(f) );
+
+
+            //qDebug() << "status: " << out.status()  ;
+
+
+
+
+        }
+        else
+        {
+            QDir d;
+            d.mkdir(qApp->applicationDirPath() + "/" + QString::fromStdString(f.filename));
+
+            qDebug() << "Dir: " <<  QString::fromStdString(f.filename);;
+        }
+
+
+
+
+    }
+
+
+}
 
 bool Zip::unzipUpdate(const QString & filePath, const QString & extDirPath, const QString & singleFileName )
 {
@@ -124,36 +176,7 @@ bool Zip::unzipUpdate(const QString & filePath, const QString & extDirPath, cons
  * \brief Zip::extract
  *
  *
- *
- *  Updater mode
- *
- *    Requires admin permission. Add manifest.
- *    Check chmod permission on current folders
- *
- *    Delta mode
- *      Download
- *      Extract
- *      Rename files in zip list
- *      Replace files
- *      Relaunch
- *
- *   Full update
- *      Update mode
- *        App handler will notify about new update
- *        Launch Updater in update mode
- *        Download Latest App zip from server
- *        Extract in folder  app.version name
- *        Execute this latest Updater in install mode
- *
- *      Install mode
- *        Run Updater saying you're latest and app is old folder
- *        Make a copy of app (with version name) This may be used for rollback actions
- *        Copy all files from app.version to app
- *
- *      Clean mode
- *        Run latest updater again but from app dir
- *        Remove this extracted folder
- *        Run Updater for cleaning up folder
+
  *
  *
  *
@@ -163,6 +186,8 @@ bool Zip::unzipUpdate(const QString & filePath, const QString & extDirPath, cons
 
 void Zip::extract(QNetworkReply* reply)
 {
+
+
 #ifdef Q_OS_MAC
     CFURLRef appURLRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
     char path[PATH_MAX];
@@ -190,33 +215,35 @@ void Zip::extract(QNetworkReply* reply)
     zip_file zipFile(fileName.toStdString());
     try
     {
-    // Retrieve List of updated files (Placed in an extra scope to avoid QuaZIP handles the archive permanently and thus avoids the deletion.)
-//            if (!zip.open(QuaZip::mdUnzip)) {
-//                qWarning("testRead(): zip.open(): %d", zip.getZipError());
-//                return;
-//            }
+        // Retrieve List of updated files (Placed in an extra scope to avoid QuaZIP handles the archive permanently and thus avoids the deletion.)
+        //            if (!zip.open(QuaZip::mdUnzip)) {
+        //                qWarning("testRead(): zip.open(): %d", zip.getZipError());
+        //                return;
+        //            }
 
-//     		zip.setFileNameCodec("IBM866");
+        //     		zip.setFileNameCodec("IBM866");
 
         std::vector <zip_info> updateFiles = zipFile.infolist();
 
         // Rename all current files with available update.
         for (int i=0;i<updateFiles.size();i++)
         {
-        	QString sourceFilePath = rootDirectory + QString::fromStdString(updateFiles[i].filename);
-        	QDir appDir( QCoreApplication::applicationDirPath() );
+            QString sourceFilePath = rootDirectory + QString::fromStdString(updateFiles[i].filename);
+            QDir appDir( QCoreApplication::applicationDirPath() );
 
-        	QFileInfo file(	sourceFilePath );
-        	if(file.exists())
-        	{
-        		//qDebug()<<tr("Moving file %1 to %2").arg(sourceFilePath).arg(sourceFilePath+".oldversion");
-        		appDir.rename( sourceFilePath, sourceFilePath+".oldversion" );
-        	}
+            QFileInfo file(	sourceFilePath );
+            if(file.exists())
+            {
+                //qDebug()<<tr("Moving file %1 to %2").arg(sourceFilePath).arg(sourceFilePath+".oldversion");
+                appDir.rename( sourceFilePath, sourceFilePath+".oldversion" );
+            }
         }
 
         // Install updated Files
         ///unzipUpdate(fileName, rootDirectory);
-        zipFile.extractall(rootDirectory.toStdString());
+        //        zipFile.extractall(rootDirectory.toStdString() + "tree");
+        extractAll(&zipFile);
+
 
 
     }
@@ -233,6 +260,10 @@ void Zip::extract(QNetworkReply* reply)
     {
     };
 
+     QApplication::exit();
+
     // Restart ap to clean up and start usual business
-    d->manager()->helper()->restartApplication();
+    ///d->manager()->helper()->restartApplication();
 }
+
+

@@ -8,7 +8,7 @@
 #include <vector>
 #include <stdint.h>
 
-
+#include <QString>
 
 struct mz_zip_archive_tag;
 
@@ -89,6 +89,7 @@ public:
     
     std::string read(const std::string &name);
     std::string read(const zip_info &name);
+    char* getData(const zip_info &info, QDataStream* out);
     
     std::pair<bool, std::string> testzip();
     

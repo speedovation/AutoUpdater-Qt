@@ -44,7 +44,8 @@ SOURCES += \
         $$PWD/Features/Tests.cpp \
         $$PWD/Common/Platform.cpp \
         $$PWD/Common/VersionComparator.cpp \
-        $$PWD/Common/IgnoredVersions.cpp
+        $$PWD/Common/IgnoredVersions.cpp \
+    $$PWD/Features/Mode.cpp
 
 HEADERS += \
         $$PWD/Features/GetReleaseNotes.h \
@@ -64,7 +65,8 @@ HEADERS += \
         $$PWD/Features/Tests.h \
         $$PWD/Common/Platform.h \
         $$PWD/Common/VersionComparator.h \
-        $$PWD/Common/IgnoredVersions.h
+        $$PWD/Common/IgnoredVersions.h \
+    $$PWD/Features/Mode.h
 
 
 FORMS += \

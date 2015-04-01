@@ -1,7 +1,6 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 Yash Pal, Speedovation
-** Copyright (C) 2012 Linas Valiukas
 **
 ** Contact: Speedovation Lab (info@speedovation.com)
 **
@@ -9,15 +8,15 @@
 ** http:// kineticwing.com
 ** This file is part of the KiWi Editor (IDE)
 **
-** Author: Yash Pal, Linas Valiukas
+** Author: Yash Pal
 ** License : Apache License 2.0
 **
 ** All rights are reserved.
 **
 **/
 
-#ifndef ZIP_H
-#define ZIP_H
+#ifndef MODE_H
+#define MODE_H
 
 #include <QtCore/QObject>
 
@@ -27,29 +26,20 @@ QT_BEGIN_NAMESPACE
 class QNetworkReply;
 QT_END_NAMESPACE
 
-#include "zip_file.hpp"
 
-class Zip : public QObject
+class Mode : public QObject
 {
         Q_OBJECT
     public:
-        Zip( UpdaterWindow *window);
-        ~Zip();
+        Mode( UpdaterWindow *window);
+        ~Mode();
 
+        void updateMode();
 
-        //
-        // Download and install Update infrastructure
-        //
-
-        bool unzipUpdate(const QString & filePath, const QString & extDirPath, const QString & singleFileName = QString(""));	// returns true on success
-
-        void extract(QNetworkReply* reply);
-
-        void extractAll(zip_file* zipFile);
 
     private:
         UpdaterWindow *d;
 
 };
 
-#endif // ZIP_H
+#endif // MODE_H

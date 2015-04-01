@@ -46,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowFlags(Qt::WindowStaysOnTopHint);
 
+    hide();
 
 }
 
