@@ -24,8 +24,8 @@
 #include <QNetworkAccessManager>
 
 
-class UpdaterWindow;
-class UpdateDownloadProgress;
+class HandlerManager;
+//class UpdateDownloadProgress;
 
 QT_BEGIN_NAMESPACE
 class QNetworkReply;
@@ -37,7 +37,7 @@ class GetUpdate : public QObject
         Q_OBJECT
 
     public:
-        GetUpdate(UpdaterWindow *window);
+        GetUpdate(HandlerManager* window);
         ~GetUpdate();
 
         //
@@ -63,23 +63,14 @@ class GetUpdate : public QObject
         bool getRemindLaterAllowed();
 
 
-
-
-
     public slots:
         void httpFeedReadyRead();
         void httpFeedUpdateDataReadProgress(qint64 bytesRead,
                                             qint64 totalBytes);
         void httpFeedDownloadFinished();
 
-
-
-
-
     private:
-        UpdaterWindow *d;
-        friend class UpdateChecker;
-        friend class MessageDialogs;
+        HandlerManager *d;
 
         // Dialogs (notifications)
         bool skipVersionAllowed;
@@ -90,13 +81,6 @@ class GetUpdate : public QObject
         // Useful for automatic update checking upon application startup.
         bool m_silentAsMuchAsItCouldGet;
 
-
-
-
-
-
-
-        UpdateDownloadProgress* dlwindow;
 
 
 

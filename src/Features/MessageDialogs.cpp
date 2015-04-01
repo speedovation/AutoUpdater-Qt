@@ -39,12 +39,6 @@ MessageDialogs::~MessageDialogs()
 
 void MessageDialogs::showErrorDialog(QString message, bool showEvenInSilentMode)
 {
-	if (d->manager()->getUpdate()->m_silentAsMuchAsItCouldGet) {
-		if (! showEvenInSilentMode) {
-			// Don't show errors in the silent mode
-			return;
-		}
-	}
 
 	QMessageBox dlFailedMsgBox;
 	dlFailedMsgBox.setIcon(QMessageBox::Critical);
@@ -55,12 +49,6 @@ void MessageDialogs::showErrorDialog(QString message, bool showEvenInSilentMode)
 
 void MessageDialogs::showInformationDialog(QString message, bool showEvenInSilentMode)
 {
-	if (d->manager()->getUpdate()->m_silentAsMuchAsItCouldGet) {
-		if (! showEvenInSilentMode) {
-			// Don't show information dialogs in the silent mode
-			return;
-		}
-	}
 
 	QMessageBox dlInformationMsgBox;
 	dlInformationMsgBox.setIcon(QMessageBox::Information);

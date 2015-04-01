@@ -25,9 +25,12 @@ INCLUDEPATH += $$PWD
 
 # Fervor autoupdater
 # (set TARGET and VERSION of your app before including Fervor.pri)
-!include("../src/AutoUpdater.pri") {
-	error("Unable to include Autoupdater.")
+!include("../src/Handler/Handler.pri") {
+	error("Unable to include Handler.")
 }
+#!include("../src/AutoUpdater.pri") {
+#	error("Unable to include Autoupdater.")
+#}
 
 # The sample application
 SOURCES += main.cpp \

@@ -20,9 +20,9 @@
 #include <QSslSocket>
 #include <QSslCertificate>
 
-#include "UpdaterWindow.h"
+#include "HandlerManager.h"
 
-Ssl::Ssl(UpdaterWindow* window) : QObject(window), d(window)
+Ssl::Ssl(HandlerManager* window) : QObject(window), d(window)
 {
     m_requiredSslFingerprint = "";
 

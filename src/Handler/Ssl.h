@@ -21,13 +21,13 @@
 
 #include <QtCore/QObject>
 
-class UpdaterWindow;
+class HandlerManager;
 
 class Ssl : public QObject
 {
         Q_OBJECT
     public:
-        Ssl(UpdaterWindow *window);
+        Ssl(HandlerManager *window);
         ~Ssl();
 
         void setRequiredSslFingerPrint(QString md5);
@@ -39,10 +39,8 @@ class Ssl : public QObject
     public slots:
 
     private:
-        UpdaterWindow *d;
-        friend class GetUpdate;
-        friend class ActionUpdate;
-
+        HandlerManager *d;
+    friend class GetUpdate;
         //
         // SSL Fingerprint Check infrastructure
         //

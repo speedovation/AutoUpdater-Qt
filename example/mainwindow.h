@@ -3,8 +3,8 @@
 
 
 #include<QMainWindow>
-#include "UpdaterWindow.h"
-
+//#include "UpdaterWindow.h"
+#include "HandlerManager.h"
 
 namespace Ui {
 class MainWindow;
@@ -21,7 +21,7 @@ public:
 private:
 	Ui::MainWindow *ui;
 
-    UpdaterWindow *w;
+    HandlerManager *w;
 };
 
 #endif // MAINWINDOW_H

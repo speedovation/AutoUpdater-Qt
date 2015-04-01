@@ -46,14 +46,16 @@ void ActionUpdate::SkipUpdate()
 {
 	qDebug() << "Skip update";
 
-	UpdateFileData* proposedUpdate = d->manager()->parseUpdate()->getProposedUpdate();
-	if (! proposedUpdate) {
-		qWarning() << "Proposed update is NULL (shouldn't be at this point)";
-		return;
-	}
+    ///FIXME : version
 
-    //	 Start ignoring this particular version
-	IgnoredVersions::setVersionIgnored(proposedUpdate->getEnclosureVersion());
+//	UpdateFileData* proposedUpdate = d->manager()->parseUpdate()->getProposedUpdate();
+//	if (! proposedUpdate) {
+//		qWarning() << "Proposed update is NULL (shouldn't be at this point)";
+//		return;
+//	}
+
+//    //	 Start ignoring this particular version
+//	IgnoredVersions::setVersionIgnored(proposedUpdate->getEnclosureVersion());
 
 }
 
@@ -69,18 +71,20 @@ void ActionUpdate::UpdateInstallationConfirmed()
 {
 	qDebug() << "Confirm update installation";
 
-    UpdateFileData* proposedUpdate = d->manager()->parseUpdate()->getProposedUpdate();
-	if (! proposedUpdate) {
-		qWarning() << "Proposed update is NULL (shouldn't be at this point)";
-		return;
-	}
+    ///FIXME: download url
+
+//    UpdateFileData* proposedUpdate = d->manager()->parseUpdate()->getProposedUpdate();
+//	if (! proposedUpdate) {
+//		qWarning() << "Proposed update is NULL (shouldn't be at this point)";
+//		return;
+//	}
 
 
-	// Open a link
-	if (! QDesktopServices::openUrl(proposedUpdate->getEnclosureUrl())) {
-		d->manager()->messageDialogs()->showErrorDialog(tr("Unable to open this link in a browser. Please do it manually."), true);
-		return;
-	}
+//	// Open a link
+//	if (! QDesktopServices::openUrl(proposedUpdate->getEnclosureUrl())) {
+//		d->manager()->messageDialogs()->showErrorDialog(tr("Unable to open this link in a browser. Please do it manually."), true);
+//		return;
+//	}
 
 	//hideUpdaterWindow();
 	//hideUpdateConfirmationDialog();
@@ -135,23 +139,23 @@ void ActionUpdate::decideWhatToDoWithCurrentUpdateProposal()
 void ActionUpdate::InstallUpdate()
 {
 	qDebug() << "Install update";
-	if(d->manager()->parseUpdate()->getProposedUpdate()==NULL)
-	{
-		qWarning() << "Abort Update: No update prososed! This should not happen.";
-		return;
-	}
+//	if(d->manager()->parseUpdate()->getProposedUpdate()==NULL)
+//	{
+//		qWarning() << "Abort Update: No update prososed! This should not happen.";
+//		return;
+//	}
 
 	//showUpdateConfirmationDialogUpdatedWithCurrentUpdateProposal();
 	// Prepare download
-	QUrl url = d->manager()->parseUpdate()->getProposedUpdate()->getEnclosureUrl();
+	QUrl url = QUrl("");// d->manager()->parseUpdate()->getProposedUpdate()->getEnclosureUrl();
 
 	// Check SSL Fingerprint if required
-	if(url.scheme()=="https" && !d->manager()->ssl()->m_requiredSslFingerprint.isEmpty())
-		if( ! d->manager()->ssl()->checkSslFingerPrint(url) )	// check failed
-		{
-			qWarning() << "Update aborted.";
-			return;
-		}
+//	if(url.scheme()=="https" && !d->manager()->ssl()->m_requiredSslFingerprint.isEmpty())
+//		if( ! d->manager()->ssl()->checkSslFingerPrint(url) )	// check failed
+//		{
+//			qWarning() << "Update aborted.";
+//			return;
+//		}
 
 
 	// Start Download

@@ -24,14 +24,15 @@
 #include <QApplication>
 #include <QFileInfo>
 
-#include "UpdaterWindow.h"
+//#include "UpdaterWindow.h"
+#include "HandlerManager.h"
 
-#include "Partials/UpdateDownloadProgress.h"
-#include "UpdateFileData/UpdateFileData.h"
-#include "Common/IgnoredVersions.h"
+//#include "Partials/UpdateDownloadProgress.h"
+#include "../UpdateFileData/UpdateFileData.h"
+#include "../Common/IgnoredVersions.h"
 
 
-GetUpdate::GetUpdate(UpdaterWindow *window) : QObject(window), d(window)
+GetUpdate::GetUpdate(HandlerManager *window) : QObject(window), d(window)
 {
     skipVersionAllowed = true;
 	remindLaterAllowed = true;
@@ -47,11 +48,11 @@ GetUpdate::~GetUpdate()
 
 void GetUpdate::startDownloadFeed(QUrl url)
 {
-	d->manager()->parseUpdate()->m_xml.clear();
+	d->parseUpdate()->m_xml.clear();
 
 	// Check SSL Fingerprint if required
-	if(url.scheme()=="https" && ! d->manager()->ssl()->m_requiredSslFingerprint.isEmpty())
-		if( !d->manager()->ssl()->checkSslFingerPrint(url) )	// check failed
+	if(url.scheme()=="https" && ! d->ssl()->m_requiredSslFingerprint.isEmpty())
+		if( !d->ssl()->checkSslFingerPrint(url) )	// check failed
 		{
 			qWarning() << "Update aborted.";
 			return;
@@ -80,7 +81,7 @@ void GetUpdate::httpFeedReadyRead()
 	// We read all of its new data and write it into the file.
 	// That way we use less RAM than when reading it at the finished()
 	// signal of the QNetworkReply
-	d->manager()->parseUpdate()->m_xml.addData(m_reply->readAll());
+	d->parseUpdate()->m_xml.addData(m_reply->readAll());
 }
 
 void GetUpdate::httpFeedUpdateDataReadProgress(qint64 bytesRead,
@@ -119,10 +120,10 @@ void GetUpdate::httpFeedDownloadFinished()
 	} else {
 
 		// Done.
-		d->manager()->parseUpdate()->xmlParseFeed();
+		d->parseUpdate()->xmlParseFeed();
 
         //
-        //if(!d->manager()->getUpdate()->m_silentAsMuchAsItCouldGet)
+        //if(!d->getUpdate()->m_silentAsMuchAsItCouldGet)
 //        {
 //            d->UpdateWindowWithCurrentProposedUpdate();
 //            d->show();

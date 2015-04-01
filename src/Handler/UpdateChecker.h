@@ -21,7 +21,7 @@
 
 #include <QObject>
 
-class UpdaterWindow;
+class HandlerManager;
 
 QT_BEGIN_NAMESPACE
 class QNetworkReply;
@@ -32,7 +32,7 @@ class UpdateChecker : public QObject
 {
         Q_OBJECT
     public:
-        UpdateChecker(UpdaterWindow *window);
+        UpdateChecker(HandlerManager* manager);
         ~UpdateChecker();
 
 
@@ -47,7 +47,7 @@ class UpdateChecker : public QObject
     private slots:
 
     private:
-        UpdaterWindow *d;
+        HandlerManager *d;
 
 
 };

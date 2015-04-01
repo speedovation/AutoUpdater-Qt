@@ -14,18 +14,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
 
-    w = new UpdaterWindow(0 , true, true) ;
+    w = new HandlerManager() ;
 
-    w->manager()->getUpdate()->setFeedURL("http://kiwi.po/update.xml");
-    //    w->manager()->getUpdate()->setFeedURL("http://kineticwing.com/update.xml");
+    w->getUpdate()->setFeedURL("http://kiwi.po/update.xml");
+//    //    w->getUpdate()->setFeedURL("http://kineticwing.com/update.xml");
 
-    // Connect the "check for updates manually" button with the autoupdater
-    connect(ui->updateButton, SIGNAL(clicked()),
-            w->manager()->updateChecker(), SLOT(CheckForUpdatesNotSilent() ));
+//    // Connect the "check for updates manually" button with the autoupdater
+//    connect(ui->updateButton, SIGNAL(clicked()),
+//            w->updateChecker(), SLOT(CheckForUpdatesNotSilent() ));
 
 
-    //Autocheck
-    w->manager()->updateChecker()->CheckForUpdatesSilent();
+//    //Autocheck
+    w->updateChecker()->CheckForUpdatesSilent();
 
 
 

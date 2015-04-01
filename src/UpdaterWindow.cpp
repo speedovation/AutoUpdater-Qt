@@ -64,6 +64,13 @@
  *        Run Updater for cleaning up folder
  *
  *
+ *  It requires:
+ *    version
+ *    download link
+ *    release note link
+ *
+ *
+ *
  * @brief UpdaterWindow::UpdaterWindow
  * @param parent
  * @param skipVersionAllowed
@@ -129,15 +136,15 @@ UpdaterWindow::~UpdaterWindow()
 
 bool UpdaterWindow::UpdateWindowWithCurrentProposedUpdate()
 {
-	UpdateFileData* proposedUpdate = _baseManager->parseUpdate()->getProposedUpdate();
-	if (! proposedUpdate) {
-		return false;
-	}
+//	UpdateFileData* proposedUpdate = _baseManager->parseUpdate()->getProposedUpdate();
+//	if (! proposedUpdate) {
+//		return false;
+//	}
 
-	QString downloadString = ui->wouldYouLikeToDownloadLabel->text()
-			.arg(QApplication::applicationName(), proposedUpdate->getEnclosureVersion(), QApplication::applicationVersion());
+//	QString downloadString = ui->wouldYouLikeToDownloadLabel->text()
+//			.arg(QApplication::applicationName(), proposedUpdate->getEnclosureVersion(), QApplication::applicationVersion());
 
-    ui->wouldYouLikeToDownloadLabel->setText(downloadString);
+//    ui->wouldYouLikeToDownloadLabel->setText(downloadString);
 
     //Get change notes from download link and set it inside
     //m_ui->releaseNotes

@@ -1,7 +1,7 @@
 #contains(QT_VERSION, ^5\\.[0-9]\\..*){
 
    QT += core widgets webkitwidgets network
-
+TEMPLATE=app
 #}else{
     #QT += core gui webkit network
 #    QT += core network
@@ -38,14 +38,15 @@ SOURCES += \
 #        $$PWD/Features/ParseUpdate.cpp \
         $$PWD/Features/MessageDialogs.cpp \
         $$PWD/Features/Zip.cpp \
-        $$PWD/Features/Ssl.cpp \
+#        $$PWD/Features/Ssl.cpp \
         $$PWD/Features/Helper.cpp \
         $$PWD/Features/ActionUpdate.cpp \
         $$PWD/Features/Tests.cpp \
         $$PWD/Common/Platform.cpp \
         $$PWD/Common/VersionComparator.cpp \
         $$PWD/Common/IgnoredVersions.cpp \
-    $$PWD/Features/Mode.cpp
+    $$PWD/Features/Mode.cpp \
+    main.cpp
 
 HEADERS += \
         $$PWD/Features/GetReleaseNotes.h \
@@ -59,7 +60,7 @@ HEADERS += \
 #        $$PWD/Features/ParseUpdate.h \
         $$PWD/Features/MessageDialogs.h \
         $$PWD/Features/Zip.h \
-        $$PWD/Features/Ssl.h \
+#        $$PWD/Features/Ssl.h \
         $$PWD/Features/Helper.h \
         $$PWD/Features/ActionUpdate.h \
         $$PWD/Features/Tests.h \

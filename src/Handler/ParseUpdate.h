@@ -23,9 +23,9 @@
 #include <QObject>
 #include <QXmlStreamReader>
 
-#include "UpdateFileData/UpdateFileData.h"
+#include "../UpdateFileData/UpdateFileData.h"
 
-class UpdaterWindow;
+class HandlerManager;
 
 
 
@@ -33,7 +33,7 @@ class ParseUpdate : public QObject
 {
         Q_OBJECT
     public:
-        ParseUpdate(   UpdaterWindow *window);
+        ParseUpdate(   HandlerManager *window);
         ~ParseUpdate();
 
         //
@@ -45,13 +45,13 @@ class ParseUpdate : public QObject
 
         UpdateFileData* getProposedUpdate();
 
+        QXmlStreamReader m_xml;				// XML data collector and parser
 
 
     private:
-        UpdaterWindow *d;
-        friend class GetUpdate;
+        HandlerManager *d;
+//        friend class GetUpdate;
 
-        QXmlStreamReader m_xml;				// XML data collector and parser
 
 
         // Available update (NULL if not fetched)

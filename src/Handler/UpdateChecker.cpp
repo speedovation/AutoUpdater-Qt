@@ -19,13 +19,14 @@
 
 #include "UpdateChecker.h"
 
-#include "UpdaterWindow.h"
+//#include "UpdaterWindow.h"
+#include "HandlerManager.h"
 
 #include <QAuthenticator>
 #include <QNetworkReply>
 #include <QApplication>
 
-UpdateChecker::UpdateChecker(UpdaterWindow* window) : d(window)
+UpdateChecker::UpdateChecker(HandlerManager* manager) : d(manager)
 {
 
 }
@@ -38,12 +39,12 @@ UpdateChecker::~UpdateChecker()
 
 bool UpdateChecker::CheckForUpdates(bool silentAsMuchAsItCouldGet)
 {
-	if (d->manager()->getUpdate()->m_feedURL.isEmpty()) {
+	if (d->getUpdate()->m_feedURL.isEmpty()) {
 		qCritical() << "Please set feed URL via setFeedURL() before calling CheckForUpdates().";
 		return false;
 	}
 
-    d->manager()->getUpdate()->m_silentAsMuchAsItCouldGet = silentAsMuchAsItCouldGet;
+    ///d->getUpdate()->m_silentAsMuchAsItCouldGet = silentAsMuchAsItCouldGet;
 
 	// Check if application's organization name and domain are set, fail otherwise
 	// (nowhere to store QSettings to)
@@ -67,9 +68,9 @@ bool UpdateChecker::CheckForUpdates(bool silentAsMuchAsItCouldGet)
 		return false;
 	}
 
-	d->manager()->getUpdate()->cancelDownloadFeed();
-	d->manager()->getUpdate()->m_httpRequestAborted = false;
-	d->manager()->getUpdate()->startDownloadFeed(d->manager()->getUpdate()->m_feedURL);
+	d->getUpdate()->cancelDownloadFeed();
+	d->getUpdate()->m_httpRequestAborted = false;
+	d->getUpdate()->startDownloadFeed(d->getUpdate()->m_feedURL);
 
 
 	return true;

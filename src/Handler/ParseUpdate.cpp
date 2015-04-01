@@ -19,11 +19,13 @@
 
 #include "ParseUpdate.h"
 
-#include "UpdaterWindow.h"
-#include "Common/Platform.h"
-#include "Common/IgnoredVersions.h"
+//#include "UpdaterWindow.h"
+#include "HandlerManager.h"
+#include "../UpdateFileData/UpdateFileData.h"
+#include "../Common/Platform.h"
+#include "../Common/IgnoredVersions.h"
 
-ParseUpdate::ParseUpdate(UpdaterWindow* window) : d(window)
+ParseUpdate::ParseUpdate(HandlerManager* window) : d(window)
 {
     m_proposedUpdate = 0;
 }
@@ -134,7 +136,8 @@ bool ParseUpdate::xmlParseFeed()
 
 		if (m_xml.error() && m_xml.error() != QXmlStreamReader::PrematureEndOfDocumentError) {
 
-			d->manager()->messageDialogs()->showErrorDialog(tr("Feed parsing failed: %1 %2.").arg(QString::number(m_xml.lineNumber()), m_xml.errorString()), false);
+            ///SHOW message in app style
+			///d->messageDialogs()->showErrorDialog(tr("Feed parsing failed: %1 %2.").arg(QString::number(m_xml.lineNumber()), m_xml.errorString()), false);
 			return false;
 
 		}
@@ -142,7 +145,8 @@ bool ParseUpdate::xmlParseFeed()
 
     // No updates were found if we're at this point
     // (not a single <item> element found)
-    d->manager()->messageDialogs()->showInformationDialog(tr("No updates were found."), false);
+    ///show error in app style
+    ///d->messageDialogs()->showInformationDialog(tr("No updates were found."), false);
 	return false;
 }
 
@@ -170,8 +174,10 @@ bool ParseUpdate::searchDownloadedFeedForUpdates(QString xmlTitle,
 	// Validate
 	if (xmlReleaseNotesLink.isEmpty()) {
 		if (xmlLink.isEmpty()) {
-			d->manager()->messageDialogs()->showErrorDialog(tr("Feed error: \"release notes\" link is empty"), false);
-			return false;
+
+            ///d->messageDialogs()->showErrorDialog(tr("Feed error: \"release notes\" link is empty"), false);
+
+            return false;
 		} else {
 			xmlReleaseNotesLink = xmlLink;
 		}
@@ -179,19 +185,23 @@ bool ParseUpdate::searchDownloadedFeedForUpdates(QString xmlTitle,
 		xmlLink = xmlReleaseNotesLink;
 	}
 	if (! (xmlLink.startsWith("http://") || xmlLink.startsWith("https://"))) {
-		d->manager()->messageDialogs()->showErrorDialog(tr("Feed error: invalid \"release notes\" link"), false);
-		return false;
+
+        ///d->messageDialogs()->showErrorDialog(tr("Feed error: invalid \"release notes\" link"), false);
+
+        return false;
 	}
 	if (xmlEnclosureUrl.isEmpty() || xmlEnclosureVersion.isEmpty() || xmlEnclosurePlatform.isEmpty()) {
-		d->manager()->messageDialogs()->showErrorDialog(tr("Feed error: invalid \"enclosure\" with the download link"), false);
-		return false;
+
+        ///d->messageDialogs()->showErrorDialog(tr("Feed error: invalid \"enclosure\" with the download link"), false);
+
+        return false;
 	}
 
 	// Relevant version?
 	if (IgnoredVersions::isVersionIgnored(xmlEnclosureVersion)) {
 		qDebug() << "Version '" << xmlEnclosureVersion << "' is ignored, too old or something like that.";
 
-		d->manager()->messageDialogs()->showInformationDialog(tr("No updates were found."), false);
+		///d->messageDialogs()->showInformationDialog(tr("No updates were found."), false);
 
 		return true;	// Things have succeeded when you think of it.
 	}
@@ -216,10 +226,17 @@ bool ParseUpdate::searchDownloadedFeedForUpdates(QString xmlTitle,
 	m_proposedUpdate->setEnclosureType(xmlEnclosureType);
 
 	// Show "look, there's an update" window
-	d->UpdateWindowWithCurrentProposedUpdate();
+	/// d->UpdateWindowWithCurrentProposedUpdate();
 	// Decide ourselves what to do
 //	decideWhatToDoWithCurrentUpdateProposal();
 //#endif
+    if (d->getUpdate()->m_silentAsMuchAsItCouldGet) {
+			// Don't show errors in the silent mode
+			return;
+		///Fixme here
+	}
+
+    qDebug() << "Update found";
 
 	return true;
 }

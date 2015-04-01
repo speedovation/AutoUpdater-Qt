@@ -22,6 +22,7 @@
 #include <QMainWindow>
 
 #include "Features/BaseManager.h"
+#include "Partials/UpdateDownloadProgress.h"
 
 class QGraphicsScene;
 
@@ -35,7 +36,7 @@ class UpdaterWindow : public QMainWindow
         Q_OBJECT
 
     public:
-        explicit UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remindLaterAllowed);
+        explicit UpdaterWindow(QWidget *parent = 0, bool skipVersionAllowed = true, bool remindLaterAllowed = true);
         ~UpdaterWindow();
 
         // Update the current update proposal from FvUpdater
