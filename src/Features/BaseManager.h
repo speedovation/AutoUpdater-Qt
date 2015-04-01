@@ -41,12 +41,19 @@
 
 #include "Tests.h"
 
+struct UpdateInfo
+{
+    QString downloadLink;
+    QString releaseLink;
+    QString version;
+};
 
 class BaseManager : public QObject
 {
         Q_OBJECT
     public:
         explicit BaseManager(UpdaterWindow *window);
+        ~BaseManager();
 
         GetReleaseNotes* getReleaseNotes();
         Authenticator* authenticator();

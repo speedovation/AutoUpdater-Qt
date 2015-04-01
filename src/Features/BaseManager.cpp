@@ -36,6 +36,10 @@ BaseManager::BaseManager(UpdaterWindow* window) :
     _tests = new Tests(window);
 
 }
+BaseManager::~BaseManager()
+{
+    delete _authenticator;
+}
 
 GetReleaseNotes* BaseManager::getReleaseNotes()
 {
