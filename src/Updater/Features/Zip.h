@@ -44,6 +44,8 @@ class Zip : public QObject
     private:
         UpdaterWindow *d;
 
+        bool copyDir(const QString &src, const QString &dest);
+
 };
 
 #endif // ZIP_H

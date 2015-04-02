@@ -72,7 +72,7 @@ void  Zip::extractAll(zip_file *zipFile)
             }
 
             QDataStream out(&file);
-//            out.setByteOrder( QDataStream::BigEndian );
+            //            out.setByteOrder( QDataStream::BigEndian );
             out.setVersion(QDataStream::Qt_5_4);
 
             zipFile->getData(f,&out);
@@ -94,8 +94,70 @@ void  Zip::extractAll(zip_file *zipFile)
     }
 
 
+    d.mkdir(random + "rollback/");
+
+    copyDir(qApp->applicationDirPath() , random + "rollback/");
+
+
+
 }
 
+/**
+ * @brief Zip::copyDir
+ * @param src
+ * @param dest
+ * @return bool
+ *
+ *  Authors: wysota , Yash
+ *
+ *  I've corrected few problems in original one
+ */
+bool Zip::copyDir(const QString &src, const QString &dest)
+{
+
+    QDir dir(src);
+
+    QDir dirdest(dest);
+
+    if(!dir.isReadable())
+        return false;
+
+    QFileInfoList entries = dir.entryInfoList();
+
+    for(QList<QFileInfo>::iterator it = entries.begin(); it!=entries.end();++it)
+    {
+        QFileInfo &fileInfo = *it;
+
+        if(fileInfo.fileName()=="." || fileInfo.fileName()=="..")
+        {
+            continue;
+        }
+        else if(fileInfo.isDir())
+        {
+            qDebug() << dest + fileInfo.fileName() ;
+            QDir d;
+            d.mkdir(dest + "/" + fileInfo.fileName());
+
+            copyDir(fileInfo.filePath(),dest + "/" + fileInfo.fileName());
+            continue;
+        }
+        else if(fileInfo.isSymLink())
+        {
+            continue;
+        }
+        else if(fileInfo.isFile() && fileInfo.isReadable())
+        {
+
+            QFile file(fileInfo.filePath());
+            file.copy(dirdest.absoluteFilePath(fileInfo.fileName()));
+        }
+        else
+            return false;
+
+    }
+
+    return true;
+}
 
 
 /*!
@@ -109,15 +171,15 @@ void Zip::extract(QNetworkReply* reply)
 
 
 #ifdef Q_OS_MAC
-//    CFURLRef appURLRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-//    char path[PATH_MAX];
-//    if (!CFURLGetFileSystemRepresentation(appURLRef, TRUE, (UInt8 *)path, PATH_MAX)) {
-//        // error!
-//    }
+    //    CFURLRef appURLRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+    //    char path[PATH_MAX];
+    //    if (!CFURLGetFileSystemRepresentation(appURLRef, TRUE, (UInt8 *)path, PATH_MAX)) {
+    //        // error!
+    //    }
 
-//    CFRelease(appURLRef);
-//    QString filePath = QString(path);
-//    QString rootDirectory = filePath.left(filePath.lastIndexOf("/"));
+    //    CFRelease(appURLRef);
+    //    QString filePath = QString(path);
+    //    QString rootDirectory = filePath.left(filePath.lastIndexOf("/"));
 
     QDir dir = QDir(QCoreApplication::applicationDirPath());
     dir.cdUp();
