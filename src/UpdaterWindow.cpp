@@ -136,15 +136,14 @@ UpdaterWindow::~UpdaterWindow()
 
 bool UpdaterWindow::UpdateWindowWithCurrentProposedUpdate()
 {
-//	UpdateFileData* proposedUpdate = _baseManager->parseUpdate()->getProposedUpdate();
-//	if (! proposedUpdate) {
-//		return false;
-//	}
 
-//	QString downloadString = ui->wouldYouLikeToDownloadLabel->text()
-//			.arg(QApplication::applicationName(), proposedUpdate->getEnclosureVersion(), QApplication::applicationVersion());
 
-//    ui->wouldYouLikeToDownloadLabel->setText(downloadString);
+	QString downloadString = ui->wouldYouLikeToDownloadLabel->text()
+			.arg(QApplication::applicationName(),_baseManager->actionUpdate()->getUpdateInfo().version ,
+                 _baseManager->actionUpdate()->getUpdateInfo().oldVersion );
+
+
+    ui->wouldYouLikeToDownloadLabel->setText(downloadString);
 
     //Get change notes from download link and set it inside
     //m_ui->releaseNotes

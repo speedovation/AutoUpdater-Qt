@@ -41,13 +41,6 @@
 
 #include "Tests.h"
 
-struct UpdateInfo
-{
-    QString downloadLink;
-    QString releaseLink;
-    QString version;
-};
-
 class BaseManager : public QObject
 {
         Q_OBJECT

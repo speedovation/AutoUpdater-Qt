@@ -47,7 +47,7 @@ SOURCES += \
         $$PWD/Common/IgnoredVersions.cpp \
     $$PWD/Features/Mode.cpp \
     main.cpp \
-    UpdateWindow.cpp
+#    UpdateWindow.cpp
 
 HEADERS += \
         $$PWD/Features/GetReleaseNotes.h \
@@ -69,13 +69,13 @@ HEADERS += \
         $$PWD/Common/VersionComparator.h \
         $$PWD/Common/IgnoredVersions.h \
     $$PWD/Features/Mode.h \
-    UpdateWindow.h
+#    UpdateWindow.h
 
 
 FORMS += \
     $$PWD/UpdaterWindow.ui \
     $$PWD/Partials/UpdateDownloadProgress.ui \
-    UpdateWindow.ui
+#    UpdateWindow.ui
 
 
 TRANSLATIONS += $$PWD/src/fervor_lt.ts

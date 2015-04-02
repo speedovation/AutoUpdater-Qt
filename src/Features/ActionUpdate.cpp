@@ -136,6 +136,8 @@ void ActionUpdate::decideWhatToDoWithCurrentUpdateProposal()
 }
 
 
+///
+/// TODO  : NO support for SSL
 void ActionUpdate::InstallUpdate()
 {
 	qDebug() << "Install update";
@@ -147,7 +149,7 @@ void ActionUpdate::InstallUpdate()
 
 	//showUpdateConfirmationDialogUpdatedWithCurrentUpdateProposal();
 	// Prepare download
-	QUrl url = QUrl("");// d->manager()->parseUpdate()->getProposedUpdate()->getEnclosureUrl();
+	QUrl url = QUrl(_updateInfo.downloadLink);// d->manager()->parseUpdate()->getProposedUpdate()->getEnclosureUrl();
 
 	// Check SSL Fingerprint if required
 //	if(url.scheme()=="https" && !d->manager()->ssl()->m_requiredSslFingerprint.isEmpty())
@@ -223,3 +225,12 @@ void ActionUpdate::httpUpdateDownloadFinished()
 }	// httpUpdateDownloadFinished END
 
 
+UpdateInfo ActionUpdate::getUpdateInfo()
+{
+    return _updateInfo;
+}
+
+void ActionUpdate::setUpdateInfo(UpdateInfo info)
+{
+    _updateInfo = info;
+}

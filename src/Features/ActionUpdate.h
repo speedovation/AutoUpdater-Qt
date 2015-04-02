@@ -24,6 +24,15 @@
 
 class UpdaterWindow;
 
+struct UpdateInfo
+{
+    QString downloadLink;
+    QString releaseLink;
+    QString version;
+    QString oldVersion;
+};
+
+
 class ActionUpdate : public QObject
 {
         Q_OBJECT
@@ -32,6 +41,9 @@ class ActionUpdate : public QObject
         ~ActionUpdate();
 
         void finishUpdate(QString pathToFinish = "");
+
+        void setUpdateInfo(UpdateInfo info);
+        UpdateInfo getUpdateInfo();
 
     public slots:
         // Update window button slots
@@ -55,6 +67,8 @@ class ActionUpdate : public QObject
         void decideWhatToDoWithCurrentUpdateProposal();                 // Perform an action which is configured in settings
 
         QNetworkAccessManager m_qnam;
+
+        UpdateInfo _updateInfo;
 
 
 };
