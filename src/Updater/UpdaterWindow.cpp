@@ -146,6 +146,9 @@ bool UpdaterWindow::UpdateWindowWithCurrentProposedUpdate()
 
     ui->wouldYouLikeToDownloadLabel->setText(downloadString);
 
+    ui->releaseNotes->setHtml ( QString("<h3>What's changed</h3>Please visit for more :<br><br><a href='%1'>%1</a>")
+                                .arg(_baseManager->actionUpdate()->getUpdateInfo().releaseLink) ) ;
+
 
     switch (_baseManager->actionUpdate()->getUpdateInfo().mode) {
         case DeltaMode:

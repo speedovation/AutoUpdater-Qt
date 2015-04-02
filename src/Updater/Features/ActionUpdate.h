@@ -68,8 +68,6 @@ class ActionUpdate : public QObject
         void clean();
 
 
-        // Update confirmation dialog button slots
-        void UpdateInstallationConfirmed();
 
     private slots:
         void httpUpdateDownloadFinished();
