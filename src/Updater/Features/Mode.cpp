@@ -46,6 +46,11 @@ void Mode::handler(const QStringList& args)
 {
     qDebug() <<"Arguments: " << qApp->arguments();
 
+    if(args.count() < 2)
+    {
+        qDebug() << "Don't run app without proper mode.";
+        exit(500);
+    }
 
     UpdateInfo info;
     info.mode = (UpdateModeFlag)args.at(1).toInt();
@@ -61,27 +66,58 @@ void Mode::handler(const QStringList& args)
     ///
     /// Clean mode
     /// Filename Mode localfolderpath
+    ///
+    ///
 
+    bool error = false;
 
-    if(qApp->arguments().count() == 6)
-    {
+    switch (info.mode) {
+        case UpdateMode:
+            if(qApp->arguments().count() == 6)
+            {
+                info.downloadLink = args.at(2);
+                info.releaseLink =args.at(3);
+                info.version = args.at(4);
+                info.oldVersion = args.at(5);
+            }
+            else
+                error = true;
 
-        info.downloadLink = args.at(2);
-        info.releaseLink =args.at(3);
-        info.version = args.at(4);
-        info.oldVersion = args.at(5);
-
-       d->manager()->actionUpdate()->setUpdateInfo(info);
-
-       d->UpdateWindowWithCurrentProposedUpdate();
+            break;
+        case InstallMode:
+            if(qApp->arguments().count() == 4)
+            {
+                info.appPath = args.at(2);
+                info.localFolderPath =args.at(3);
+            }
+            else
+                error = true;
+        case CleanMode:
+            if(qApp->arguments().count() == 3)
+            {
+                info.localFolderPath =args.at(2);
+            }
+            else
+                error = true;
+        default:
+            break;
     }
-    else
+
+    if(error)
     {
         qDebug() << "Wrong arguments";
+
         d->show();
+        return;
         ///REMOVE below comment when in production
 //        exit(100);
     }
+
+
+    d->manager()->actionUpdate()->setUpdateInfo(info);
+    d->UpdateWindowWithCurrentProposedUpdate();
+
+
 }
 
 /**

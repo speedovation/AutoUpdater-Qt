@@ -41,6 +41,8 @@ struct UpdateInfo
     QString version;
     QString oldVersion;
     UpdateModeFlag mode;
+    QString localFolderPath;
+    QString appPath;
 };
 
 
