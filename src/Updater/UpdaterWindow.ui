@@ -31,8 +31,7 @@
     <item>
      <widget class="QLabel" name="wouldYouLikeToDownloadLabel">
       <property name="text">
-       <string>%1 %2 is now available - you have %3. 
-Would you like to download and install it?</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 %2&lt;/span&gt; is now available - you have &lt;span style=&quot; font-weight:600;&quot;&gt;%3&lt;/span&gt;. &lt;/p&gt;&lt;p&gt;Would you like to &lt;span style=&quot; font-weight:600;&quot;&gt;download and install&lt;/span&gt; it?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </item>

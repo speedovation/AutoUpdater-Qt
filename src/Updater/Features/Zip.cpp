@@ -26,6 +26,7 @@
 #include <QNetworkReply>
 #include <QVector>
 #include <QDebug>
+#include <QUuid>
 
 #ifdef Q_OS_MAC
 #include "CoreFoundation/CoreFoundation.h"
@@ -50,18 +51,23 @@ void  Zip::extractAll(zip_file *zipFile)
 
     QVector<zip_info> files =  QVector<zip_info>::fromStdVector(zipFile->infolist());
 
+    QString random = QDir::tempPath() + "/" + QUuid::createUuid().toString() + "/" ;
+
+    QDir d;
+    d.mkdir(random);
+
     foreach (const zip_info &f , files ) {
 
         if( f.crc > 0 )
         {
             qDebug() <<"File:" <<  QString::fromStdString(f.filename);;
 
-            QFile file( qApp->applicationDirPath() + "/" + QString::fromStdString(f.filename));
+            QFile file(  random  + QString::fromStdString(f.filename));
 
 
             if (!file.open(QIODevice::WriteOnly))
             {
-                qDebug() << file.errorString() << " :error" << qApp->applicationDirPath() + "/" + QString::fromStdString(f.filename);
+                qDebug() << file.errorString() << " :error" <<  random +  QString::fromStdString(f.filename);
                 continue;
             }
 
@@ -76,8 +82,8 @@ void  Zip::extractAll(zip_file *zipFile)
         }
         else
         {
-            QDir d;
-            d.mkdir(qApp->applicationDirPath() + "/" + QString::fromStdString(f.filename));
+
+            d.mkdir( random + QString::fromStdString(f.filename));
 
             qDebug() << "Dir: " <<  QString::fromStdString(f.filename);;
         }

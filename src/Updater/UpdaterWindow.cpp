@@ -78,25 +78,25 @@
  *
  */
 UpdaterWindow::UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remindLaterAllowed) :
-	QMainWindow(parent),
+    QMainWindow(parent),
     ui(new Ui::UpdaterWindow)
 {
-	ui->setupUi(this);
+    ui->setupUi(this);
 
-//	m_appIconScene = 0;
+    //	m_appIconScene = 0;
 
-	if(!skipVersionAllowed)
-		ui->skipThisVersionButton->hide();
+    if(!skipVersionAllowed)
+        ui->skipThisVersionButton->hide();
 
     if(!remindLaterAllowed)
-		ui->remindMeLaterButton->hide();
+        ui->remindMeLaterButton->hide();
 
-	// Delete on close
-	setAttribute(Qt::WA_DeleteOnClose, true);
+    // Delete on close
+    setAttribute(Qt::WA_DeleteOnClose, true);
 
-	// Set the "new version is available" string
-	QString newVersString = ui->newVersionIsAvailableLabel->text().arg(QApplication::applicationName());
-	ui->newVersionIsAvailableLabel->setText(newVersString);
+    // Set the "new version is available" string
+    QString newVersString = ui->newVersionIsAvailableLabel->text().arg(QApplication::applicationName());
+    ui->newVersionIsAvailableLabel->setText(newVersString);
 
     ui->updateDownloadProgress->hide();
 
@@ -104,11 +104,11 @@ UpdaterWindow::UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remi
 
 
     // Connect buttons
-	connect(ui->installUpdateButton, SIGNAL(clicked()),
-			_baseManager->actionUpdate() , SLOT(InstallUpdate()));
-	connect(ui->skipThisVersionButton, SIGNAL(clicked()),
-			_baseManager->actionUpdate(), SLOT(SkipUpdate()));
-	connect(ui->remindMeLaterButton, SIGNAL(clicked()),
+    connect(ui->installUpdateButton, SIGNAL(clicked()),
+            _baseManager->actionUpdate() , SLOT(InstallUpdate()));
+    connect(ui->skipThisVersionButton, SIGNAL(clicked()),
+            _baseManager->actionUpdate(), SLOT(SkipUpdate()));
+    connect(ui->remindMeLaterButton, SIGNAL(clicked()),
             _baseManager->actionUpdate(), SLOT(RemindMeLater()));
 
 
@@ -131,16 +131,16 @@ UpdaterWindow::UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remi
 
 UpdaterWindow::~UpdaterWindow()
 {
-//	m_ui->releaseNotesWebView->stop();
-	delete ui;
+    //	m_ui->releaseNotesWebView->stop();
+    delete ui;
 }
 
 bool UpdaterWindow::UpdateWindowWithCurrentProposedUpdate()
 {
 
 
-	QString downloadString = ui->wouldYouLikeToDownloadLabel->text()
-			.arg(QApplication::applicationName(),_baseManager->actionUpdate()->getUpdateInfo().version ,
+    QString downloadString = ui->wouldYouLikeToDownloadLabel->text()
+            .arg(QApplication::applicationName(),_baseManager->actionUpdate()->getUpdateInfo().version ,
                  _baseManager->actionUpdate()->getUpdateInfo().oldVersion );
 
 
@@ -155,15 +155,15 @@ bool UpdaterWindow::UpdateWindowWithCurrentProposedUpdate()
 
             break;
         case UpdateMode:
-                setWindowTitle("Software update : New update found");
-//                ui->newVersionIsAvailableLabel->setText("New update found. Please download and Install it.");
-                ui->newVersionIsAvailableLabel->setText( tr("A new version of %1 is available!.").arg(qApp->applicationName()) );
+            setWindowTitle("Software update : New update found");
+            //                ui->newVersionIsAvailableLabel->setText("New update found. Please download and Install it.");
+            ui->newVersionIsAvailableLabel->setText( tr("A new version of %1 is available!.").arg(qApp->applicationName()) );
 
             break;
         case InstallMode:
             setWindowTitle("Software update : Installing...");
             ui->newVersionIsAvailableLabel->setText( tr("Don't close this or open %1. \nWe are in process of updating latest files.").arg(qApp->applicationName()) );
-//            ui->newVersionIsAvailableLabel->hide();
+            //            ui->newVersionIsAvailableLabel->hide();
             ui->wouldYouLikeToDownloadLabel->hide();
             showProgress(true);
 
@@ -172,7 +172,7 @@ bool UpdaterWindow::UpdateWindowWithCurrentProposedUpdate()
             setWindowTitle("Software update : Cleaning...");
             ui->newVersionIsAvailableLabel->setText("We're cleaning. In a minute we will be ready.");
 
-//            ui->newVersionIsAvailableLabel->hide();
+            //            ui->newVersionIsAvailableLabel->hide();
             ui->wouldYouLikeToDownloadLabel->hide();
             showProgress(true);
 
@@ -190,12 +190,12 @@ bool UpdaterWindow::UpdateWindowWithCurrentProposedUpdate()
     //Get change notes from download link and set it inside
     //m_ui->releaseNotes
 
-//	m_ui->releaseNotesWebView->stop();
-//	m_ui->releaseNotesWebView->load(proposedUpdate->GetReleaseNotesLink());
+    //	m_ui->releaseNotesWebView->stop();
+    //	m_ui->releaseNotesWebView->load(proposedUpdate->GetReleaseNotesLink());
 
     show();
 
-	return true;
+    return true;
 }
 
 void UpdaterWindow::closeEvent(QCloseEvent* event)
