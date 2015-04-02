@@ -36,6 +36,7 @@ class Zip : public QObject
         Zip( UpdaterWindow *window);
         ~Zip();
 
+        bool copyDir(const QString &src, const QString &dest);
 
         void extract(QNetworkReply* reply);
 
@@ -44,7 +45,6 @@ class Zip : public QObject
     private:
         UpdaterWindow *d;
 
-        bool copyDir(const QString &src, const QString &dest);
 
 };
 
