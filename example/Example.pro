@@ -1,13 +1,4 @@
-# ------------------------------------------------
-# Sample Fervor application
-# ------------------------------------------------
-
-#contains(QT_VERSION, ^5\\..[0-9]\\.*){
-#    QT += core widgets
-#}else{
-#    QT += core gui
-#}
-QT += core gui widgets webkitwidgets
+QT += core gui widgets
 TARGET = Sample
 VERSION = 1.0
 TEMPLATE = app

@@ -1,20 +1,5 @@
-#contains(QT_VERSION, ^5\\.[0-9]\\..*){
+QT += core widgets network
 
-   QT += core widgets webkitwidgets network
-
-#}else{
-    #QT += core gui webkit network
-#    QT += core network
-#    fervor_gui {
-#        DEFINES += FV_GUI
-#        QT += gui
-#    }
-#    win32:INCLUDEPATH += $$[QT_INSTALL_PREFIX]/../../../../QtSources/4.8.1/src/3rdparty/zlib
-#}
-
-
-DEFINES += FV_APP_NAME=\\\"$$TARGET\\\"
-DEFINES += FV_APP_VERSION=\\\"$$VERSION\\\"
 CONFIG   += c++11
 
 

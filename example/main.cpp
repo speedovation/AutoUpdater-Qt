@@ -15,7 +15,6 @@ int main(int argc, char *argv[])
 	QApplication::setApplicationName("KineticWing IDE");
     QApplication::setApplicationVersion("1.0.0");
 
-//	// Set feed URL before doing anything else
 //	FvUpdater::sharedUpdater()->SetFeedURL("http://kiwi.po/update.xml");
 ////    FvUpdater::sharedUpdater()->setRequiredSslFingerPrint("6c673fd7ca385089b3aff75e9f8ae8c0");	// Optional
 ////	FvUpdater::sharedUpdater()->setHtAuthCredentials("swupdates", "updatepw");	// Optional
