@@ -21,7 +21,7 @@ CONFIG   += c++11
 DEPENDPATH += "$$PWD"
 INCLUDEPATH += "$$PWD"
 
-!include("../thirdparty/miniz-cpp/Miniz.pri") {
+!include("../../thirdparty/miniz-cpp/Miniz.pri") {
 	error("Unable to include Minz.")
 }
 
