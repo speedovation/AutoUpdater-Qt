@@ -19,6 +19,9 @@
 
 #include "ParseUpdate.h"
 
+#include <QProcess>
+#include <QApplication>
+
 //#include "UpdaterWindow.h"
 #include "HandlerManager.h"
 #include "../UpdateFileData/UpdateFileData.h"
@@ -230,14 +233,24 @@ bool ParseUpdate::searchDownloadedFeedForUpdates(QString xmlTitle,
 	// Decide ourselves what to do
 //	decideWhatToDoWithCurrentUpdateProposal();
 //#endif
-    if (d->getUpdate()->m_silentAsMuchAsItCouldGet) {
-			// Don't show errors in the silent mode
-			return;
-		///Fixme here
-	}
+//    if (d->getUpdate()->m_silentAsMuchAsItCouldGet) {
+//			// Don't show errors in the silent mode
+//			return;
+//		///Fixme here
+//	}
 
     qDebug() << "Update found";
 
+
+  bool f =  QProcess::startDetached("./AutoUpdater",
+                            QStringList()
+                            << xmlEnclosureUrl
+                            << xmlReleaseNotesLink
+                            << xmlEnclosureVersion
+                            << qApp->applicationVersion()
+                            );
+
+  qDebug() << f;
 	return true;
 }
 
