@@ -29,10 +29,10 @@
 //class GetUpdate;
 
 
-#include "GetUpdate.h"
-#include "ParseUpdate.h"
-#include "UpdateChecker.h"
-#include "Ssl.h"
+#include "Features/GetUpdate.h"
+#include "Features/ParseUpdate.h"
+#include "Features/UpdateChecker.h"
+#include "Features/Ssl.h"
 
 class HandlerManager : public QObject
 {

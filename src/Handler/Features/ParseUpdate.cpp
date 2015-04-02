@@ -24,7 +24,7 @@
 
 //#include "UpdaterWindow.h"
 #include "HandlerManager.h"
-#include "../UpdateFileData/UpdateFileData.h"
+#include "../Common/UpdateFileData.h"
 #include "../Common/Platform.h"
 #include "../Common/IgnoredVersions.h"
 
@@ -242,7 +242,7 @@ bool ParseUpdate::searchDownloadedFeedForUpdates(QString xmlTitle,
     qDebug() << "Update found";
 
 
-  bool f =  QProcess::startDetached("./AutoUpdater",
+  startUpdater("AutoUpdater",
                             QStringList()
                             << xmlEnclosureUrl
                             << xmlReleaseNotesLink
@@ -250,11 +250,27 @@ bool ParseUpdate::searchDownloadedFeedForUpdates(QString xmlTitle,
                             << qApp->applicationVersion()
                             );
 
-  qDebug() << f;
+
 	return true;
 }
 
+void ParseUpdate::startUpdater(const QString& program, const QStringList& args)
+{
+    QString p = program;
 
+#if defined(Q_OS_LINUX) || defined(Q_OS_MAC)
+    p.prepend("./");
+#elif defined(Q_OS_WIN)
+    p.append(".exe");
+#endif
+
+    bool f =  QProcess::startDetached(p,args);
+
+    if(f)
+        qDebug() << "Running Updater...";
+    else
+        qDebug() << "Failed to run Updater";
+}
 
 UpdateFileData* ParseUpdate::getProposedUpdate()
 {

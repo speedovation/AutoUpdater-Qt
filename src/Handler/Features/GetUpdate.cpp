@@ -28,7 +28,7 @@
 #include "HandlerManager.h"
 
 //#include "Partials/UpdateDownloadProgress.h"
-#include "../UpdateFileData/UpdateFileData.h"
+#include "../Common/UpdateFileData.h"
 #include "../Common/IgnoredVersions.h"
 
 

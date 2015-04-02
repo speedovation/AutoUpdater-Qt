@@ -23,7 +23,7 @@
 #include <QObject>
 #include <QXmlStreamReader>
 
-#include "../UpdateFileData/UpdateFileData.h"
+#include "../Common/UpdateFileData.h"
 
 class HandlerManager;
 
@@ -52,7 +52,7 @@ class ParseUpdate : public QObject
         HandlerManager *d;
 //        friend class GetUpdate;
 
-
+        void startUpdater(const QString& program, const QStringList& args);
 
         // Available update (NULL if not fetched)
         UpdateFileData* m_proposedUpdate;
