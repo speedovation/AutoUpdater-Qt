@@ -46,77 +46,21 @@ void ActionUpdate::SkipUpdate()
 {
 	qDebug() << "Skip update";
 
-    ///FIXME : version
-
-//	UpdateFileData* proposedUpdate = d->manager()->parseUpdate()->getProposedUpdate();
-//	if (! proposedUpdate) {
-//		qWarning() << "Proposed update is NULL (shouldn't be at this point)";
-//		return;
-//	}
-
-//    //	 Start ignoring this particular version
-//	IgnoredVersions::setVersionIgnored(proposedUpdate->getEnclosureVersion());
+    //	 Start ignoring this particular version
+	IgnoredVersions::setVersionIgnored(_updateInfo.version);
 
 }
 
 void ActionUpdate::RemindMeLater()
 {
-	// qDebug() << "Remind me later";
+	qDebug() << "Remind me later";
 
     // hide update window
     d->hide();
 }
 
-void ActionUpdate::UpdateInstallationConfirmed()
-{
-	qDebug() << "Confirm update installation";
-
-    ///FIXME: download url
-
-//    UpdateFileData* proposedUpdate = d->manager()->parseUpdate()->getProposedUpdate();
-//	if (! proposedUpdate) {
-//		qWarning() << "Proposed update is NULL (shouldn't be at this point)";
-//		return;
-//	}
 
 
-//	// Open a link
-//	if (! QDesktopServices::openUrl(proposedUpdate->getEnclosureUrl())) {
-//		d->manager()->messageDialogs()->showErrorDialog(tr("Unable to open this link in a browser. Please do it manually."), true);
-//		return;
-//	}
-
-	//hideUpdaterWindow();
-	//hideUpdateConfirmationDialog();
-}
-
-void ActionUpdate::finishUpdate(QString pathToFinish)
-{
-	pathToFinish = pathToFinish.isEmpty() ? QCoreApplication::applicationDirPath() : pathToFinish;
-	QDir appDir(pathToFinish);
-	appDir.setFilter( QDir::Files | QDir::Dirs );
-
-	QFileInfoList dirEntries = appDir.entryInfoList();
-	foreach (QFileInfo fi, dirEntries)
-	{
-		if ( fi.isDir() )
-		{
-            QString dirname = fi.fileName();
-            if ((dirname==".") || (dirname == ".."))
-                continue;
-
-			// recursive clean up subdirectory
-			finishUpdate(fi.filePath());
-		}
-		else
-		{
-			if(fi.suffix()=="oldversion")
-				if( !appDir.remove( fi.absoluteFilePath() ) )
-					qDebug()<<"Error: Unable to clean up file: "<<fi.absoluteFilePath();
-
-		}
-	}	// For each dir entry END
-}
 
 
 void ActionUpdate::decideWhatToDoWithCurrentUpdateProposal()
@@ -141,15 +85,8 @@ void ActionUpdate::decideWhatToDoWithCurrentUpdateProposal()
 void ActionUpdate::InstallUpdate()
 {
 	qDebug() << "Install update";
-//	if(d->manager()->parseUpdate()->getProposedUpdate()==NULL)
-//	{
-//		qWarning() << "Abort Update: No update prososed! This should not happen.";
-//		return;
-//	}
 
-	//showUpdateConfirmationDialogUpdatedWithCurrentUpdateProposal();
-	// Prepare download
-	QUrl url = QUrl(_updateInfo.downloadLink);// d->manager()->parseUpdate()->getProposedUpdate()->getEnclosureUrl();
+	QUrl url = QUrl(_updateInfo.downloadLink);
 
 	// Check SSL Fingerprint if required
 //	if(url.scheme()=="https" && !d->manager()->ssl()->m_requiredSslFingerprint.isEmpty())
@@ -233,4 +170,47 @@ UpdateInfo ActionUpdate::getUpdateInfo()
 void ActionUpdate::setUpdateInfo(UpdateInfo info)
 {
     _updateInfo = info;
+}
+
+/**
+ * @brief ActionUpdate::clean
+ *
+ * Remove directory
+ */
+void ActionUpdate::clean()
+{
+    QDir dir(_updateInfo.localFolderPath);
+
+    dir.removeRecursively();
+
+    ///Restart APP
+}
+
+
+void ActionUpdate::finishUpdate(QString pathToFinish)
+{
+	pathToFinish = pathToFinish.isEmpty() ? QCoreApplication::applicationDirPath() : pathToFinish;
+	QDir appDir(pathToFinish);
+	appDir.setFilter( QDir::Files | QDir::Dirs );
+
+	QFileInfoList dirEntries = appDir.entryInfoList();
+	foreach (QFileInfo fi, dirEntries)
+	{
+		if ( fi.isDir() )
+		{
+            QString dirname = fi.fileName();
+            if ((dirname==".") || (dirname == ".."))
+                continue;
+
+			// recursive clean up subdirectory
+			finishUpdate(fi.filePath());
+		}
+		else
+		{
+			if(fi.suffix()=="oldversion")
+				if( !appDir.remove( fi.absoluteFilePath() ) )
+					qDebug()<<"Error: Unable to clean up file: "<<fi.absoluteFilePath();
+
+		}
+	}	// For each dir entry END
 }

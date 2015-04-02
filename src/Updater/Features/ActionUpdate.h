@@ -65,6 +65,8 @@ class ActionUpdate : public QObject
         void RemindMeLater();
         void InstallUpdate();
 
+        void clean();
+
 
         // Update confirmation dialog button slots
         void UpdateInstallationConfirmed();

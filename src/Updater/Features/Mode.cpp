@@ -73,7 +73,7 @@ void Mode::handler(const QStringList& args)
 
     switch (info.mode) {
         case UpdateMode:
-            if(qApp->arguments().count() == 6)
+            if(qApp->arguments().count() >= 6)
             {
                 info.downloadLink = args.at(2);
                 info.releaseLink =args.at(3);
@@ -85,20 +85,22 @@ void Mode::handler(const QStringList& args)
 
             break;
         case InstallMode:
-            if(qApp->arguments().count() == 4)
+            if(qApp->arguments().count() >= 4)
             {
                 info.appPath = args.at(2);
                 info.localFolderPath =args.at(3);
             }
             else
                 error = true;
+            break;
         case CleanMode:
-            if(qApp->arguments().count() == 3)
+            if(qApp->arguments().count() >= 3)
             {
                 info.localFolderPath =args.at(2);
             }
             else
                 error = true;
+            break;
         default:
             break;
     }

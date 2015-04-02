@@ -171,6 +171,12 @@ void Zip::extract(QNetworkReply* reply)
     {
     };
 
+
+
+    /// Restart extracted Updater in install mode
+    /// ./extractedpath/TARGET appPath extractedpath
+
+
     QApplication::exit(200);
 
     // Restart ap to clean up and start usual business
