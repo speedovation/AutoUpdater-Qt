@@ -14,27 +14,7 @@ int main(int argc, char *argv[])
     // Show main window
 	UpdaterWindow *w = new UpdaterWindow;
 
-    qDebug() <<"Arguments: " << qApp->arguments();
-
-    if(qApp->arguments().count() == 5)
-    {
-        UpdateInfo info;
-        info.downloadLink = qApp->arguments().at(1);
-        info.releaseLink = qApp->arguments().at(2);
-        info.version = qApp->arguments().at(3);
-        info.oldVersion = qApp->arguments().at(4);
-
-       w->manager()->actionUpdate()->setUpdateInfo(info);
-
-       w->UpdateWindowWithCurrentProposedUpdate();
-    }
-    else
-    {
-        qDebug() << "Wrong arguments";
-        w->show();
-        ///REMOVE below comment when in production
-//        exit(100);
-    }
+    w->manager()->mode()->handler(qApp->arguments());
 
 	
 	return a.exec();

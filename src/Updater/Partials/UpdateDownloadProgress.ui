@@ -49,7 +49,7 @@
       <enum>QProgressBar::TopToBottom</enum>
      </property>
      <property name="format">
-      <string>Downloaded %p%</string>
+      <string>%p%</string>
      </property>
     </widget>
    </item>

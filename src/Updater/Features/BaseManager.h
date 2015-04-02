@@ -38,7 +38,7 @@
 #include "Zip.h"
 #include "Helper.h"
 #include "ActionUpdate.h"
-
+#include "Mode.h"
 #include "Tests.h"
 
 class BaseManager : public QObject
@@ -55,6 +55,7 @@ class BaseManager : public QObject
         Zip* zip();
         Helper* helper();
         ActionUpdate* actionUpdate();
+        Mode* mode();
 
         Tests* tests();
 
@@ -75,6 +76,7 @@ class BaseManager : public QObject
         Zip* _zip;
         Helper* _helper;
         ActionUpdate* _actionUpdate;
+        Mode* _mode;
 
         Tests* _tests;
 

@@ -24,12 +24,23 @@
 
 class UpdaterWindow;
 
+
+enum UpdateModeFlag
+{
+    DeltaMode = 1,
+    UpdateMode = 10,
+    InstallMode = 11,
+    CleanMode = 12,
+};
+
+
 struct UpdateInfo
 {
     QString downloadLink;
     QString releaseLink;
     QString version;
     QString oldVersion;
+    UpdateModeFlag mode;
 };
 
 
@@ -57,7 +68,7 @@ class ActionUpdate : public QObject
         void UpdateInstallationConfirmed();
 
     private slots:
-        	void httpUpdateDownloadFinished();
+        void httpUpdateDownloadFinished();
 
     signals:
         void updatedFinishedSuccessfully();

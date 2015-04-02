@@ -30,7 +30,6 @@
 #include "CoreFoundation/CoreFoundation.h"
 #endif
 
-
 /**
  *
  *  Updater mode
@@ -99,6 +98,8 @@ UpdaterWindow::UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remi
 	QString newVersString = ui->newVersionIsAvailableLabel->text().arg(QApplication::applicationName());
 	ui->newVersionIsAvailableLabel->setText(newVersString);
 
+    ui->updateDownloadProgress->hide();
+
     _baseManager = new BaseManager(this);
 
 
@@ -144,6 +145,44 @@ bool UpdaterWindow::UpdateWindowWithCurrentProposedUpdate()
 
 
     ui->wouldYouLikeToDownloadLabel->setText(downloadString);
+
+
+    switch (_baseManager->actionUpdate()->getUpdateInfo().mode) {
+        case DeltaMode:
+
+            break;
+        case UpdateMode:
+                setWindowTitle("Software update : New update found");
+//                ui->newVersionIsAvailableLabel->setText("New update found. Please download and Install it.");
+                ui->newVersionIsAvailableLabel->setText( tr("A new version of %1 is available!.").arg(qApp->applicationName()) );
+
+            break;
+        case InstallMode:
+            setWindowTitle("Software update : Installing...");
+            ui->newVersionIsAvailableLabel->setText( tr("Don't close this or open %1. \nWe are in process of updating latest files.").arg(qApp->applicationName()) );
+//            ui->newVersionIsAvailableLabel->hide();
+            ui->wouldYouLikeToDownloadLabel->hide();
+            showProgress(true);
+
+            break;
+        case CleanMode:
+            setWindowTitle("Software update : Cleaning...");
+            ui->newVersionIsAvailableLabel->setText("We're cleaning. In a minute we will be ready.");
+
+//            ui->newVersionIsAvailableLabel->hide();
+            ui->wouldYouLikeToDownloadLabel->hide();
+            showProgress(true);
+
+
+            break;
+        default:
+            qDebug() << "Error : no mode found";
+            exit(100);
+            break;
+    }
+
+
+
 
     //Get change notes from download link and set it inside
     //m_ui->releaseNotes

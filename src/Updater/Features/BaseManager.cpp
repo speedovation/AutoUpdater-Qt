@@ -30,6 +30,7 @@ BaseManager::BaseManager(UpdaterWindow* window) :
 
     _messageDialogs = new MessageDialogs(window);
     _zip = new Zip(window);
+    _mode = new Mode(window);
     _helper = new Helper(window);
     _actionUpdate = new ActionUpdate(window);
 
@@ -62,6 +63,10 @@ MessageDialogs* BaseManager::messageDialogs()
 Zip* BaseManager::zip()
 {
     return _zip;
+}
+Mode* BaseManager::mode()
+{
+    return _mode;
 }
 Helper* BaseManager::helper()
 {

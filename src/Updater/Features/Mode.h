@@ -37,6 +37,7 @@ class Mode : public QObject
         void deltaUpdateMode();
 
         void updateMode();
+        void handler(const QStringList& args);
 
 
     private:
