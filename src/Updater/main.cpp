@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     QApplication::setApplicationVersion("1.0.0");
 
     // Show main window
-	UpdaterWindow w;
+	UpdaterWindow *w = new UpdaterWindow;
 
     qDebug() <<"Arguments: " << qApp->arguments();
 
@@ -24,14 +24,14 @@ int main(int argc, char *argv[])
         info.version = qApp->arguments().at(3);
         info.oldVersion = qApp->arguments().at(4);
 
-       w.manager()->actionUpdate()->setUpdateInfo(info);
+       w->manager()->actionUpdate()->setUpdateInfo(info);
 
-       w.UpdateWindowWithCurrentProposedUpdate();
+       w->UpdateWindowWithCurrentProposedUpdate();
     }
     else
     {
         qDebug() << "Wrong arguments";
-        w.show();
+        w->show();
         ///REMOVE below comment when in production
 //        exit(100);
     }

@@ -51,7 +51,7 @@ class UpdaterWindow : public QMainWindow
 
     private:
         Ui::UpdaterWindow*	ui;
-        QGraphicsScene* m_appIconScene;
+//        QGraphicsScene* m_appIconScene;
 
         BaseManager *_baseManager;
 

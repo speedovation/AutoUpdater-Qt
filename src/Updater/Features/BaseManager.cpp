@@ -39,6 +39,11 @@ BaseManager::BaseManager(UpdaterWindow* window) :
 BaseManager::~BaseManager()
 {
     delete _authenticator;
+    delete _getReleaseNotes;
+    delete _messageDialogs;
+    delete _helper;
+    delete _actionUpdate;
+    delete _tests;
 }
 
 GetReleaseNotes* BaseManager::getReleaseNotes()

@@ -26,7 +26,7 @@
 
 #include "UpdaterWindow.h"
 #include "Partials/UpdateDownloadProgress.h"
-#include "Common/IgnoredVersions.h"
+#include "../Common/IgnoredVersions.h"
 
 
 #define FV_NEW_VERSION_POLICY_KEY  "FVNewVersionPolicy"

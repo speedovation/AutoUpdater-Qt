@@ -19,7 +19,7 @@
 #include "UpdaterWindow.h"
 #include "ui_UpdaterWindow.h"
 
-#include "UpdateFileData/UpdateFileData.h"
+#include "../Common/UpdateFileData.h"
 
 #include <QApplication>
 #include <QCloseEvent>
@@ -84,7 +84,7 @@ UpdaterWindow::UpdaterWindow(QWidget *parent, bool skipVersionAllowed, bool remi
 {
 	ui->setupUi(this);
 
-	m_appIconScene = 0;
+//	m_appIconScene = 0;
 
 	if(!skipVersionAllowed)
 		ui->skipThisVersionButton->hide();

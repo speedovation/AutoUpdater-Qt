@@ -27,26 +27,26 @@ INCLUDEPATH += "$$PWD"
 
 
 SOURCES += \
-        $$PWD/UpdateChecker.cpp \
-        $$PWD/GetUpdate.cpp \
-        $$PWD/ParseUpdate.cpp \
+        $$PWD/Features/UpdateChecker.cpp \
+        $$PWD/Features/GetUpdate.cpp \
+        $$PWD/Features/ParseUpdate.cpp \
         $$PWD/HandlerManager.cpp \
-        $$PWD/../UpdateFileData/UpdateFileData.cpp \
+        $$PWD/../Common/UpdateFileData.cpp \
         $$PWD/../Common/VersionComparator.cpp \
         $$PWD/../Common/Platform.cpp \
         $$PWD/../Common/IgnoredVersions.cpp \
-    $$PWD/Ssl.cpp
+    $$PWD/Features/Ssl.cpp
 
 HEADERS += \
-        $$PWD/UpdateChecker.h \
-        $$PWD/ParseUpdate.h \
+        $$PWD/Features/UpdateChecker.h \
+        $$PWD/Features/ParseUpdate.h \
         $$PWD/HandlerManager.h \
-        $$PWD/GetUpdate.h \
-        $$PWD/../UpdateFileData/UpdateFileData.h \
+        $$PWD/Features/GetUpdate.h \
+        $$PWD/../Common/UpdateFileData.h \
         $$PWD/../Common/VersionComparator.h \
         $$PWD/../Common/Platform.h \
         $$PWD/../Common/IgnoredVersions.h \
-    $$PWD/Ssl.h
+    $$PWD/Features/Ssl.h
 
 
 

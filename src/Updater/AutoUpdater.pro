@@ -27,49 +27,40 @@ INCLUDEPATH += "$$PWD"
 
 
 SOURCES += \
+        $$PWD/main.cpp \
+        $$PWD/UpdaterWindow.cpp \
         $$PWD/Features/GetReleaseNotes.cpp \
         $$PWD/Features/BaseManager.cpp \
-        $$PWD/UpdaterWindow.cpp \
-        $$PWD/UpdateFileData/UpdateFileData.cpp \
         $$PWD/Partials/UpdateDownloadProgress.cpp \
         $$PWD/Features/Authenticator.cpp \
-#        $$PWD/Features/UpdateChecker.cpp \
-#        $$PWD/Features/GetUpdate.cpp \
-#        $$PWD/Features/ParseUpdate.cpp \
         $$PWD/Features/MessageDialogs.cpp \
         $$PWD/Features/Zip.cpp \
-#        $$PWD/Features/Ssl.cpp \
         $$PWD/Features/Helper.cpp \
         $$PWD/Features/ActionUpdate.cpp \
         $$PWD/Features/Tests.cpp \
-        $$PWD/Common/Platform.cpp \
-        $$PWD/Common/VersionComparator.cpp \
-        $$PWD/Common/IgnoredVersions.cpp \
-    $$PWD/Features/Mode.cpp \
-    main.cpp \
-#    UpdateWindow.cpp
+        $$PWD/Features/Mode.cpp \
+        $$PWD/../Common/UpdateFileData.cpp \
+        $$PWD/../Common/Platform.cpp \
+        $$PWD/../Common/VersionComparator.cpp \
+        $$PWD/../Common/IgnoredVersions.cpp \
 
 HEADERS += \
+        $$PWD/UpdaterWindow.h \
         $$PWD/Features/GetReleaseNotes.h \
         $$PWD/Features/BaseManager.h \
-        $$PWD/UpdaterWindow.h \
-        $$PWD/UpdateFileData/UpdateFileData.h \
         $$PWD/Partials/UpdateDownloadProgress.h \
         $$PWD/Features/Authenticator.h \
-#        $$PWD/Features/UpdateChecker.h \
-#        $$PWD/Features/GetUpdate.h \
-#        $$PWD/Features/ParseUpdate.h \
+        $$PWD/Features/GetUpdate.h \
         $$PWD/Features/MessageDialogs.h \
         $$PWD/Features/Zip.h \
-#        $$PWD/Features/Ssl.h \
         $$PWD/Features/Helper.h \
         $$PWD/Features/ActionUpdate.h \
         $$PWD/Features/Tests.h \
-        $$PWD/Common/Platform.h \
-        $$PWD/Common/VersionComparator.h \
-        $$PWD/Common/IgnoredVersions.h \
-    $$PWD/Features/Mode.h \
-#    UpdateWindow.h
+        $$PWD/Features/Mode.h \
+        $$PWD/../Common/UpdateFileData.h \
+        $$PWD/../Common/Platform.h \
+        $$PWD/../Common/VersionComparator.h \
+        $$PWD/../Common/IgnoredVersions.h \
 
 
 FORMS += \
