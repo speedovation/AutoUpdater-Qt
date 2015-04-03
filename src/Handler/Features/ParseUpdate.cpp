@@ -245,14 +245,17 @@ bool ParseUpdate::searchDownloadedFeedForUpdates(QString xmlTitle,
 
   CommonTasks::startUpdater("AutoUpdater",
                             QStringList()
+                            << QString::number(10) // update
                             << xmlEnclosureUrl
                             << xmlReleaseNotesLink
                             << xmlEnclosureVersion
                             << qApp->applicationVersion()
                             );
 
+//  exit(10);
 
-	return true;
+    return true;
+
 }
 
 

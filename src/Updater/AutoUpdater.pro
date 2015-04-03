@@ -32,6 +32,7 @@ SOURCES += \
         $$PWD/../Common/Platform.cpp \
         $$PWD/../Common/VersionComparator.cpp \
         $$PWD/../Common/IgnoredVersions.cpp \
+        $$PWD/../Common/CommonTasks.cpp
 
 HEADERS += \
         $$PWD/UpdaterWindow.h \
@@ -50,6 +51,7 @@ HEADERS += \
         $$PWD/../Common/Platform.h \
         $$PWD/../Common/VersionComparator.h \
         $$PWD/../Common/IgnoredVersions.h \
+        $$PWD/../Common/CommonTasks.h
 
 
 FORMS += \
