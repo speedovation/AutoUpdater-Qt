@@ -52,8 +52,8 @@ void  Zip::extractAll(zip_file *zipFile)
 
     QString random = QDir::tempPath() + "/" + QUuid::createUuid().toString() + "/" ;
 
-    QDir d;
-    d.mkdir(random);
+    QDir dir;
+    dir.mkdir(random);
 
     foreach (const zip_info &f , files )
     {
@@ -77,15 +77,16 @@ void  Zip::extractAll(zip_file *zipFile)
         }
         else
         {
-            d.mkdir( random + QString::fromStdString(f.filename));
+            dir.mkdir( random + QString::fromStdString(f.filename));
             qDebug() << "Dir: " <<  QString::fromStdString(f.filename);;
         }
 
 
     }
 
+    d->manager()->actionUpdate()->getUpdateInfo().localFolderPath = random;
 
-    d.mkdir(random + "rollback/");
+    dir.mkdir(random + "rollback/");
 
     copyDir(qApp->applicationDirPath() , random + "rollback/");
 

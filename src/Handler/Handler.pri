@@ -21,6 +21,7 @@ SOURCES += \
         $$PWD/../Common/VersionComparator.cpp \
         $$PWD/../Common/Platform.cpp \
         $$PWD/../Common/IgnoredVersions.cpp \
+        $$PWD/../Common/CommonTasks.cpp
 
 HEADERS += \
         $$PWD/HandlerManager.h \
@@ -32,6 +33,7 @@ HEADERS += \
         $$PWD/../Common/VersionComparator.h \
         $$PWD/../Common/Platform.h \
         $$PWD/../Common/IgnoredVersions.h \
+        $$PWD/../Common/CommonTasks.h
 
 
 

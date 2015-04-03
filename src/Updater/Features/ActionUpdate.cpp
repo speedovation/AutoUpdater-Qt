@@ -48,6 +48,8 @@ void ActionUpdate::SkipUpdate()
 
     //	 Start ignoring this particular version
 	IgnoredVersions::setVersionIgnored(_updateInfo.version);
+    d->manager()->messageDialogs()->showInformationDialog("This version is skipped.");
+    exit(0);
 
 }
 
@@ -56,7 +58,7 @@ void ActionUpdate::RemindMeLater()
 	qDebug() << "Remind me later";
 
     // hide update window
-    d->hide();
+    exit(0);
 }
 
 

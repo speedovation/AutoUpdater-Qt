@@ -2,8 +2,9 @@ QT += core gui widgets
 TARGET = Sample
 VERSION = 1.0
 TEMPLATE = app
-#DEFINES += QUAZIP_BUILD
-#CONFIG(staticlib): DEFINES += QUAZIP_STATIC
+
+DEFINES += TARGET=\\\"$TARGET\\\"
+
 #DEFINES +=QUAZIP_STATIC
 DEFINES += NOMINMAX
 mac:ICON = sample.icns
