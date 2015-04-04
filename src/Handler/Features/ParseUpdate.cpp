@@ -240,7 +240,7 @@ bool ParseUpdate::searchDownloadedFeedForUpdates(QString xmlTitle,
 //		///Fixme here
 //	}
 
-    qDebug() << "Update found";
+    qDebug() << "Update found" << qApp->applicationPid();
 
 
   CommonTasks::startUpdater("AutoUpdater",
