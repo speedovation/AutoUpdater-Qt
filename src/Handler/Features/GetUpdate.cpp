@@ -122,14 +122,6 @@ void GetUpdate::httpFeedDownloadFinished()
 		// Done.
 		d->parseUpdate()->xmlParseFeed();
 
-        //
-        //if(!d->getUpdate()->m_silentAsMuchAsItCouldGet)
-//        {
-//            d->UpdateWindowWithCurrentProposedUpdate();
-//            d->show();
-//        }
-
-
 	}
 
 	m_reply->deleteLater();
